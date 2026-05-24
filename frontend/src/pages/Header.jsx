@@ -1,0 +1,97 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { GraduationCap, Sun, Moon } from 'lucide-react';
+
+const Navbar = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  // Initialize Theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      setIsDark(false);
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  // Theme Toggle Handler
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const newTheme = !prev;
+      if (newTheme) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return newTheme;
+    });
+  };
+
+  // Smooth scroll handler
+  const scrollToPortalSelection = (e) => {
+    e.preventDefault();
+    document.getElementById('portalSelection')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-2 text-blue-600 dark:text-blue-500">
+          <GraduationCap className="h-8 w-8" />
+          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Placement<span className="text-blue-600 dark:text-blue-500">Portal</span>
+          </span>
+        </div>
+        
+        <div className="hidden items-center gap-8 md:flex">
+          <a href="#home" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">Home</a>
+          <a href="#features" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">Features</a>
+          <a href="#how-it-works" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">How It Works</a>
+          <a href="#contact" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">Contact</a>
+        </div>
+
+        <div className="flex items-center gap-4 sm:gap-6">
+          {/* Premium Theme Switcher */}
+          <button
+            onClick={toggleTheme}
+            className="relative flex h-8 w-14 items-center rounded-full bg-slate-200 p-1 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-800"
+            aria-label="Toggle Theme"
+          >
+            <div className="flex w-full justify-between px-1">
+              <Sun size={14} className="text-amber-500" />
+              <Moon size={14} className="text-blue-400" />
+            </div>
+            <motion.div
+              className="absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-sm transition-shadow dark:bg-slate-950"
+              animate={{ x: isDark ? 24 : 0 }}
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            >
+              {isDark ? <Moon size={12} className="text-blue-400" /> : <Sun size={12} className="text-amber-500" />}
+            </motion.div>
+          </button>
+
+          <button 
+            onClick={scrollToPortalSelection}
+            className="hidden text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 md:block"
+          >
+            Login
+          </button>
+          <button 
+            onClick={scrollToPortalSelection}
+            className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 sm:block"
+          >
+            Get Started
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
