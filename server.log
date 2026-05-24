@@ -1,0 +1,557 @@
+
+> placement-portal-project@1.0.0 start
+> nodemon src/index.js
+
+[33m[nodemon] 3.1.14[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+1
+2
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+1
+{
+  _id: new ObjectId('6a1246bb770ea67dec9ac1e8'),
+  companyId: 'company123',
+  name: 'autoTech',
+  email: 'company@gmail.com',
+  logo: 'public\\temp\\logo-1779582651842-656422509.png',
+  website: '',
+  industry: 'it',
+  description: 'tech',
+  hrName: 'hr1',
+  hrEmail: 'hr1@gmail.com',
+  accessTokenVersion: 0,
+  isBlocked: false,
+  createdAt: 2026-05-24T00:30:51.893Z,
+  updatedAt: 2026-05-24T00:30:51.893Z,
+  __v: 0
+}
+done
+1
+{
+  _id: new ObjectId('6a1246bb770ea67dec9ac1e8'),
+  companyId: 'company123',
+  name: 'autoTech',
+  email: 'company@gmail.com',
+  logo: 'public\\temp\\logo-1779582651842-656422509.png',
+  website: '',
+  industry: 'it',
+  description: 'tech',
+  hrName: 'hr1',
+  hrEmail: 'hr1@gmail.com',
+  accessTokenVersion: 0,
+  isBlocked: false,
+  createdAt: 2026-05-24T00:30:51.893Z,
+  updatedAt: 2026-05-24T00:30:51.893Z,
+  __v: 0
+}
+done
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+[32m[nodemon] restarting due to changes...[39m
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+1
+done
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTEyNDZiYjc3MGVhNjdkZWM5YWMxZTgiLCJjb21wYW55SWQiOiJjb21wYW55MTIzIiwiZW1haWwiOiJjb21wYW55QGdtYWlsLmNvbSIsImlhdCI6MTc3OTU4MzUxNSwiZXhwIjoxNzc5NTg0NDE1fQ.6bmXtebDY4Nu2PPv3kpOOgv8kHjfpLoKCHTC6YIqCc0
+2
+1
+done
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTEyNDZiYjc3MGVhNjdkZWM5YWMxZTgiLCJjb21wYW55SWQiOiJjb21wYW55MTIzIiwiZW1haWwiOiJjb21wYW55QGdtYWlsLmNvbSIsImlhdCI6MTc3OTYxMTE0MiwiZXhwIjoxNzc5NjEyMDQyfQ.xNfbHitn7vgJZMfBGTbObp5cnwjr_SCJZZLzdUORsEg
+2
+1
+done
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTEyNDZiYjc3MGVhNjdkZWM5YWMxZTgiLCJjb21wYW55SWQiOiJjb21wYW55MTIzIiwiZW1haWwiOiJjb21wYW55QGdtYWlsLmNvbSIsImlhdCI6MTc3OTYxNDY4NiwiZXhwIjoxNzc5NjE1NTg2fQ.EBXQn6F8SJcSRhFKcP3P-XQRYLxGueMbZ06x2VeUyfE
+2
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+1
+done
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTEyNDZiYjc3MGVhNjdkZWM5YWMxZTgiLCJjb21wYW55SWQiOiJjb21wYW55MTIzIiwiZW1haWwiOiJjb21wYW55QGdtYWlsLmNvbSIsImlhdCI6MTc3OTYxNTY0NSwiZXhwIjoxNzc5NjE2NTQ1fQ.XB1Ul11aSlsZADtLbnKxNxF0153lSfwWusYyNqRWKsk
+2
+1
+done
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTEyNDZiYjc3MGVhNjdkZWM5YWMxZTgiLCJjb21wYW55SWQiOiJjb21wYW55MTIzIiwiZW1haWwiOiJjb21wYW55QGdtYWlsLmNvbSIsImlhdCI6MTc3OTYzMTA5NywiZXhwIjoxNzc5NjMxOTk3fQ.V6IdXJaWZw4DQY3wdm4p_Jj8X2kGWvNCjqm1TmqCDbk
+2
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (9) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m

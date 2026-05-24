@@ -96,9 +96,10 @@ const placementDriveSchema = new mongoose.Schema(
    }
 
    ,
-   isApproved: {
-   type: Boolean,
-   default: false
+  approvalStatus: {
+   type: String,
+   enum: ["pending", "approved", "rejected"],
+   default: "pending"
 },
 
 approvedBy: {

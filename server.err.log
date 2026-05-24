@@ -1,0 +1,328 @@
+TypeError: next is not a function
+    at model.<anonymous> (file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/College.models.js:98:4)
+    at async Kareem.execPre (C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\node_modules\kareem\index.js:61:24)
+    at async model.$__save (C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\node_modules\mongoose\lib\model.js:397:5)
+    at async model.save (C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\node_modules\mongoose\lib\model.js:667:5)
+    at async Function.create (C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\node_modules\mongoose\lib\model.js:2747:5)
+    at async file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/controllers/college.controllers.js:94:7
+    at async file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/utils/asyncHandler.js:3:5
+file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/routes/college.routes.js:45
+.post(veupload.none(),loginCollege);
+      ^
+
+ReferenceError: veupload is not defined
+    at file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/routes/college.routes.js:45:7
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.0
+file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/routes/college.routes.js:45
+.post(upload.none(),verifyJWT,add);
+                              ^
+
+ReferenceError: add is not defined
+    at file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/routes/college.routes.js:45:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/app.js:27
+  companyRouter
+  ^
+
+ReferenceError: companyRouter is not defined
+    at file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/app.js:27:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+(node:25060) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [Bus]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:283
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\models\company.model.js' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\middlewares\verifyCompanyJWT.js
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/resolve:952:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/models/company.model.js'
+}
+
+Node.js v20.20.0
+(node:32336) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/modules/esm/resolve:873
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'dotenv' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\index.js
+    at packageResolve (node:internal/modules/esm/resolve:873:9)
+    at moduleResolve (node:internal/modules/esm/resolve:946:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:873
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'dotenv' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\index.js
+    at packageResolve (node:internal/modules/esm/resolve:873:9)
+    at moduleResolve (node:internal/modules/esm/resolve:946:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:873
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'dotenv' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\index.js
+    at packageResolve (node:internal/modules/esm/resolve:873:9)
+    at moduleResolve (node:internal/modules/esm/resolve:946:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:873
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'dotenv' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\index.js
+    at packageResolve (node:internal/modules/esm/resolve:873:9)
+    at moduleResolve (node:internal/modules/esm/resolve:946:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v20.20.0
+node:internal/modules/esm/resolve:873
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'dotenv' imported from C:\Users\LENOVO\OneDrive\Desktop\placement portal PROJECT\src\index.js
+    at packageResolve (node:internal/modules/esm/resolve:873:9)
+    at moduleResolve (node:internal/modules/esm/resolve:946:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v20.20.0

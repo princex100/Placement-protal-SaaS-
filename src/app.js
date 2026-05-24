@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import studentRouter from "./routes/student.routes.js"
 import collegeRouter from "./routes/college.routes.js"
+import companyRouter
+from "./routes/company.routes.js";
 
 
 export const app=express()
@@ -21,6 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/colleges", collegeRouter);
+app.use("/api/v1/companies",companyRouter);
 
 
 app.use((err,req,res,next)=>{
@@ -31,6 +34,8 @@ app.use((err,req,res,next)=>{
     errors:err.errors||[]
   })
 })
+
+
 
 
 
