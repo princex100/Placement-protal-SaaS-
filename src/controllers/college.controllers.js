@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import College from "../models/College.models.js";
+import PlacementDrive from "../models/placementDrive.models.js";
 import Student from "../models/Student.models.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
@@ -60,7 +61,6 @@ export const registerCollege =
       password,
       address,
       phoneNumber,
-      logo,
     } = req.body || {};
 
     if (
@@ -98,7 +98,7 @@ export const registerCollege =
         password,
         address,
         phoneNumber,
-        logo: req.file?.path || logo,
+        logo: req.file?.path,
       });
 
     const createdCollege =
@@ -356,7 +356,7 @@ export const refreshCollegeAccessToken =
   });
 
 
-
+//////////////////////
 
 export const addStudent = asyncHandler(
   async (req, res) => {
@@ -445,3 +445,100 @@ export const addStudent = asyncHandler(
     );
   }
 );
+
+///////////////////////////////////////////
+
+///////////////////////////////////////////
+// DASHBOARD STATS CONTROLLER
+///////////////////////////////////////////
+
+export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+  const studentsCount = req.college.studentsCount || 0;
+
+  // RUN ALL QUERIES IN PARALLEL FOR SPEED
+  const [
+    linkedStudents,
+    placedStudents,
+    pendingApprovals,
+    uniqueCompanies
+  ] = await Promise.all([
+    // 1. TOTAL STUDENTS
+    Student.countDocuments({
+      college: collegeId
+    }),
+
+    // 2. PLACED STUDENTS
+    Student.countDocuments({
+      college: collegeId,
+      placementStatus: "placed",
+    }),
+
+    // 3. PENDING DRIVES
+    PlacementDrive.countDocuments({
+      college: collegeId,
+      approvalStatus: "pending",
+    }),
+
+    // 4. UNIQUE PARTNER COMPANIES
+    PlacementDrive.distinct(
+      "company",
+      {
+        college: collegeId,
+        approvalStatus: "approved",
+      }
+    )
+  ]);
+
+  const totalStudents = Math.max(
+    linkedStudents,
+    studentsCount
+  );
+
+  // CALCULATE PLACEMENT RATE
+  const placementRate = totalStudents > 0
+    ? Math.round((placedStudents / totalStudents) * 100)
+    : 0;
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        totalStudents,
+        pendingApprovals,
+        partnerCompanies: uniqueCompanies.length,
+        placementRate
+      },
+      "Dashboard stats fetched successfully"
+    )
+  );
+});
+
+///////////////////////////////////////////
+// INCOMING DRIVES CONTROLLER
+///////////////////////////////////////////
+
+export const getIncomingDrives = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+
+  const incomingDrives = await PlacementDrive.find({
+    college: collegeId,
+    approvalStatus: "pending",
+  })
+    .populate(
+      "company", // This assumes your Drive model references the Company model via 'company'
+      "name logo"
+    )
+    .sort({
+      createdAt: -1 // Newest first
+    })
+    .limit(5); // Only fetch top 5 for the dashboard
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      incomingDrives,
+      "Incoming drives fetched successfully"
+    )
+  );
+});

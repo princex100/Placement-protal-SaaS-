@@ -622,3 +622,288 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTEyNDZiYjc3MGVhNjdkZWM5YWMxZTg
 [32m[nodemon] restarting due to changes...[39m
 [32m[nodemon] starting `node src/index.js`[39m
 [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ override existing { override: true }
+❌ MongoDB Connection Error: Error: MONGODB_URL is not defined in .env
+    at connectDB (file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/db/db.js:10:13)
+    at file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/index.js:10:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+❌ MongoDB Connection Error: Error: MONGODB_URL is not defined in .env
+    at connectDB (file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/db/db.js:10:13)
+    at file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/index.js:10:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+❌ MongoDB Connection Error: Error: MONGODB_URL is not defined in .env
+    at connectDB (file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/db/db.js:10:13)
+    at file:///C:/Users/LENOVO/OneDrive/Desktop/placement%20portal%20PROJECT/src/index.js:10:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ override existing { override: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ suppress logs { quiet: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/index.js`[39m
+◇ injected env (13) from .env // tip: ⌘ enable debugging { debug: true }
+✅ MongoDB Connected !! DB HOST: ac-2evpdqi-shard-00-00.v4xfxy0.mongodb.net
+mongodb+srv://snorlex:princesharma%40123@cluster0.v4xfxy0.mongodb.net
+placementPortal
+⚙️ Server is running on port : 8000

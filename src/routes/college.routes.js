@@ -6,7 +6,9 @@ import {
    logoutCollege,
    getCurrentCollege,
    refreshCollegeAccessToken,
-   addStudent
+   addStudent,
+   getCollegeDashboardStats,
+   getIncomingDrives
 } from "../controllers/college.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -17,7 +19,6 @@ const router = Router();
 
 router.post(
   "/register",
-  upload.single("logo"),
   registerCollege
 );
 
@@ -36,13 +37,17 @@ router.route("/logout")
    logoutCollege
 );
 
-router.route("/current")
-.get(
-   verifyJWT,
-   getCurrentCollege
-);
 
 router.route("/add-student")
 .post(upload.none(),verifyJWT,addStudent);
+
+router.route("/current")
+.get(verifyJWT,getCurrentCollege);
+
+router.route("/dashboard/stats")
+.get(verifyJWT,getCollegeDashboardStats);
+
+router.route("/dashboard/incoming-drives")
+.get(verifyJWT,getIncomingDrives);
 
 export default router;

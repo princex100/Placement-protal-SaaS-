@@ -17,6 +17,7 @@ dist-ssr/
 # Local env files
 *.local
 .env
+.vite-cache
 
 # Editor directories and files
 .vscode/*

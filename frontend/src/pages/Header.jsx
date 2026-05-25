@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronDown, User, LayoutDashboard, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Sun, Moon } from 'lucide-react';
 
 const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
+  const [user, setUser] = useState(null);
+const [showProfileMenu, setShowProfileMenu] =
+  useState(false);
 
+useEffect(() => {
+  const storedUser =
+    localStorage.getItem("user");
+
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
+
+const isAuthenticated = !!user;
   // Initialize Theme
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -82,12 +96,84 @@ const Navbar = () => {
           >
             Login
           </button>
-          <button 
-            onClick={scrollToPortalSelection}
-            className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 sm:block"
-          >
-            Get Started
-          </button>
+         {isAuthenticated ? (
+  <div className="relative">
+
+    <button
+      onClick={() =>
+        setShowProfileMenu(!showProfileMenu)
+      }
+      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
+    >
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-slate-700 dark:text-blue-400">
+        <User size={18} />
+      </div>
+
+      <div className="hidden text-left sm:block">
+        <p className="text-sm font-semibold text-slate-900 dark:text-white">
+          {user.name}
+        </p>
+
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          {user.role}
+        </p>
+      </div>
+
+      <ChevronDown
+        size={16}
+        className={`text-slate-500 transition duration-300 ${
+          showProfileMenu
+            ? "rotate-180"
+            : ""
+        }`}
+      />
+    </button>
+
+    {showProfileMenu && (
+      <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+
+        <div className="border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+
+          <h4 className="font-semibold text-slate-900 dark:text-white">
+            {user.name}
+          </h4>
+
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            {user.email}
+          </p>
+        </div>
+
+        <button className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800">
+
+          <LayoutDashboard size={18} />
+          Dashboard
+        </button>
+
+        <button className="flex w-full items-center gap-3 px-5 py-3 text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/10">
+
+          <LogOut size={18} />
+          Logout
+        </button>
+      </div>
+    )}
+  </div>
+) : (
+  <>
+    <button
+      onClick={scrollToPortalSelection}
+      className="hidden text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 md:block"
+    >
+      Login
+    </button>
+
+    <button
+      onClick={scrollToPortalSelection}
+      className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md sm:block"
+    >
+      Get Started
+    </button>
+  </>
+)}
         </div>
       </div>
     </nav>
