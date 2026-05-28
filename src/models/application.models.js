@@ -1,58 +1,64 @@
 import mongoose from "mongoose";
 
 const applicationSchema = new mongoose.Schema(
-{
-   student:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"Student",
-      required:true
-   },
-
-   drive:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"PlacementDrive",
-      required:true
-   },
-
-   status:{
-      type:String,
-      enum:[
-         "applied",
-         "shortlisted",
-         "rejected",
-         "selected"
+  {
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+      index: true
+    },
+    drive: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PlacementDrive",
+      required: true,
+      index: true
+    },
+    college: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College",
+      required: true,
+      index: true
+    },
+    status: {
+      type: String,
+      enum: [
+        "Applied",
+        "Shortlisted",
+        "Interview Scheduled",
+        "Selected",
+        "Rejected",
+        "Withdrawn",
       ],
-      default:"applied"
-   },
-
-   appliedAt:{
-      type:Date,
-      default:Date.now
-   },
-
-   remarks:{
-      type:String
-   }
-
-},
-{
-   timestamps:true
-}
+      default: "Applied",
+    },
+    appliedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    resumeSnapshot: {
+      type: String,
+      required: true // Must snapshot the resume URL at the time of applying
+    },
+    remarks: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
 applicationSchema.index(
-   {
-      student:1,
-      drive:1
-   },
-   {
-      unique:true
-   }
+  {
+    student: 1,
+    drive: 1,
+  },
+  {
+    unique: true, // Prevent duplicate applications
+  }
 );
 
-const Application = mongoose.model(
-   "Application",
-   applicationSchema
-);
+const Application = mongoose.model("Application", applicationSchema);
 
 export default Application;

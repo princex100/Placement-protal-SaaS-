@@ -61,7 +61,7 @@ const LandingPage = () => {
   // Typing effect phrases
   const phrases = [
     "Get Placed Smarter",
-    "Recruit Smarter, Hire Faster",
+    "Create Drives Smarter",
     "Manage Placements Smarter"
   ];
   
@@ -114,8 +114,8 @@ const LandingPage = () => {
           </div>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
-            Connecting Students, Colleges, and Companies in one streamlined placement ecosystem. 
-            Automate workflows, track applications, and hire top talent seamlessly.
+            Connecting Students and Colleges in one streamlined placement ecosystem. 
+            Automate workflows, track applications, and organize campus drives seamlessly.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             <button onClick={scrollToPortalSelection} className="rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md">
@@ -135,7 +135,6 @@ const LandingPage = () => {
           <div className="mb-8 flex flex-wrap items-center justify-center gap-4">
             <PortalPreviewButton active={activePortal === 'student'} onClick={() => setActivePortal('student')} icon={<GraduationCap size={18} />} label="Student Portal" />
             <PortalPreviewButton active={activePortal === 'college'} onClick={() => setActivePortal('college')} icon={<Building2 size={18} />} label="College Portal" />
-            <PortalPreviewButton active={activePortal === 'company'} onClick={() => setActivePortal('company')} icon={<Briefcase size={18} />} label="Company Portal" />
           </div>
 
           <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl ring-1 ring-slate-900/5 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none dark:ring-white/5 lg:h-[700px]">
@@ -151,7 +150,6 @@ const LandingPage = () => {
                 <motion.div key={activePortal} variants={portalPreviewVariants} initial="initial" animate="animate" exit="exit" className="h-full w-full">
                   {activePortal === 'student' && <StudentPortalPreview />}
                   {activePortal === 'college' && <CollegePortalPreview />}
-                  {activePortal === 'company' && <CompanyPortalPreview />}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -166,10 +164,10 @@ const LandingPage = () => {
             <h2 className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-500">Core Platform</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Built for scale, designed for simplicity</p>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             <FeatureCard icon={<BarChart3 className="h-6 w-6" />} title="Student Placement Tracking" description="Real-time ATS-style dashboard for students to track application status, interview schedules, and job offers." />
-            <FeatureCard icon={<Building2 className="h-6 w-6" />} title="College Placement Management" description="Automated workflows for placement cells to verify data, approve companies, and generate reports." />
-            <FeatureCard icon={<Users className="h-6 w-6" />} title="Recruit Top Talent" description="Companies can create drives, filter candidates by criteria, manage interview rounds, and rollout offers seamlessly." />
+            <FeatureCard icon={<Building2 className="h-6 w-6" />} title="College Placement Management" description="Automated workflows for placement cells to verify data, approve students, and generate reports." />
+            <FeatureCard icon={<Users className="h-6 w-6" />} title="Organize Placement Drives" description="Colleges can create drives, filter candidates by criteria, manage interview rounds, and rollout offers seamlessly." />
           </div>
         </div>
       </section>
@@ -182,9 +180,9 @@ const LandingPage = () => {
             <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">A streamlined process</p>
           </div>
           <div className="relative flex flex-col items-center justify-between gap-8 md:flex-row">
-            <WorkflowStep icon={<Briefcase className="h-7 w-7" />} step="1. Company Creates Drive" desc="Recruiters set criteria and post openings." color="blue" />
+            <WorkflowStep icon={<Briefcase className="h-7 w-7" />} step="1. College Creates Drive" desc="Colleges set criteria and post placement openings." color="blue" />
             <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-slate-300 dark:text-slate-700 md:block" />
-            <WorkflowStep icon={<CheckCircle2 className="h-7 w-7" />} step="2. College Approves" desc="Placement cell verifies and approves the drive." color="blue" />
+            <WorkflowStep icon={<CheckCircle2 className="h-7 w-7" />} step="2. Verification" desc="Placement cell verifies the drive requirements." color="blue" />
             <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-slate-300 dark:text-slate-700 md:block" />
             <WorkflowStep icon={<GraduationCap className="h-7 w-7" />} step="3. Students Apply" desc="Eligible students submit their applications." color="blue" />
             <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-slate-300 dark:text-slate-700 md:block" />
@@ -200,10 +198,9 @@ const LandingPage = () => {
             <h2 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Choose Your Portal</h2>
             <p className="mt-4 text-lg text-slate-500 dark:text-slate-400">Select your role to access your personalized dashboard.</p>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 max-w-4xl mx-auto">
             <PortalCard icon={<GraduationCap className="h-8 w-8" />} title="Student Portal" desc="Apply to placement drives, track applications, and build your career." link="/student/auth" linkText="Continue as Student" />
             <PortalCard icon={<Building2 className="h-8 w-8" />} title="College Portal" desc="Manage students, approve placement drives, and coordinate recruitment." link="/college/auth" linkText="Continue as College" />
-            <PortalCard icon={<Briefcase className="h-8 w-8" />} title="Company Portal" desc="Create placement drives and recruit top talent effectively." link="/company/auth" linkText="Continue as Company" />
           </div>
         </div>
       </section>
@@ -213,7 +210,7 @@ const LandingPage = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 divide-y divide-slate-200 text-center transition-colors duration-300 dark:divide-slate-800 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             <StatColumn value="500+" label="Students Placed" />
-            <StatColumn value="120+" label="Hiring Companies" />
+            <StatColumn value="120+" label="Partner Companies" />
             <StatColumn value="1000+" label="Applications Processed" />
           </div>
         </div>
@@ -228,7 +225,6 @@ const LandingPage = () => {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link to="/student/auth" className="w-full rounded-lg bg-white px-8 py-4 text-sm font-bold text-blue-600 shadow-md transition-all hover:bg-slate-50 hover:shadow-lg sm:w-auto">Student Portal</Link>
             <Link to="/college/auth" className="w-full rounded-lg border border-blue-500 bg-blue-700 px-8 py-4 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-800 hover:shadow-lg dark:border-blue-600 dark:bg-blue-900 dark:hover:bg-blue-950 sm:w-auto">College Portal</Link>
-            <Link to="/company/auth" className="w-full rounded-lg border border-blue-500 bg-blue-700 px-8 py-4 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-800 hover:shadow-lg dark:border-blue-600 dark:bg-blue-900 dark:hover:bg-blue-950 sm:w-auto">Company Portal</Link>
           </div>
         </div>
       </section>
@@ -423,60 +419,7 @@ const CollegePortalPreview = () => (
   </div>
 );
 
-const CompanyPortalPreview = () => (
-  <div className="flex h-full w-full">
-    <div className="hidden w-64 flex-col border-r border-slate-200 bg-white p-4 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 lg:flex">
-      <div className="space-y-1">
-        <SidebarItem icon={<LayoutDashboard size={18} />} label="Dashboard" active />
-        <SidebarItem icon={<Briefcase size={18} />} label="My Drives" />
-        <SidebarItem icon={<Users size={18} />} label="Applicants" />
-        <SidebarItem icon={<Building2 size={18} />} label="Colleges" />
-        <SidebarItem icon={<BarChart3 size={18} />} label="Reports" />
-        <SidebarItem icon={<Settings size={18} />} label="Settings" />
-      </div>
-    </div>
-    
-    <div className="flex-1 overflow-y-auto p-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Company Dashboard</h2>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Track your campus hiring drives and process applications.</p>
-      </div>
 
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
-        <StatCard title="Active Drives" value="3" trend="In progress" icon={<Briefcase size={20} />} color="blue" />
-        <StatCard title="Total Applications" value="482" trend="+124 this week" icon={<FileText size={20} />} color="emerald" />
-        <StatCard title="Connected Colleges" value="12" trend="Across 4 regions" icon={<Building2 size={20} />} color="purple" />
-        <StatCard title="Offers Released" value="18" trend="Acceptance: 90%" icon={<CheckCircle2 size={20} />} color="amber" />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 lg:col-span-2">
-           <div className="mb-6 flex items-center justify-between">
-            <h3 className="font-bold text-slate-900 dark:text-white">My Placement Drives</h3>
-            <button className="rounded bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600 transition hover:bg-blue-100 dark:bg-blue-500/10 dark:text-blue-400 dark:hover:bg-blue-500/20">Create New</button>
-          </div>
-          <div className="space-y-4">
-            <PlacementDriveRow role="SDE Internship" applications="124" status="Active" date="Closes 30 May" />
-            <PlacementDriveRow role="Frontend Engineer" applications="68" status="Closed" date="Evaluating" />
-            <PlacementDriveRow role="Data Analyst" applications="92" status="Active" date="Closes 15 Jun" />
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
-          <div>
-            <h3 className="font-bold text-slate-900 dark:text-white">Recruitment Funnel</h3>
-            <div className="mt-6 space-y-4">
-              <FunnelBar label="Applied" width="100%" count="482" />
-              <FunnelBar label="Shortlisted" width="60%" count="289" />
-              <FunnelBar label="Interviewed" width="25%" count="120" />
-              <FunnelBar label="Offered" width="5%" count="18" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 /* --- PREVIEW HELPER SUB-COMPONENTS --- */
 
@@ -554,23 +497,6 @@ const DriveApprovalRow = ({ company, role, packages }) => (
   </div>
 );
 
-const PlacementDriveRow = ({ role, applications, status, date }) => (
-  <div className="flex items-center justify-between rounded-lg border border-slate-100 p-4 transition-all hover:border-slate-200 hover:shadow-sm dark:border-slate-800/60 dark:hover:border-slate-700">
-    <div>
-      <h4 className="font-semibold text-slate-900 dark:text-white">{role}</h4>
-      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{date}</p>
-    </div>
-    <div className="text-center">
-      <p className="text-sm font-bold text-slate-900 dark:text-white">{applications}</p>
-      <p className="text-xs text-slate-500 dark:text-slate-400">Applicants</p>
-    </div>
-    <div className={`rounded-full px-3 py-1 text-xs font-medium ${
-      status === 'Active' ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
-    }`}>
-      {status}
-    </div>
-  </div>
-);
 
 const ChartLegend = ({ label, value, color }) => (
   <div className="flex items-center justify-between text-sm">
@@ -582,16 +508,6 @@ const ChartLegend = ({ label, value, color }) => (
   </div>
 );
 
-const FunnelBar = ({ label, width, count }) => (
-  <div>
-    <div className="mb-1 flex justify-between text-xs">
-      <span className="font-medium text-slate-600 dark:text-slate-400">{label}</span>
-      <span className="font-bold text-slate-900 dark:text-white">{count}</span>
-    </div>
-    <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-      <div className="h-full rounded-full bg-blue-500" style={{ width }}></div>
-    </div>
-  </div>
-);
+
 
 export default LandingPage;

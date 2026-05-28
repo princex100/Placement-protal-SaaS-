@@ -14,8 +14,7 @@ import App from "./App";
 import LandingPage from "./pages/LandingPage";
 
 import StudentAuth from "./pages/auth/StudentAuth.jsx";
-import CompanyAuth from "./pages/auth/CompanyAuth.jsx";
-import CompanyRegister from "./pages/auth/CompanyRegister.jsx";
+
 import CollegeRegister from "./pages/auth/CollegeRegister.jsx";
 import CollegeLogin from "./pages/auth/CollegeAuth.jsx";
 import { store } from "./redux/store";
@@ -41,14 +40,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               element={<StudentAuth />}
             />
 
-            <Route
-              path="company/auth"
-              element={<CompanyAuth />}
-            />
-             <Route
-              path="company/register"
-              element={<CompanyRegister/>}
-            />
 
             <Route
               path="college/auth"

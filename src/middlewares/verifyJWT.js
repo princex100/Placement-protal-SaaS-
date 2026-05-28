@@ -28,39 +28,20 @@ async (req,res,next)=>{
       );
 
       if(decodedToken?.role === "college-admin"){
-         const college =
-         await College.findById(decodedToken?._id)
-         .select("-password -refreshToken");
-
-         if(!college){
-            throw new ApiError(
-               401,
-               "Invalid access token"
-            );
-         }
-
+         const college = await College.findById(decodedToken?._id).select("-password -refreshToken");
+         if(!college) throw new ApiError(401, "Invalid access token");
          req.college = college;
          req.user = college;
-
+         req.role = "college-admin";
          return next();
       }
 
-      const student =
-      await Student.findById(decodedToken?._id)
-      .select("-password -refreshToken");
-
-      if(!student){
-         throw new ApiError(
-            401,
-            "Invalid access token"
-         );
-      }
-
+      const student = await Student.findById(decodedToken?._id).select("-password -refreshToken");
+      if(!student) throw new ApiError(401, "Invalid access token");
       req.student = student;
       req.user = student;
-
+      req.role = "student";
       next();
-
    } catch (error) {
 
       throw new ApiError(

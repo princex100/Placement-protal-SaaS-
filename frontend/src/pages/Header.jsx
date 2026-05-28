@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, User, LayoutDashboard, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GraduationCap, Sun, Moon } from 'lucide-react';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
   const [user, setUser] = useState(null);
 const [showProfileMenu, setShowProfileMenu] =
@@ -48,26 +50,46 @@ const isAuthenticated = !!user;
   };
 
   // Smooth scroll handler
-  const scrollToPortalSelection = (e) => {
+  const scrollToSection = (e, sectionId) => {
     e.preventDefault();
-    document.getElementById('portalSelection')?.scrollIntoView({ behavior: 'smooth' });
+    if (window.location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        if (sectionId === 'top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      if (sectionId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/";
   };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 text-blue-600 dark:text-blue-500">
+        <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="flex items-center gap-2 text-blue-600 dark:text-blue-500 transition-transform duration-200 active:scale-95">
           <GraduationCap className="h-8 w-8" />
           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             Placement<span className="text-blue-600 dark:text-blue-500">Portal</span>
           </span>
-        </div>
+        </a>
         
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#home" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">Home</a>
-          <a href="#features" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">Features</a>
-          <a href="#how-it-works" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">How It Works</a>
-          <a href="#contact" className="text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">Contact</a>
+          <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 hover:-translate-y-0.5 active:scale-95">Home</a>
+          <a href="/#features" onClick={(e) => scrollToSection(e, 'features')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 hover:-translate-y-0.5 active:scale-95">Features</a>
+          <a href="/#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 hover:-translate-y-0.5 active:scale-95">How It Works</a>
+          <a href="/#contact" onClick={(e) => scrollToSection(e, 'contact')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 hover:-translate-y-0.5 active:scale-95">Contact</a>
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6">
@@ -90,12 +112,6 @@ const isAuthenticated = !!user;
             </motion.div>
           </button>
 
-          <button 
-            onClick={scrollToPortalSelection}
-            className="hidden text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 md:block"
-          >
-            Login
-          </button>
          {isAuthenticated ? (
   <div className="relative">
 
@@ -103,7 +119,7 @@ const isAuthenticated = !!user;
       onClick={() =>
         setShowProfileMenu(!showProfileMenu)
       }
-      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
+      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition-all hover:shadow-md active:scale-95 dark:border-slate-700 dark:bg-slate-800"
     >
       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-slate-700 dark:text-blue-400">
         <User size={18} />
@@ -143,13 +159,17 @@ const isAuthenticated = !!user;
           </p>
         </div>
 
-        <button className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800">
+        <button 
+          onClick={() => navigate(user?.role === 'college' ? '/college/dashboard' : '/')}
+          className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition-all hover:bg-slate-50 active:scale-95 dark:text-slate-300 dark:hover:bg-slate-800">
 
           <LayoutDashboard size={18} />
           Dashboard
         </button>
 
-        <button className="flex w-full items-center gap-3 px-5 py-3 text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/10">
+        <button 
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 px-5 py-3 text-sm text-red-500 transition-all hover:bg-red-50 active:scale-95 dark:hover:bg-red-500/10">
 
           <LogOut size={18} />
           Logout
@@ -160,15 +180,8 @@ const isAuthenticated = !!user;
 ) : (
   <>
     <button
-      onClick={scrollToPortalSelection}
-      className="hidden text-sm font-medium text-slate-600 transition hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 md:block"
-    >
-      Login
-    </button>
-
-    <button
-      onClick={scrollToPortalSelection}
-      className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md sm:block"
+      onClick={(e) => scrollToSection(e, 'portalSelection')}
+      className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 active:scale-95 sm:block"
     >
       Get Started
     </button>

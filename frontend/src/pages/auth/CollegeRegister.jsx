@@ -186,8 +186,8 @@ const CollegeRegister = () => {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="flex w-full flex-col bg-white dark:bg-slate-900 lg:w-[55%]">
-          <div className="flex-1 overflow-y-auto px-6 py-6 sm:px-8 xl:px-12">
+        <div className="flex w-full flex-col justify-center bg-white dark:bg-slate-900 lg:w-[55%]">
+          <div className="overflow-y-auto px-6 py-6 sm:px-8 xl:px-12">
             <div className="mx-auto w-full max-w-[500px]">
               {/* Mobile Logo */}
               <div className="mb-6 flex items-center gap-3 lg:hidden">
@@ -211,19 +211,25 @@ const CollegeRegister = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <InputField label="College Name" icon={<Building2 size={16} />} name="name" value={formData.name} onChange={handleChange} placeholder="ABC Institute of Technology" />
-                <InputField label="College ID" icon={<ShieldCheck size={16} />} name="collegeId" value={formData.collegeId} onChange={handleChange} placeholder="JSS123" />
-                <InputField label="Placement Officer Name" icon={<Users size={16} />} name="placementOfficerName" value={formData.placementOfficerName} onChange={handleChange} placeholder="Enter officer name" />
-
-                {/* Email + Phone Grid */}
+                {/* Row 1: Name & ID */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <InputField label="Official Email" icon={<Mail size={16} />} name="email" type="email" value={formData.email} onChange={handleChange} placeholder="college@domain.edu" />
-                  <InputField label="Contact Number" icon={<Phone size={16} />} name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="Enter contact number" />
+                  <InputField label="College Name" icon={<Building2 size={16} />} name="name" value={formData.name} onChange={handleChange} placeholder="ABC Institute" />
+                  <InputField label="College ID" icon={<ShieldCheck size={16} />} name="collegeId" value={formData.collegeId} onChange={handleChange} placeholder="JSS123" />
                 </div>
 
-                <InputField label="Address" icon={<Building2 size={16} />} name="address" value={formData.address} onChange={handleChange} placeholder="Enter full college address" />
+                {/* Row 2: Officer & Phone */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <InputField label="Placement Officer" icon={<Users size={16} />} name="placementOfficerName" value={formData.placementOfficerName} onChange={handleChange} placeholder="Officer name" />
+                  <InputField label="Contact Number" icon={<Phone size={16} />} name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="Phone number" />
+                </div>
 
-                {/* Password Grid (Side by side to save height) */}
+                {/* Row 3: Email */}
+                <InputField label="Official Email" icon={<Mail size={16} />} name="email" type="email" value={formData.email} onChange={handleChange} placeholder="college@domain.edu" />
+
+                {/* Row 4: Address */}
+                <InputField label="Address" icon={<Building2 size={16} />} name="address" value={formData.address} onChange={handleChange} placeholder="City, State, Zip" />
+
+                {/* Row 5: Password Grid */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Password</label>
@@ -288,6 +294,7 @@ const CollegeRegister = () => {
                     </>
                   )}
                 </button>
+
 
                 {/* Footer */}
                 <div className="pt-2 pb-4">

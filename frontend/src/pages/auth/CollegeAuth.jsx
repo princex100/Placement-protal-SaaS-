@@ -261,6 +261,7 @@ const CollegeLogin = () => {
                   )}
                 </button>
 
+
                 {/* Footer */}
                 <div className="pt-6 pb-2">
                   <p className="text-center text-xs text-slate-500 dark:text-slate-400">

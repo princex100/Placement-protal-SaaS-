@@ -6,48 +6,49 @@ import {
    logoutCollege,
    getCurrentCollege,
    refreshCollegeAccessToken,
-   addStudent,
-   getCollegeDashboardStats,
-   getIncomingDrives
+   getCollegeDashboardStats
 } from "../controllers/college.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
+import { allowRoles } from "../middlewares/role.middleware.js";
+import { validateRequest } from "../middlewares/validateRequest.middleware.js";
+import {
+  collegeRegistrationRules,
+  collegeLoginRules,
+} from "../validators/college.validators.js";
 
 const router = Router();
 
 // PUBLIC ROUTES
 
-router.post(
-  "/register",
-  registerCollege
-);
-
+router.route("/register")
+  .post(
+    upload.single("logo"),
+    ...collegeRegistrationRules(),
+    validateRequest,
+    registerCollege
+  );
 
 router.route("/login")
-.post(upload.none(),loginCollege);
+  .post(
+    upload.none(), 
+    ...collegeLoginRules(), 
+    validateRequest, 
+    loginCollege
+  );
 
 router.route("/refresh-token")
-.patch(refreshCollegeAccessToken);
+  .patch(refreshCollegeAccessToken);
 
-// PROTECTED ROUTES
+// PROTECTED ROUTES (College only)
 
 router.route("/logout")
-.post(
-   verifyJWT,
-   logoutCollege
-);
-
-
-router.route("/add-student")
-.post(upload.none(),verifyJWT,addStudent);
+  .post(verifyJWT, allowRoles(["college-admin"]), logoutCollege);
 
 router.route("/current")
-.get(verifyJWT,getCurrentCollege);
+  .get(verifyJWT, allowRoles(["college-admin"]), getCurrentCollege);
 
 router.route("/dashboard/stats")
-.get(verifyJWT,getCollegeDashboardStats);
-
-router.route("/dashboard/incoming-drives")
-.get(verifyJWT,getIncomingDrives);
+  .get(verifyJWT, allowRoles(["college-admin"]), getCollegeDashboardStats);
 
 export default router;
