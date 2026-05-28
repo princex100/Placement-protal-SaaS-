@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 import {
   Building2,
   GraduationCap,
@@ -53,26 +54,30 @@ const CollegeRegister = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    setIsSubmitting(true);
+    try {
+      setIsSubmitting(true);
 
-    const response = await api.post(
-      "/colleges/register",
-      formData
-    );
-    console.log(response);
+      const response = await api.post("/colleges/register", formData);
+      toast.success(response.data.message || "Verification email sent. Please check your inbox.");
 
-    console.log(response.data);
-
-    navigate("/college/auth");
-  } catch (error) {
-    console.log(error.response?.data);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+      setFormData({
+        collegeId: "",
+        name: "",
+        placementOfficerName: "",
+        email: "",
+        phoneNumber: "",
+        address: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const FeatureRow = ({ icon, title, subtitle }) => (
     <div className="flex items-start gap-3">

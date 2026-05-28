@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setCredentials, clearCredentials } from "../../redux/features/authSlice";
 import {
   LayoutDashboard,
   Users,
@@ -35,6 +37,7 @@ const SIDEBAR_NAV = [
 const CollegeDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   // --- STATE ---
   const [dashboardStats, setDashboardStats] = useState({
@@ -68,10 +71,19 @@ const CollegeDashboard = () => {
   const fetchCurrentCollege = async () => {
     try {
       const response = await api.get("/colleges/current");
-      setCollegeData(response.data?.data || response.data || null);
+      const data = response.data?.data || response.data;
+      setCollegeData(data || null);
+      if (data) {
+        dispatch(setCredentials({ user: data, role: data.role || "college" }));
+      }
     } catch (error) {
       console.error("Error fetching current college:", error);
       setCollegeData(null);
+      // Optional: if unauthorized, dispatch clearCredentials and redirect
+      if (error.response?.status === 401) {
+        dispatch(clearCredentials());
+        navigate("/college/auth");
+      }
     }
   };
 

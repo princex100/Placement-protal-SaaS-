@@ -1,16 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setCredentials } from '../../redux/features/authSlice';
+import api from '../../api/axios';
 import { 
   Mail, Lock, Eye, EyeOff, Briefcase, TrendingUp, GraduationCap, 
-  CheckCircle2, Calendar, Sparkles, ChevronRight
+  CheckCircle2, Calendar, Sparkles, ChevronRight, Hash
 } from 'lucide-react';
 
 const StudentLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    rollNo: '',
+    password: ''
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsSubmitting(true);
+      const response = await api.post("/students/login", {
+        rollNumber: formData.rollNo, // Adjust if your backend expects 'rollNo' instead of 'rollNumber'
+        password: formData.password
+      });
+      
+      const data = response.data?.data;
+      if (data?.student) {
+        dispatch(setCredentials({ user: data.student, role: data.student.role }));
+      }
+      
+      navigate("/student/dashboard"); // Adjust to your actual student dashboard route
+    } catch (error) {
+      console.error("Student login failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="h-screen bg-slate-50 flex items-center justify-center p-3 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
@@ -143,15 +184,19 @@ const StudentLogin = () => {
             </div>
 
             {/* Form */}
-            <form className="space-y-3.5" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-3.5" onSubmit={handleSubmit}>
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Email</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Roll Number</label>
                 <div className="relative flex items-center">
-                  <Mail className="absolute left-3.5 h-4 w-4 text-slate-400" />
+                  <Hash className="absolute left-3.5 h-4 w-4 text-slate-400" />
                   <input 
-                    type="email" placeholder="Enter your email" 
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                    type="text" placeholder="Enter your roll number" 
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all uppercase"
                     required
+                    autoComplete="off"
+                    name="rollNo"
+                    value={formData.rollNo}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -164,6 +209,9 @@ const StudentLogin = () => {
                     type={showPassword ? "text" : "password"} placeholder="Enter your password"
                     className="w-full pl-10 pr-11 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
                     required
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors focus:outline-none">
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -171,24 +219,25 @@ const StudentLogin = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-0.5">
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <div className="relative flex items-center justify-center">
-                    <input type="checkbox" className="peer sr-only" />
-                    <div className="w-3.5 h-3.5 border-2 border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-all"></div>
-                    <CheckCircle2 className="absolute w-2.5 h-2.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity" strokeWidth={3} />
-                  </div>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Remember Me</span>
-                </label>
+              <div className="flex items-center justify-end pt-0.5">
                 <a href="#" className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition-colors">Forgot Password?</a>
               </div>
 
-              <button type="submit" className="w-full mt-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm">
-                Log In
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full mt-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm disabled:opacity-70 flex justify-center items-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    Authenticating...
+                  </>
+                ) : (
+                  "Log In"
+                )}
               </button>
             </form>
-
-
 
             <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
               Don't have an account?{' '}

@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken";
 
 const studentSchema = new mongoose.Schema(
   {
-    studentId: {
+    rollNo: {
       type: String,
-      unique: true,
       required: true,
+      trim: true,
       index: true
     },
     college: {
@@ -16,6 +16,10 @@ const studentSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    isProfileCompleted: {
+      type: Boolean,
+      default: false
+    },
     // Personal Info
     fullName: {
       type: String,
@@ -23,9 +27,9 @@ const studentSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
-      index: true
+      // Optional initially, unique if provided
+      sparse: true,
+      unique: true
     },
     password: {
       type: String,
@@ -45,6 +49,7 @@ const studentSchema = new mongoose.Schema(
     // Academic Info
     branch: {
       type: String,
+      // Required by default for student categorization? Let's make it optional if desired, but typically provided by college.
       required: true,
     },
     cgpa: {
@@ -101,6 +106,13 @@ const studentSchema = new mongoose.Schema(
       },
     ],
     // Auth fields
+    accessToken: {
+      type: String,
+      select: false,
+    },
+    accessTokenExpiry: {
+      type: Date,
+    },
     refreshToken: {
       type: String,
       select: false,
@@ -112,6 +124,9 @@ const studentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Compound Index: rollNo must be unique within a single college
+studentSchema.index({ college: 1, rollNo: 1 }, { unique: true });
 
 // HASH PASSWORD BEFORE SAVE
 studentSchema.pre("save", async function () {

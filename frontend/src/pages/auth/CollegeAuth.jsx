@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../redux/features/authSlice";
 import {
   GraduationCap,
   Mail,
@@ -18,6 +20,7 @@ import api from "../../api/axios";
 
 const CollegeLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,11 +52,16 @@ const CollegeLogin = () => {
     try {
       setIsSubmitting(true);
 
-      await api.post("/colleges/login", {
+      const response = await api.post("/colleges/login", {
         collegeId: formData.collegeId,
         email: formData.email,
         password: formData.password,
       });
+
+      const data = response.data?.data;
+      if (data?.college) {
+        dispatch(setCredentials({ user: data.college, role: data.college.role }));
+      }
 
       navigate("/college/dashboard");
     } catch (error) {

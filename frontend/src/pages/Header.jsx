@@ -3,24 +3,18 @@ import { ChevronDown, User, LayoutDashboard, LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GraduationCap, Sun, Moon } from 'lucide-react';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearCredentials } from '../redux/features/authSlice';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isDark, setIsDark] = useState(false);
-  const [user, setUser] = useState(null);
-const [showProfileMenu, setShowProfileMenu] =
-  useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-useEffect(() => {
-  const storedUser =
-    localStorage.getItem("user");
+  // Use Redux state instead of localStorage
+  const { user, isAuthenticated, role } = useSelector((state) => state.auth);
 
-  if (storedUser) {
-    setUser(JSON.parse(storedUser));
-  }
-}, []);
-
-const isAuthenticated = !!user;
   // Initialize Theme
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -70,9 +64,11 @@ const isAuthenticated = !!user;
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // Optionally call backend logout endpoint here
+    dispatch(clearCredentials());
     localStorage.removeItem("user");
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (

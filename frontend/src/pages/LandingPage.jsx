@@ -308,8 +308,8 @@ const StudentPortalPreview = () => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto p-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="flex-1 overflow-y-auto p-6">
+      <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, Ankit 👋</h2>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Here's what's happening with your placements.</p>
@@ -327,36 +327,36 @@ const StudentPortalPreview = () => (
         </div>
       </div>
 
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
         <StatCard title="Active Drives" value="24" trend="+12% this month" icon={<Briefcase size={20} />} color="blue" />
         <StatCard title="Applications" value="12" trend="+8% this month" icon={<FileText size={20} />} color="emerald" />
         <StatCard title="Interviews" value="4" trend="+14% this month" icon={<Users size={20} />} color="purple" />
         <StatCard title="Offers" value="1" trend="+100% this month" icon={<GraduationCap size={20} />} color="amber" />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 lg:col-span-2">
-          <div className="mb-6 flex items-center justify-between">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 lg:col-span-2">
+          <div className="mb-4 flex items-center justify-between">
             <h3 className="font-bold text-slate-900 dark:text-white">Upcoming Placement Drives</h3>
             <button className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">View All</button>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             <DriveRow company="Google" role="SDE Intern" package="₹12 LPA" eligible="CSE, IT" date="28 May 2025" status="Apply" />
             <DriveRow company="Microsoft" role="SWE" package="₹18 LPA" eligible="CSE" date="02 Jun 2025" status="Applied" />
             <DriveRow company="Amazon" role="Graduate Engineer" package="₹16 LPA" eligible="IT, CSE, ECE" date="05 Jun 2025" status="Apply" />
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
-          <h3 className="mb-6 font-bold text-slate-900 dark:text-white">Application Status</h3>
-          <div className="relative flex h-48 items-center justify-center">
-            <div className="h-32 w-32 rounded-full border-[12px] border-slate-100 border-b-amber-400 border-l-purple-500 border-r-emerald-500 border-t-blue-500 dark:border-slate-800"></div>
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
+          <h3 className="mb-4 font-bold text-slate-900 dark:text-white">Application Status</h3>
+          <div className="relative flex h-36 items-center justify-center">
+            <div className="h-28 w-28 rounded-full border-[10px] border-slate-100 border-b-amber-400 border-l-purple-500 border-r-emerald-500 border-t-blue-500 dark:border-slate-800"></div>
             <div className="absolute flex flex-col items-center">
-              <span className="text-2xl font-bold text-slate-900 dark:text-white">12</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">Total</span>
+              <span className="text-xl font-bold text-slate-900 dark:text-white">12</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Total</span>
             </div>
           </div>
-          <div className="mt-4 space-y-2">
+          <div className="mt-2 space-y-1.5">
             <ChartLegend label="Applied" value="6" color="bg-blue-500" />
             <ChartLegend label="Shortlisted" value="3" color="bg-emerald-500" />
             <ChartLegend label="Interview" value="2" color="bg-purple-500" />
@@ -382,33 +382,33 @@ const CollegePortalPreview = () => (
       </div>
     </div>
     
-    <div className="flex-1 overflow-y-auto p-8">
-      <div className="mb-8">
+    <div className="flex-1 overflow-y-auto p-6">
+      <div className="mb-6">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Placement Cell Overview</h2>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Manage and coordinate student placements effectively.</p>
       </div>
 
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
         <StatCard title="Registered Students" value="850" trend="+40 this week" icon={<Users size={20} />} color="blue" />
         <StatCard title="Pending Approvals" value="8" trend="Requires attention" icon={<CheckCircle2 size={20} />} color="amber" />
         <StatCard title="Partner Companies" value="45" trend="Ongoing semester" icon={<Building2 size={20} />} color="purple" />
         <StatCard title="Placement Rate" value="72%" trend="+4% YoY" icon={<TrendingUp size={20} />} color="emerald" />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 lg:col-span-2">
-          <h3 className="mb-6 font-bold text-slate-900 dark:text-white">Incoming Placement Drives</h3>
-          <div className="space-y-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 lg:col-span-2">
+          <h3 className="mb-4 font-bold text-slate-900 dark:text-white">Incoming Placement Drives</h3>
+          <div className="space-y-3">
             <DriveApprovalRow company="Google" role="SDE Internship" packages="₹12 LPA" />
             <DriveApprovalRow company="Amazon" role="Full Time Engineer" packages="₹16 LPA" />
             <DriveApprovalRow company="TCS" role="Ninja Profile" packages="₹3.36 LPA" />
           </div>
         </div>
         
-        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
           <h3 className="font-bold text-slate-900 dark:text-white">Placement Analytics</h3>
-          <div className="flex flex-1 items-center justify-center">
-             <BarChart3 className="h-32 w-32 text-blue-200 dark:text-slate-800" />
+          <div className="flex flex-1 items-center justify-center my-4">
+             <BarChart3 className="h-28 w-28 text-blue-200 dark:text-slate-800" />
           </div>
           <button className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 text-sm font-medium text-blue-600 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400 dark:hover:bg-slate-700">
             Generate Full Report

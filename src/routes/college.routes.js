@@ -6,7 +6,9 @@ import {
    logoutCollege,
    getCurrentCollege,
    refreshCollegeAccessToken,
-   getCollegeDashboardStats
+   getCollegeDashboardStats,
+   verifyEmail,
+   getIncomingDrives
 } from "../controllers/college.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -40,6 +42,9 @@ router.route("/login")
 router.route("/refresh-token")
   .patch(refreshCollegeAccessToken);
 
+router.route("/verify-email/:token")
+  .get(verifyEmail);
+
 // PROTECTED ROUTES (College only)
 
 router.route("/logout")
@@ -50,5 +55,8 @@ router.route("/current")
 
 router.route("/dashboard/stats")
   .get(verifyJWT, allowRoles(["college-admin"]), getCollegeDashboardStats);
+
+router.route("/dashboard/incoming-drives")
+  .get(verifyJWT, allowRoles(["college-admin"]), getIncomingDrives);
 
 export default router;
