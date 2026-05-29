@@ -9,27 +9,12 @@ const branchPlacementRecordSchema = new mongoose.Schema(
       index: true,
     },
     branch: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
       required: true,
       index: true,
     },
-    totalStudentsInCollege: {
-      type: Number,
-      default: 0,
-    },
-    totalStudentsInBranch: {
-      type: Number,
-      default: 0,
-    },
-    eligibleStudents: {
-      type: Number,
-      default: 0,
-    },
-    placedStudentsCount: {
-      type: Number,
-      default: 0,
-    },
-    students: [
+    placedStudents: [
       {
         student: {
           type: mongoose.Schema.Types.ObjectId,
@@ -43,9 +28,6 @@ const branchPlacementRecordSchema = new mongoose.Schema(
         package: {
           type: Number,
           required: true,
-        },
-        packageDisplay: {
-          type: String, // Optional human-readable format e.g., "10-12 LPA"
         },
       },
     ],

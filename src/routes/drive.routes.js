@@ -5,7 +5,9 @@ import {
   deleteDrive,
   getCollegeDrives,
   getEligibleDrives,
-  getDriveById
+  getDriveById,
+  getDriveStudents,
+  removeStudentFromDrive
 } from "../controllers/drive.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -46,6 +48,18 @@ router.route("/:id")
   .delete(
     allowRoles(["college-admin"]),
     deleteDrive
+  );
+
+router.route("/:id/students")
+  .get(
+    allowRoles(["college-admin"]),
+    getDriveStudents
+  );
+
+router.route("/:id/students/:studentId")
+  .delete(
+    allowRoles(["college-admin"]),
+    removeStudentFromDrive
   );
 
 

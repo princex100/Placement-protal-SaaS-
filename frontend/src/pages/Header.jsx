@@ -80,7 +80,7 @@ const Navbar = () => {
             Placement<span className="text-blue-600 dark:text-blue-500">Portal</span>
           </span>
         </a>
-        
+
         <div className="hidden items-center gap-8 md:flex">
           <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 hover:-translate-y-0.5 active:scale-95">Home</a>
           <a href="/#features" onClick={(e) => scrollToSection(e, 'features')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 hover:-translate-y-0.5 active:scale-95">Features</a>
@@ -108,81 +108,80 @@ const Navbar = () => {
             </motion.div>
           </button>
 
-         {isAuthenticated ? (
-  <div className="relative">
+          {isAuthenticated ? (
+            <div className="relative">
 
-    <button
-      onClick={() =>
-        setShowProfileMenu(!showProfileMenu)
-      }
-      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition-all hover:shadow-md active:scale-95 dark:border-slate-700 dark:bg-slate-800"
-    >
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-slate-700 dark:text-blue-400">
-        <User size={18} />
-      </div>
+              <button
+                onClick={() =>
+                  setShowProfileMenu(!showProfileMenu)
+                }
+                className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition-all hover:shadow-md active:scale-95 dark:border-slate-700 dark:bg-slate-800"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-slate-700 dark:text-blue-400">
+                  <User size={18} />
+                </div>
 
-      <div className="hidden text-left sm:block">
-        <p className="text-sm font-semibold text-slate-900 dark:text-white">
-          {user.name}
-        </p>
+                <div className="hidden text-left sm:block">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                    {user.name}
+                  </p>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400">
-          {user.role}
-        </p>
-      </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {user.role}
+                  </p>
+                </div>
 
-      <ChevronDown
-        size={16}
-        className={`text-slate-500 transition duration-300 ${
-          showProfileMenu
-            ? "rotate-180"
-            : ""
-        }`}
-      />
-    </button>
+                <ChevronDown
+                  size={16}
+                  className={`text-slate-500 transition duration-300 ${showProfileMenu
+                      ? "rotate-180"
+                      : ""
+                    }`}
+                />
+              </button>
 
-    {showProfileMenu && (
-      <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
 
-        <div className="border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+                  <div className="border-b border-slate-100 px-5 py-4 dark:border-slate-800">
 
-          <h4 className="font-semibold text-slate-900 dark:text-white">
-            {user.name}
-          </h4>
+                    <h4 className="font-semibold text-slate-900 dark:text-white">
+                      {user.name}
+                    </h4>
 
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            {user.email}
-          </p>
-        </div>
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                      {user.email}
+                    </p>
+                  </div>
 
-        <button 
-          onClick={() => navigate(user?.role === 'college' ? '/college/dashboard' : '/')}
-          className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition-all hover:bg-slate-50 active:scale-95 dark:text-slate-300 dark:hover:bg-slate-800">
+                  <button
+                    onClick={() => navigate(user?.role === 'student' ? '/student/dashboard' : (user?.role === 'college-admin' ? '/college/dashboard' : '/'))}
+                    className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition-all hover:bg-slate-50 active:scale-95 dark:text-slate-300 dark:hover:bg-slate-800">
 
-          <LayoutDashboard size={18} />
-          Dashboard
-        </button>
+                    <LayoutDashboard size={18} />
+                    Dashboard
+                  </button>
 
-        <button 
-          onClick={handleLogout}
-          className="flex w-full items-center gap-3 px-5 py-3 text-sm text-red-500 transition-all hover:bg-red-50 active:scale-95 dark:hover:bg-red-500/10">
+                  <button
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-3 px-5 py-3 text-sm text-red-500 transition-all hover:bg-red-50 active:scale-95 dark:hover:bg-red-500/10">
 
-          <LogOut size={18} />
-          Logout
-        </button>
-      </div>
-    )}
-  </div>
-) : (
-  <>
-    <button
-      onClick={(e) => scrollToSection(e, 'portalSelection')}
-      className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 active:scale-95 sm:block"
-    >
-      Get Started
-    </button>
-  </>
-)}
+                    <LogOut size={18} />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={(e) => scrollToSection(e, 'portalSelection')}
+                className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 active:scale-95 sm:block"
+              >
+                Get Started
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

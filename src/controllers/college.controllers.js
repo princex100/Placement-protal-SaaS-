@@ -207,58 +207,68 @@ export const refreshCollegeAccessToken = asyncHandler(async (req, res) => {
 export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
 
+  // Run all independent queries in parallel
   const [
     totalStudents,
+    eligibleStudents,
+    placedStudents,
+    totalApplications,
     activeDrives,
-    totalApplications
+    latestDrives
   ] = await Promise.all([
+    // 1. Total Registered Students
     Student.countDocuments({ college: collegeId }),
-    PlacementDrive.countDocuments({ college: collegeId, status: "open" }),
-    Application.countDocuments({ college: collegeId })
+
+    // 2. Eligible Students (Profile Complete & Not Blocked)
+    Student.countDocuments({ 
+      college: collegeId, 
+      placementBlocked: false, 
+      isProfileCompleted: true 
+    }),
+
+    // 3. Placed Students
+    Student.countDocuments({ 
+      college: collegeId, 
+      placementStatus: { $in: ["placed"] } 
+    }),
+
+    // 4. Applications Received
+    Application.countDocuments({ college: collegeId }),
+
+    // 5. Active Placement Drives
+    PlacementDrive.countDocuments({ 
+      college: collegeId, 
+      status: "open", 
+      isActive: true 
+    }),
+
+    // 6. Latest 4 Drives (Sorted by newest)
+    PlacementDrive.find({ college: collegeId })
+      .select("companyName role package applicationDeadline status students")
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .lean()
   ]);
 
-  // Aggregate selected students
-  const selectedResult = await Application.aggregate([
-    { $match: { college: new mongoose.Types.ObjectId(collegeId), status: "Selected" } },
-    { $group: { _id: "$student" } },
-    { $count: "selectedStudents" }
-  ]);
-  const selectedStudents = selectedResult.length > 0 ? selectedResult[0].selectedStudents : 0;
+  // Calculate Placement Rate safely
+  const placementRate = eligibleStudents > 0 
+    ? Math.round((placedStudents / eligibleStudents) * 100) 
+    : 0;
 
-  const placementRate = totalStudents > 0 ? Math.round((selectedStudents / totalStudents) * 100) : 0;
+  // Map latest drives to avoid sending full student arrays
+  const mappedLatestDrives = latestDrives.map(drive => ({
+    ...drive,
+    appliedStudentsCount: drive.students ? drive.students.length : 0,
+    students: undefined
+  }));
 
-  return res.status(200).json(
-    new ApiResponse(
-      200,
-      {
-        totalStudents,
-        activeDrives,
-        totalApplications,
-        selectedStudents,
-        placementRate
-      },
-      "Dashboard stats fetched successfully"
-    )
-  );
-});
-
-export const getIncomingDrives = asyncHandler(async (req, res) => {
-  const collegeId = req.college._id;
-  
-  // Fetch drives that are pending approval for this college
-  const incomingDrives = await PlacementDrive.find({ 
-    college: collegeId, 
-    approvalStatus: "pending" 
-  }).sort({ createdAt: -1 }).limit(10);
-
-  // Map data to fit frontend structure if needed (frontend expects drive.company.name)
-  const formattedDrives = incomingDrives.map(drive => {
-    const driveObj = drive.toObject();
-    return {
-      ...driveObj,
-      company: { name: drive.companyName }
-    };
-  });
-
-  return res.status(200).json(new ApiResponse(200, formattedDrives, "Incoming drives fetched successfully"));
+  return res.status(200).json(new ApiResponse(200, {
+    totalStudents,
+    eligibleStudents,
+    placedStudents,
+    placementRate,
+    totalApplications,
+    activeDrives,
+    latestDrives: mappedLatestDrives
+  }, "Dashboard stats fetched successfully"));
 });

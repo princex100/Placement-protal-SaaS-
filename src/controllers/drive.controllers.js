@@ -58,9 +58,19 @@ export const deleteDrive = asyncHandler(async (req, res) => {
 export const getCollegeDrives = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
 
-  const drives = await PlacementDrive.find({ college: collegeId }).sort({ createdAt: -1 });
+  const drives = await PlacementDrive.find({ college: collegeId })
+    .select("companyName role package location applicationDeadline students status")
+    .sort({ createdAt: -1 })
+    .lean();
+    
+  // Map students array length to a clean count for the frontend, remove students array to save bandwidth
+  const mappedDrives = drives.map(drive => ({
+    ...drive,
+    appliedStudentsCount: drive.students ? drive.students.length : 0,
+    students: undefined
+  }));
 
-  return res.status(200).json(new ApiResponse(200, drives, "Drives fetched successfully"));
+  return res.status(200).json(new ApiResponse(200, mappedDrives, "Drives fetched successfully"));
 });
 
 // Student fetches eligible drives (Includes isApplied flag)
@@ -97,7 +107,7 @@ export const getEligibleDrives = asyncHandler(async (req, res) => {
 export const getDriveById = asyncHandler(async (req, res) => {
   const driveId = req.params.id;
 
-  const drive = await PlacementDrive.findById(driveId);
+  const drive = await PlacementDrive.findById(driveId).lean();
   if (!drive) throw new ApiError(404, "Drive not found");
 
   // Verify access
@@ -107,6 +117,49 @@ export const getDriveById = asyncHandler(async (req, res) => {
   if (req.role === "student" && drive.college.toString() !== req.student.college.toString()) {
     throw new ApiError(403, "Unauthorized access to this drive");
   }
+  
+  // Attach applied count for convenience
+  drive.appliedStudentsCount = drive.students ? drive.students.length : 0;
+  // Remove the actual students array from this endpoint (handled by /students route)
+  delete drive.students;
 
   return res.status(200).json(new ApiResponse(200, drive, "Drive fetched successfully"));
+});
+
+// College fetches students who applied to a drive
+export const getDriveStudents = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+  const driveId = req.params.id;
+
+  const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId })
+    .populate("students", "fullName rollNo branch cgpa");
+
+  if (!drive) {
+    throw new ApiError(404, "Drive not found or unauthorized");
+  }
+
+  return res.status(200).json(new ApiResponse(200, drive.students, "Applied students fetched successfully"));
+});
+
+// College removes a student from a drive
+export const removeStudentFromDrive = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+  const driveId = req.params.id;
+  const studentId = req.params.studentId;
+
+  // 1. Remove student reference from the Drive's students array
+  const drive = await PlacementDrive.findOneAndUpdate(
+    { _id: driveId, college: collegeId },
+    { $pull: { students: studentId } },
+    { new: true }
+  );
+
+  if (!drive) {
+    throw new ApiError(404, "Drive not found or unauthorized");
+  }
+
+  // 2. Delete the associated Application document
+  await Application.findOneAndDelete({ drive: driveId, student: studentId });
+
+  return res.status(200).json(new ApiResponse(200, null, "Student removed from drive successfully"));
 });

@@ -109,3 +109,38 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, application, "Application status updated successfully"));
 });
+
+// College fetches all applications (Paginated)
+export const getAllCollegeApplications = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+  
+  // Pagination parameters
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const filter = { college: collegeId };
+
+  // Fetch data concurrently
+  const [totalApplications, applications] = await Promise.all([
+    Application.countDocuments(filter),
+    Application.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate("student", "fullName rollNo branch cgpa")
+      .populate("drive", "companyName role")
+      .lean()
+  ]);
+
+  const totalPages = Math.ceil(totalApplications / limit);
+
+  return res.status(200).json(new ApiResponse(200, {
+    applications,
+    currentPage: page,
+    totalPages: totalPages === 0 ? 1 : totalPages,
+    totalApplications,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1
+  }, "Applications fetched successfully"));
+});

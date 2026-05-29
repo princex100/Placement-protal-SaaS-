@@ -4,19 +4,7 @@ import { motion } from "framer-motion";
 import { Building2, ArrowLeft, Loader2, Search, Briefcase, IndianRupee } from "lucide-react";
 import api from "../../../api/axios";
 
-const DUMMY_DETAILS = {
-  _id: "dummy1",
-  branch: "Computer Science (CSE)",
-  totalStudentsInBranch: 120,
-  eligibleStudents: 100,
-  placedStudentsCount: 85,
-  students: [
-    { _id: "s1", student: { _id: "u1", fullName: "Rahul Sharma", rollNo: "CSE001", profileImage: "" }, company: "Google", package: 24, packageDisplay: "24 LPA" },
-    { _id: "s2", student: { _id: "u2", fullName: "Priya Patel", rollNo: "CSE045", profileImage: "" }, company: "Microsoft", package: 22, packageDisplay: "22 LPA" },
-    { _id: "s3", student: { _id: "u3", fullName: "Amit Kumar", rollNo: "CSE089", profileImage: "" }, company: "Amazon", package: 18, packageDisplay: "18 LPA" },
-    { _id: "s4", student: { _id: "u4", fullName: "Sneha Reddy", rollNo: "CSE102", profileImage: "" }, company: "TCS Digital", package: 7.5, packageDisplay: "7.5 LPA" },
-  ]
-};
+
 
 const BranchPlacementDetails = () => {
   const { branchId } = useParams();
@@ -32,17 +20,9 @@ const BranchPlacementDetails = () => {
         const data = response.data?.data || response.data;
         if (data && data.branch) {
           setRecord(data);
-        } else {
-          setRecord(DUMMY_DETAILS);
         }
       } catch (error) {
-        console.warn("Using dummy details due to backend error:", error);
-        // Fallback matching logic for dummy data
-        if (branchId === "dummy2") {
-          setRecord({ ...DUMMY_DETAILS, branch: "Information Technology (IT)" });
-        } else {
-          setRecord(DUMMY_DETAILS);
-        }
+        console.warn("Backend error fetching details:", error);
       } finally {
         setLoading(false);
       }
@@ -59,7 +39,7 @@ const BranchPlacementDetails = () => {
     );
   }
 
-  const filteredStudents = record.students?.filter((s) => 
+  const filteredStudents = record.placedStudents?.filter((s) => 
     s.student?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.student?.rollNo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.company?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -77,7 +57,7 @@ const BranchPlacementDetails = () => {
         </button>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{record.branch} Placements</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{record.branch?.name} Placements</h1>
             <p className="mt-2 text-slate-500 dark:text-slate-400">Detailed list of placed students and offers</p>
           </div>
           <div className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm dark:bg-slate-900">

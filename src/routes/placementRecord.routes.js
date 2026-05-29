@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { verifyCollegeJWT } from "../middlewares/auth.middlewares.js";
+import { verifyJWT } from "../middlewares/verifyJWT.js";
+import { allowRoles } from "../middlewares/role.middleware.js";
 import {
   getPlacementOverview,
   getBranchPlacementDetails,
@@ -10,7 +11,8 @@ import {
 const router = Router();
 
 // Secure all routes with College JWT middleware
-router.use(verifyCollegeJWT);
+router.use(verifyJWT);
+router.use(allowRoles(["college-admin"]));
 
 router.route("/").get(getPlacementOverview);
 router.route("/:branchId").get(getBranchPlacementDetails);

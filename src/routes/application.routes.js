@@ -3,7 +3,8 @@ import {
   applyToDrive,
   getMyApplications,
   getDriveApplicants,
-  updateApplicationStatus
+  updateApplicationStatus,
+  getAllCollegeApplications
 } from "../controllers/application.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -36,6 +37,12 @@ router.route("/:driveId/apply")
 
 
 // COLLEGE ROUTES
+router.route("/college/all")
+  .get(
+    allowRoles(["college-admin"]),
+    getAllCollegeApplications
+  );
+
 router.route("/drive/:driveId")
   .get(
     allowRoles(["college-admin"]),

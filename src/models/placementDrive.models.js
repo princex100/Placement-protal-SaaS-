@@ -94,15 +94,12 @@ const placementDriveSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    approvalStatus: {
-      type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending",
-    },
-    approvedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "College",
-    },
+    students: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+      },
+    ],
   },
   {
     timestamps: true,
