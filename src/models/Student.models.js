@@ -98,6 +98,10 @@ const studentSchema = new mongoose.Schema(
       enum: ["unplaced", "placed", "internship"],
       default: "unplaced",
     },
+    placementBlocked: {
+      type: Boolean,
+      default: false,
+    },
     // Track applications by reference (optional, applications collection is better)
     appliedDrives: [
       {

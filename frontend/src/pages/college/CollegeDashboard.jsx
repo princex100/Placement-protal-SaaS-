@@ -15,9 +15,15 @@ import {
   Check,
   X,
   ChevronRight,
+  FileText,
 } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import api from "../../api/axios";
+
+// Import placement record pages
+import PlacementRecordsOverview from "./placement-records/PlacementRecordsOverview";
+import BranchPlacementDetails from "./placement-records/BranchPlacementDetails";
+import StudentProfileDetails from "./placement-records/StudentProfileDetails";
 
 // ----------------------------------------------------------------------
 // STATIC DATA (Navigation)
@@ -25,6 +31,7 @@ import api from "../../api/axios";
 const SIDEBAR_NAV = [
   { label: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/college/dashboard" },
   { label: "Students", icon: <Users size={20} />, path: "/college/dashboard/students" },
+  { label: "Placement Records", icon: <FileText size={20} />, path: "/college/dashboard/placement-records" },
   { label: "Incoming Drives", icon: <Briefcase size={20} />, path: "/college/dashboard/incoming-drives" },
   { label: "Approved Drives", icon: <CheckSquare size={20} />, path: "/college/dashboard/approved-drives" },
   { label: "Reports", icon: <BarChart3 size={20} />, path: "/college/dashboard/reports" },
@@ -165,14 +172,16 @@ const CollegeDashboard = () => {
 
         {/* MAIN CONTENT */}
         <main className="flex-1 space-y-8 pb-12">
-          {loading ? (
-            <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
-              <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600 dark:border-slate-800 dark:border-t-blue-500"></div>
-              <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading dashboard...</p>
-            </div>
-          ) : (
-            <>
-              {/* Top Welcome Section */}
+          <Routes>
+            <Route path="/" element={
+              loading ? (
+                <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
+                  <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600 dark:border-slate-800 dark:border-t-blue-500"></div>
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Loading dashboard...</p>
+                </div>
+              ) : (
+                <>
+                  {/* Top Welcome Section */}
               <div className="flex flex-col justify-between gap-6 rounded-[32px] border border-slate-200 bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:border-slate-800/60 dark:bg-slate-900 md:flex-row md:items-center">
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -310,7 +319,11 @@ const CollegeDashboard = () => {
                 </div>
               </div>
             </>
-          )}
+          )} />
+            <Route path="placement-records" element={<PlacementRecordsOverview />} />
+            <Route path="placement-records/:branchId" element={<BranchPlacementDetails />} />
+            <Route path="student-profile/:studentId" element={<StudentProfileDetails />} />
+          </Routes>
         </main>
       </div>
     </div>
