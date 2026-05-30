@@ -30,13 +30,49 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Application deadline has passed");
   }
 
-  // 5. Prevent duplicate applications
+  // 5. Check Eligibility
+  // a) Placement Season
+  if (drive.placementSeasonYear !== student.placementSeasonYear) {
+    throw new ApiError(400, "You are not eligible for this drive (Placement Season mismatch)");
+  }
+  // b) Placement Status
+  if (student.placementStatus === "placed") {
+    throw new ApiError(400, "You are already placed and cannot apply for this drive");
+  }
+  // c) CGPA
+  if (drive.minimumCgpa && student.cgpa < drive.minimumCgpa) {
+    throw new ApiError(400, `You do not meet the minimum CGPA requirement (${drive.minimumCgpa})`);
+  }
+  // d) Backlogs
+  if (drive.backlogAllowed !== undefined && student.backlogCount > drive.backlogAllowed) {
+    throw new ApiError(400, `You exceed the maximum allowed active backlogs (${drive.backlogAllowed})`);
+  }
+  // e) Allowed Branches
+  if (drive.eligibleBranches && drive.eligibleBranches.length > 0) {
+    if (!drive.eligibleBranches.includes(student.branch)) {
+      throw new ApiError(400, "Your branch is not eligible for this drive");
+    }
+  }
+  // f) Passing Year
+  if (drive.passingYearsAllowed && drive.passingYearsAllowed.length > 0) {
+    if (!drive.passingYearsAllowed.includes(student.passingYear)) {
+      throw new ApiError(400, "Your passing year is not eligible for this drive");
+    }
+  }
+
+  // 6. Prevent duplicate applications
   const existingApplication = await Application.findOne({ student: student._id, drive: driveId });
   if (existingApplication) {
     throw new ApiError(400, "You have already applied to this drive");
   }
+  
+  // Prevent duplicate insertion in drive.students
+  const isAlreadyInDrive = drive.students?.some(s => s.student.toString() === student._id.toString());
+  if (isAlreadyInDrive) {
+    throw new ApiError(400, "You are already registered as an eligible student in this drive");
+  }
 
-  // 6. Create application
+  // 7. Create application
   const application = await Application.create({
     student: student._id,
     drive: driveId,
@@ -45,8 +81,11 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     resumeSnapshot: student.resume // Snapshot resume at time of applying
   });
 
-  // Increment totalApplicants count in Drive
-  await PlacementDrive.findByIdAndUpdate(driveId, { $inc: { totalApplicants: 1 } });
+  // Increment totalApplicants count and add to students array
+  await PlacementDrive.findByIdAndUpdate(driveId, { 
+    $inc: { totalApplicants: 1 },
+    $push: { students: { student: student._id } }
+  });
 
   return res.status(201).json(new ApiResponse(201, application, "Successfully applied to drive"));
 });

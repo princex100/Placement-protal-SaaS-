@@ -112,7 +112,12 @@ export const getEligibleDrives = asyncHandler(async (req, res) => {
 export const getDriveById = asyncHandler(async (req, res) => {
   const driveId = req.params.id;
 
-  const drive = await PlacementDrive.findById(driveId).lean();
+  const drive = await PlacementDrive.findById(driveId)
+    .populate({
+      path: "students.student",
+      select: "fullName rollNo branch cgpa profileImage placementStatus"
+    })
+    .lean();
   if (!drive) throw new ApiError(404, "Drive not found");
 
   // Verify access
@@ -130,8 +135,7 @@ export const getDriveById = asyncHandler(async (req, res) => {
   });
   
   drive.appliedStudentsCount = applicationsCount;
-  // Remove the actual students array from this endpoint (handled by /students route)
-  delete drive.students;
+  // We keep drive.students for the Eligible Students list in Drive Details.
 
   return res.status(200).json(new ApiResponse(200, drive, "Drive fetched successfully"));
 });

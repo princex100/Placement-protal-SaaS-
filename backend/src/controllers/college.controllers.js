@@ -233,22 +233,21 @@ export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
   // Run all independent queries in parallel
   const [
     totalStudents,
-    eligibleStudents,
+    allDrivesForSeason,
     placedStudents,
     totalApplications,
     activeDrives,
-    latestDrives
+    latestDrives,
+    unblockedStudents
   ] = await Promise.all([
     // 1. Total Registered Students
     Student.countDocuments({ college: collegeId, placementSeasonYear: activeSeason }),
 
-    // 2. Eligible Students (Profile Complete & Not Blocked)
-    Student.countDocuments({ 
-      college: collegeId, 
-      placementSeasonYear: activeSeason,
-      placementBlocked: false, 
-      isProfileCompleted: true 
-    }),
+    // 2. Eligible Students (Calculated via Set below)
+    PlacementDrive.find({
+      college: collegeId,
+      placementSeasonYear: activeSeason
+    }).select("students.student").lean(),
 
     // 3. Placed Students
     Student.countDocuments({ 
@@ -273,12 +272,30 @@ export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
       .select("companyName role package applicationDeadline status students")
       .sort({ createdAt: -1 })
       .limit(4)
-      .lean()
+      .lean(),
+
+    // 7. Unblocked Students (Denominator for Placement Rate)
+    Student.countDocuments({ 
+      college: collegeId, 
+      placementSeasonYear: activeSeason,
+      placementBlocked: false 
+    })
   ]);
 
+  // Calculate unique Eligible Students using Set
+  const eligibleStudentIds = new Set();
+  allDrivesForSeason.forEach(drive => {
+    drive.students?.forEach(studentObj => {
+      if (studentObj.student) {
+        eligibleStudentIds.add(studentObj.student.toString());
+      }
+    });
+  });
+  const eligibleStudents = eligibleStudentIds.size;
+
   // Calculate Placement Rate safely
-  const placementRate = eligibleStudents > 0 
-    ? Math.round((placedStudents / eligibleStudents) * 100) 
+  const placementRate = totalStudents > 0 
+    ? Math.round((placedStudents / totalStudents) * 100) 
     : 0;
 
   // Map latest drives to avoid sending full student arrays

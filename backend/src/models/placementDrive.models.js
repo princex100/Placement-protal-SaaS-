@@ -101,8 +101,15 @@ const placementDriveSchema = new mongoose.Schema(
     },
     students: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Student",
+        student: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Student",
+          required: true,
+        },
+        appliedAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
   },

@@ -22,7 +22,7 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
       // The branch.name is the string inside the branch doc
       const branchName = record.branch?.name || "";
 
-      const [totalStudents, eligibleStudents] = await Promise.all([
+      const [totalStudents, eligibleStudents, placedStudentsCount] = await Promise.all([
         Student.countDocuments({ 
           college: collegeId, 
           branch: branchName,
@@ -33,7 +33,12 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
           branch: branchName,
           placementSeasonYear: req.user.activePlacementSeason,
           placementBlocked: false,
-          isProfileCompleted: true,
+        }),
+        Student.countDocuments({
+          college: collegeId,
+          branch: branchName,
+          placementSeasonYear: req.user.activePlacementSeason,
+          placementStatus: { $in: ["placed", "internship"] }
         }),
       ]);
 
@@ -42,7 +47,7 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
         branchName: branchName,
         totalStudents,
         eligibleStudents,
-        placedStudents: record.placedStudents ? record.placedStudents.length : 0,
+        placedStudents: placedStudentsCount,
       };
     })
   );
@@ -72,8 +77,8 @@ export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
 
   const branchName = record.branch?.name || "";
 
-  // Compute dynamic counts for this specific branch
-  const [totalStudents, eligibleStudents] = await Promise.all([
+  // Compute dynamic counts and fetch placed students for this specific branch
+  const [totalStudents, eligibleStudents, dynamicallyPlacedStudents] = await Promise.all([
     Student.countDocuments({ 
       college: collegeId, 
       branch: branchName,
@@ -84,15 +89,36 @@ export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
       branch: branchName,
       placementSeasonYear: req.user.activePlacementSeason,
       placementBlocked: false,
-      isProfileCompleted: true,
     }),
+    Student.find({
+      college: collegeId,
+      branch: branchName,
+      placementSeasonYear: req.user.activePlacementSeason,
+      placementStatus: { $in: ["placed", "internship"] }
+    }).select("fullName rollNo email profileImage branch cgpa placementBlocked").lean()
   ]);
+
+  const formattedPlacedStudents = dynamicallyPlacedStudents.map(student => {
+    // Look up existing placement details (e.g. from placement drives)
+    const existingDetail = record.placedStudents?.find(
+      ps => ps.student && ps.student._id.toString() === student._id.toString()
+    );
+    
+    return {
+      _id: existingDetail ? existingDetail._id : student._id,
+      student: student,
+      company: existingDetail?.companyName || "Manual / Off-Campus",
+      package: existingDetail?.package || "N/A",
+      packageDisplay: existingDetail?.package ? `${existingDetail.package} LPA` : "N/A",
+    };
+  });
 
   const enrichedRecord = {
     ...record,
     totalStudents,
     eligibleStudents,
-    placedStudentsCount: record.placedStudents ? record.placedStudents.length : 0,
+    placedStudentsCount: dynamicallyPlacedStudents.length,
+    placedStudents: formattedPlacedStudents
   };
 
   return res

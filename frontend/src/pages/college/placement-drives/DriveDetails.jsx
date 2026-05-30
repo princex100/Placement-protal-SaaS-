@@ -238,6 +238,66 @@ const DriveDetails = () => {
           )}
         </div>
       </div>
+
+      {/* Eligible Students List */}
+      <div className="mt-8 rounded-[24px] border border-slate-200 bg-white p-6 md:p-8 shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+            Eligible Students <span className="ml-2 rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">{drive.students?.length || 0}</span>
+          </h2>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50 text-slate-500 dark:bg-slate-800/50 dark:text-slate-400">
+              <tr>
+                <th className="px-6 py-4 font-semibold">Student Name</th>
+                <th className="px-6 py-4 font-semibold">Roll No</th>
+                <th className="px-6 py-4 font-semibold">Branch</th>
+                <th className="px-6 py-4 font-semibold">CGPA</th>
+                <th className="px-6 py-4 font-semibold text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+              {drive.students && drive.students.length > 0 ? (
+                drive.students.map((item) => {
+                  if (!item.student) return null;
+                  return (
+                    <tr 
+                      key={item._id} 
+                      className="group cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/30"
+                      onClick={() => navigate(`/college/dashboard/student-profile/${item.student._id}`)}
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                            {item.student.fullName?.charAt(0) || "?"}
+                          </div>
+                          <span className="font-semibold text-slate-900 dark:text-white">{item.student.fullName}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{item.student.rollNo}</td>
+                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{item.student.branch}</td>
+                      <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">{item.student.cgpa}</td>
+                      <td className="px-6 py-4 text-right">
+                        <button className="text-blue-600 opacity-0 transition-opacity group-hover:opacity-100 dark:text-blue-400">
+                          View Profile
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="5" className="py-8 text-center text-slate-500">
+                    No eligible students have applied to this drive yet.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
