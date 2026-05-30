@@ -74,6 +74,11 @@ export const getBranches = asyncHandler(async (req, res) => {
       },
     },
     {
+      $match: {
+        totalStudents: { $gt: 0 } // Only return branches that have students for this season
+      }
+    },
+    {
       $project: {
         studentsList: 0, // exclude array from output
       },
