@@ -84,12 +84,12 @@ const CollegeLogin = () => {
   );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-transparent dark:bg-slate-950 p-4 transition-colors duration-300">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
-        className="relative flex w-full max-w-[1200px] max-h-[95vh] overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+        className="relative flex w-full max-w-[1200px] max-h-[95vh] overflow-hidden rounded-[24px] border border-blue-100/50 bg-white/90 shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:border-slate-800 dark:bg-slate-900"
       >
         {/* LEFT PANEL */}
         <div className="hidden lg:flex w-[45%] relative overflow-hidden bg-gradient-to-br from-slate-950 via-[#0B1437] to-slate-950 text-white p-8 xl:p-10 flex-col justify-between">
@@ -178,7 +178,7 @@ const CollegeLogin = () => {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="flex w-full flex-col justify-center bg-white dark:bg-slate-900 lg:w-[55%]">
+        <div className="flex w-full flex-col justify-center bg-white/60 dark:bg-slate-900 lg:w-[55%]">
           <div className="overflow-y-auto px-6 py-6 sm:px-8 xl:px-12">
             <div className="mx-auto w-full max-w-[420px]">
               {/* Mobile Logo */}
@@ -237,7 +237,7 @@ const CollegeLogin = () => {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="Enter your password"
-                      className="h-10 w-full rounded-xl border border-slate-300 bg-white pl-10 pr-10 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                      className="h-10 w-full rounded-xl border border-blue-100/50 bg-white/80 pl-10 pr-10 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                     />
                     <button
                       type="button"

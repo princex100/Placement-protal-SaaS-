@@ -54,7 +54,8 @@ export const registerStudent = asyncHandler(async (req, res) => {
     branch,
     passingYear,
     semester,
-    cgpa
+    cgpa,
+    placementSeasonYear: passingYear
   });
 
   await College.findByIdAndUpdate(college._id, {

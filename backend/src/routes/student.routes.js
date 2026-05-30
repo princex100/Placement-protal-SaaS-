@@ -11,6 +11,7 @@ import {
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
 import { allowRoles } from "../middlewares/role.middleware.js";
+import { importStudents } from "../controllers/student.import.controller.js";
 import { validateRequest } from "../middlewares/validateRequest.middleware.js";
 import {
   studentRegistrationRules,
@@ -35,14 +36,35 @@ router.route("/login").post(
   loginStudent
 );
 
+// PROTECTED ROUTES (College only)
+router.route("/register").post(
+  verifyJWT,
+  allowRoles(["college-admin"]),
+  registerStudent
+);
+router.route("/import").post(
+  verifyJWT,
+  allowRoles(["college-admin"]),
+  upload.single("file"),
+  importStudents
+);
+
 // PROTECTED ROUTES (Student only)
-router.use(verifyJWT, allowRoles(["student"]));
+router.route("/logout").post(
+  verifyJWT,
+  allowRoles(["student"]),
+  logoutStudent
+);
 
-router.route("/logout").post(logoutStudent);
-
-router.route("/current").get(getCurrentStudent);
+router.route("/current").get(
+  verifyJWT,
+  allowRoles(["student"]),
+  getCurrentStudent
+);
 
 router.route("/profile").patch(
+  verifyJWT,
+  allowRoles(["student"]),
   upload.none(),
   ...studentProfileUpdateRules(),
   validateRequest,
@@ -50,6 +72,8 @@ router.route("/profile").patch(
 );
 
 router.route("/resume").patch(
+  verifyJWT,
+  allowRoles(["student"]),
   upload.single("resume"),
   uploadResume
 );

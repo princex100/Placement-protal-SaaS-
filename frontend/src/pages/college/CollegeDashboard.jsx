@@ -1,24 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useDispatch } from "react-redux";
-import { setCredentials, clearCredentials } from "../../redux/features/authSlice";
-import {
-  LayoutDashboard,
-  Users,
-  Briefcase,
-  CheckSquare,
-  BarChart3,
-  Settings,
-  LogOut,
-  Calendar,
-  Building2,
-  Check,
-  X,
-  ChevronRight,
-  FileText,
-  PlusSquare,
-} from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, CheckSquare, BarChart3, Settings, LogOut, Calendar, Building2, Check, X, ChevronRight, FileText, PlusSquare } from "lucide-react";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setCredentials, clearCredentials } from "../../redux/features/authSlice";
 import api from "../../api/axios";
 
 // Import placement record pages
@@ -26,8 +11,8 @@ import PlacementRecordsOverview from "./placement-records/PlacementRecordsOvervi
 import BranchPlacementDetails from "./placement-records/BranchPlacementDetails";
 import StudentProfileDetails from "./placement-records/StudentProfileDetails";
 
-import Applications from "./applications/Applications";
-
+import DriveApplications from "./placement-drives/DriveApplications";
+import ApplicationDetails from "./applications/ApplicationDetails";
 import StudentBranches from "./students/StudentBranches";
 import BranchStudents from "./students/BranchStudents";
 
@@ -42,11 +27,9 @@ import DriveStudents from "./placement-drives/DriveStudents";
 const SIDEBAR_NAV = [
   { label: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/college/dashboard" },
   { label: "Students", icon: <Users size={20} />, path: "/college/dashboard/students" },
-  { label: "Applications", icon: <CheckSquare size={20} />, path: "/college/dashboard/applications" },
   { label: "Placement Records", icon: <FileText size={20} />, path: "/college/dashboard/placement-records" },
   { label: "Placement Drives", icon: <Briefcase size={20} />, path: "/college/dashboard/placement-drives" },
   { label: "Add Placement Drive", icon: <PlusSquare size={20} />, path: "/college/dashboard/placement-drives/create" },
-  { label: "Reports", icon: <BarChart3 size={20} />, path: "/college/dashboard/reports" },
   { label: "Settings", icon: <Settings size={20} />, path: "/college/dashboard/settings" },
 ];
 
@@ -57,6 +40,7 @@ const CollegeDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   // --- STATE ---
   const [dashboardStats, setDashboardStats] = useState({
@@ -89,18 +73,14 @@ const CollegeDashboard = () => {
       );
     } catch (error) {
       console.error("Error fetching stats:", error);
-      // Dummy Fallback for UI testing
       setDashboardStats({
-        totalStudents: 1250,
-        eligibleStudents: 1050,
-        placedStudents: 750,
-        placementRate: 71,
-        totalApplications: 3420,
-        activeDrives: 12,
-        latestDrives: [
-          { _id: "d1", companyName: "Google", role: "Software Engineer", package: 24, status: "open", applicationDeadline: new Date(Date.now() + 86400000 * 5).toISOString(), appliedStudentsCount: 156 },
-          { _id: "d2", companyName: "Microsoft", role: "Frontend Developer", package: 18, status: "open", applicationDeadline: new Date(Date.now() + 86400000 * 2).toISOString(), appliedStudentsCount: 92 },
-        ]
+        totalStudents: 0,
+        eligibleStudents: 0,
+        placedStudents: 0,
+        placementRate: 0,
+        totalApplications: 0,
+        activeDrives: 0,
+        latestDrives: []
       });
     }
   };
@@ -153,14 +133,14 @@ const CollegeDashboard = () => {
     };
 
     fetchData();
-  }, []);
+  }, [user?.activePlacementSeason]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-transparent text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto flex max-w-[1600px] gap-8 px-6 py-5 lg:px-8 lg:py-6">
         
         {/* SIDEBAR */}
-        <aside className="sticky top-24 hidden h-[calc(100vh-96px)] w-[260px] flex-col justify-between rounded-[32px] border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:border-slate-800/60 dark:bg-slate-900 lg:flex">
+        <aside className="sticky top-24 hidden h-[calc(100vh-96px)] w-[260px] flex-col justify-between rounded-[32px] border border-blue-100/50 bg-white/80 backdrop-blur-md p-5 shadow-[0_8px_30px_rgb(37,99,235,0.04)] dark:border-slate-800/60 dark:bg-slate-900 lg:flex">
           <div className="space-y-1.5">
             {SIDEBAR_NAV.map((item) => {
               const isActive = location.pathname === item.path;
@@ -170,8 +150,8 @@ const CollegeDashboard = () => {
                   onClick={() => navigate(item.path)}
                   className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-sm transition-all duration-300 ${
                     isActive
-                      ? "bg-blue-50 text-blue-600 font-semibold shadow-sm dark:bg-blue-900/20 dark:text-blue-400"
-                      : "font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200"
+                      ? "bg-gradient-to-r from-blue-50/80 to-transparent border-l-2 border-blue-500 text-blue-600 font-semibold dark:from-blue-900/20 dark:to-transparent dark:text-blue-400"
+                      : "font-medium text-slate-500 hover:bg-blue-50/50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200"
                   }`}
                 >
                   {item.icon}
@@ -199,7 +179,7 @@ const CollegeDashboard = () => {
               ) : (
                 <>
                   {/* Top Welcome Section */}
-              <div className="flex flex-col justify-between gap-6 rounded-[32px] border border-slate-200 bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:border-slate-800/60 dark:bg-slate-900 md:flex-row md:items-center">
+              <div className="flex flex-col justify-between gap-6 rounded-[32px] border border-blue-100/50 bg-white/90 backdrop-blur-md p-8 shadow-[0_8px_30px_rgb(37,99,235,0.04)] dark:border-slate-800/60 dark:bg-slate-900 md:flex-row md:items-center">
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                     Welcome back, {collegeData?.name || "College"} 👋
@@ -210,7 +190,7 @@ const CollegeDashboard = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-3 rounded-2xl bg-slate-50 px-5 py-3 dark:bg-slate-800/50">
+                  <div className="flex items-center gap-3 rounded-2xl bg-blue-50/50 px-5 py-3 dark:bg-slate-800/50">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm dark:bg-slate-700 dark:text-blue-400">
                       <Calendar size={18} />
                     </div>
@@ -267,7 +247,7 @@ const CollegeDashboard = () => {
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 
                 {/* LEFT CARD: Latest Placement Drives (Takes up 2 cols on large screens) */}
-                <div className="flex flex-col rounded-[32px] border border-slate-200 bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:border-slate-800/60 dark:bg-slate-900 lg:col-span-2">
+                <div className="flex flex-col rounded-[32px] border border-blue-100/50 bg-white/90 backdrop-blur-md p-8 shadow-[0_8px_30px_rgb(37,99,235,0.04)] dark:border-slate-800/60 dark:bg-slate-900 lg:col-span-2">
                   <div className="mb-6 flex items-center justify-between">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900 dark:text-white">Latest Placement Drives</h2>
@@ -283,7 +263,7 @@ const CollegeDashboard = () => {
 
                   <div className="flex-1 space-y-4">
                     {!Array.isArray(dashboardStats?.latestDrives) || dashboardStats.latestDrives.length === 0 ? (
-                      <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50">
+                      <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-blue-200/60 bg-blue-50/30 dark:border-slate-800 dark:bg-slate-900/50">
                         <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
                           No placement drives yet
                         </p>
@@ -299,7 +279,7 @@ const CollegeDashboard = () => {
                         <div 
                           key={drive._id} 
                           onClick={() => navigate(`/college/dashboard/placement-drives/${drive._id}`)}
-                          className="group relative flex cursor-pointer flex-col justify-between gap-4 rounded-2xl border border-slate-100 bg-slate-50/50 p-5 transition-all hover:-translate-y-1 hover:border-slate-200 hover:bg-white hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/20 dark:hover:border-slate-700 dark:hover:bg-slate-800 sm:flex-row sm:items-center"
+                          className="group relative flex cursor-pointer flex-col justify-between gap-4 rounded-2xl border border-blue-50 bg-white/60 p-5 transition-all hover:-translate-y-1 hover:border-blue-100 hover:bg-white hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/20 dark:hover:border-slate-700 dark:hover:bg-slate-800 sm:flex-row sm:items-center"
                         >
                           <div className="flex items-center gap-4">
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm dark:bg-slate-700">
@@ -345,11 +325,15 @@ const CollegeDashboard = () => {
                   {/* Secondary Stats */}
                   <div className="grid grid-cols-2 gap-4">
                     <QuickStatCard title="Placed Students" value={dashboardStats?.placedStudents || 0} />
-                    <QuickStatCard title="Total Applications" value={dashboardStats?.totalApplications || 0} />
+                    <QuickStatCard 
+                      title="Total Applications" 
+                      value={dashboardStats?.totalApplications || 0} 
+                      onClick={() => navigate('/college/dashboard/placement-drives')}
+                    />
                   </div>
 
                   {/* Quick Actions */}
-                  <div className="flex flex-col rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
+                  <div className="flex flex-col rounded-[32px] border border-blue-100/50 bg-white/90 backdrop-blur-md p-6 shadow-[0_4px_20px_rgb(37,99,235,0.03)] dark:border-slate-800/60 dark:bg-slate-900">
                     <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Quick Actions</h3>
                     <div className="grid grid-cols-1 gap-3">
                       <button 
@@ -406,11 +390,12 @@ const CollegeDashboard = () => {
             <Route path="placement-records" element={<PlacementRecordsOverview />} />
             <Route path="placement-records/:branchId" element={<BranchPlacementDetails />} />
             <Route path="student-profile/:studentId" element={<StudentProfileDetails />} />
-            <Route path="applications" element={<Applications />} />
             <Route path="placement-drives" element={<PlacementDrives />} />
             <Route path="placement-drives/create" element={<CreatePlacementDrive />} />
             <Route path="placement-drives/:driveId" element={<DriveDetails />} />
             <Route path="placement-drives/:driveId/students" element={<DriveStudents />} />
+            <Route path="placement-drives/:driveId/applications" element={<DriveApplications />} />
+            <Route path="applications/:applicationId" element={<ApplicationDetails />} />
           </Routes>
         </main>
       </div>
@@ -423,9 +408,9 @@ const CollegeDashboard = () => {
 // ----------------------------------------------------------------------
 
 const StatCard = ({ title, value, icon, trend, progress, isAlert = false }) => (
-  <div className="group cursor-pointer rounded-[32px] border border-slate-200 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 dark:border-slate-800/60 dark:bg-slate-900">
+  <div className="rounded-[32px] border border-blue-50 bg-white/90 backdrop-blur-md p-6 shadow-[0_8px_30px_rgb(37,99,235,0.03)] dark:border-slate-800/60 dark:bg-slate-900">
     <div className="mb-4 flex items-center justify-between">
-      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${isAlert ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400' : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'} transition-transform group-hover:scale-110`}>
+      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${isAlert ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400' : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'}`}>
         {icon}
       </div>
       <div className={`text-xs font-semibold ${isAlert ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
@@ -445,12 +430,15 @@ const StatCard = ({ title, value, icon, trend, progress, isAlert = false }) => (
   </div>
 );
 
-const QuickStatCard = ({ title, value }) => (
-  <div className="cursor-pointer rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-md dark:border-slate-800/60 dark:bg-slate-900 dark:hover:border-slate-700">
+const QuickStatCard = ({ title, value, onClick }) => (
+  <div 
+    onClick={onClick} 
+    className={`rounded-3xl border border-blue-50 bg-white/90 backdrop-blur-md p-5 shadow-[0_4px_20px_rgb(37,99,235,0.03)] dark:border-slate-800/60 dark:bg-slate-900 ${onClick ? 'cursor-pointer transition hover:-translate-y-1 hover:border-blue-100 hover:shadow-md dark:hover:border-slate-700' : ''}`}
+  >
     <h4 className="text-3xl font-bold text-slate-900 dark:text-white">{value}</h4>
     <div className="mt-2 flex items-center justify-between">
       <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{title}</p>
-      <ChevronRight size={14} className="text-slate-300 dark:text-slate-600" />
+      {onClick && <ChevronRight size={14} className="text-slate-300 dark:text-slate-600" />}
     </div>
   </div>
 );

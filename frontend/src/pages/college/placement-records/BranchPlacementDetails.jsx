@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Building2, ArrowLeft, Loader2, Search, Briefcase, IndianRupee } from "lucide-react";
+import { useSelector } from "react-redux";
 import api from "../../../api/axios";
 
 
@@ -9,6 +10,7 @@ import api from "../../../api/axios";
 const BranchPlacementDetails = () => {
   const { branchId } = useParams();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +31,7 @@ const BranchPlacementDetails = () => {
     };
 
     fetchDetails();
-  }, [branchId]);
+  }, [branchId, user?.activePlacementSeason]);
 
   if (loading || !record) {
     return (

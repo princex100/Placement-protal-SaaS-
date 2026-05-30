@@ -6,11 +6,12 @@ import api from "../../api/axios";
 import toast from "react-hot-toast";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 
+let processedTokens = new Set();
+
 const VerifyEmail = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const hasRun = useRef(false);
   
   const [status, setStatus] = useState("verifying"); // verifying, success, error
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,15 +40,15 @@ const VerifyEmail = () => {
       }
     };
 
-    if (token && !hasRun.current) {
-      hasRun.current = true;
+    if (token && !processedTokens.has(token)) {
+      processedTokens.add(token);
       verifyEmailToken();
     }
-  }, [token, navigate]);
+  }, [token, navigate, dispatch]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 transition-colors duration-300">
-      <div className="w-full max-w-md rounded-[24px] border border-slate-200 bg-white p-8 shadow-2xl dark:border-slate-800 dark:bg-slate-900 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-transparent dark:bg-slate-950 p-4 transition-colors duration-300">
+      <div className="w-full max-w-md rounded-[24px] border border-blue-100/50 bg-white/90 p-8 shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:border-slate-800 dark:bg-slate-900 text-center">
         
         {status === "verifying" && (
           <div className="flex flex-col items-center">

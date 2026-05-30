@@ -4,7 +4,8 @@ import {
   getMyApplications,
   getDriveApplicants,
   updateApplicationStatus,
-  getAllCollegeApplications
+  getAllCollegeApplications,
+  getApplicationById
 } from "../controllers/application.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -56,6 +57,12 @@ router.route("/:applicationId/status")
     ...updateApplicationStatusRules(),
     validateRequest,
     updateApplicationStatus
+  );
+
+router.route("/:applicationId")
+  .get(
+    allowRoles(["college-admin"]),
+    getApplicationById
   );
 
 export default router;

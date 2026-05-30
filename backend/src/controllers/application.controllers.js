@@ -41,6 +41,7 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     student: student._id,
     drive: driveId,
     college: student.college,
+    placementSeasonYear: drive.placementSeasonYear,
     resumeSnapshot: student.resume // Snapshot resume at time of applying
   });
 
@@ -61,7 +62,7 @@ export const getMyApplications = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, applications, "Applications fetched successfully"));
 });
 
-// College fetches applicants for a specific drive
+// College fetches applicants for a specific drive (Paginated)
 export const getDriveApplicants = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
   const driveId = req.params.driveId;
@@ -72,11 +73,35 @@ export const getDriveApplicants = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Drive not found or unauthorized");
   }
 
-  const applications = await Application.find({ drive: driveId })
-    .populate("student", "fullName email branch cgpa passingYear skills resume")
-    .sort({ appliedAt: -1 });
+  // Pagination parameters
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 25;
+  const skip = (page - 1) * limit;
 
-  return res.status(200).json(new ApiResponse(200, applications, "Applicants fetched successfully"));
+  const filter = { drive: driveId, college: collegeId };
+
+  // Fetch data concurrently
+  const [totalApplications, applications] = await Promise.all([
+    Application.countDocuments(filter),
+    Application.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate("student", "fullName rollNo branch cgpa email placementStatus")
+      .populate("drive", "companyName role")
+      .lean()
+  ]);
+
+  const totalPages = Math.ceil(totalApplications / limit);
+
+  return res.status(200).json(new ApiResponse(200, {
+    applications,
+    currentPage: page,
+    totalPages: totalPages === 0 ? 1 : totalPages,
+    totalApplications,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1
+  }, "Applicants fetched successfully"));
 });
 
 // College updates application status
@@ -119,7 +144,10 @@ export const getAllCollegeApplications = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const filter = { college: collegeId };
+  const filter = { 
+    college: collegeId,
+    placementSeasonYear: req.college.activePlacementSeason
+  };
 
   // Fetch data concurrently
   const [totalApplications, applications] = await Promise.all([
@@ -143,4 +171,21 @@ export const getAllCollegeApplications = asyncHandler(async (req, res) => {
     hasNextPage: page < totalPages,
     hasPrevPage: page > 1
   }, "Applications fetched successfully"));
+});
+
+// College fetches a single application by ID
+export const getApplicationById = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+  const applicationId = req.params.applicationId;
+
+  const application = await Application.findOne({ _id: applicationId, college: collegeId })
+    .populate("student", "fullName rollNo email branch cgpa passingYear skills resume")
+    .populate("drive", "title companyName role package location applicationDeadline")
+    .lean();
+
+  if (!application) {
+    throw new ApiError(404, "Application not found or unauthorized");
+  }
+
+  return res.status(200).json(new ApiResponse(200, application, "Application details fetched successfully"));
 });

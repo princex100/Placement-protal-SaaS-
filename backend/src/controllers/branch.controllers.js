@@ -58,7 +58,8 @@ export const getBranches = asyncHandler(async (req, res) => {
               $expr: {
                 $and: [
                   { $eq: ["$branch", "$$branchName"] },
-                  { $eq: ["$college", "$$collegeId"] }
+                  { $eq: ["$college", "$$collegeId"] },
+                  { $eq: ["$placementSeasonYear", req.college.activePlacementSeason] }
                 ]
               }
             }
@@ -113,6 +114,7 @@ export const createStudent = asyncHandler(async (req, res) => {
     semester,
     branch: branch.name, // Save branch as string name as requested
     college: collegeId,
+    placementSeasonYear: passingYear
   });
 
   // Remove password from response
@@ -138,7 +140,11 @@ export const getBranchStudents = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit) || 25;
   const skip = (page - 1) * limit;
 
-  const filter = { college: collegeId, branch: branch.name };
+  const filter = { 
+    college: collegeId, 
+    branch: branch.name,
+    placementSeasonYear: req.college.activePlacementSeason
+  };
 
   const [totalStudents, students] = await Promise.all([
     Student.countDocuments(filter),

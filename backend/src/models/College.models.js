@@ -73,6 +73,10 @@ const collegeSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    activePlacementSeason: {
+      type: Number,
+      default: () => new Date().getFullYear(),
+    },
   },
   { timestamps: true }
 );

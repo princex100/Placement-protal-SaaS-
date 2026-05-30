@@ -1,34 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Briefcase, Building2, MapPin, IndianRupee, Users, ArrowRight, Loader2, Calendar } from "lucide-react";
 import api from "../../../api/axios";
 
-const DUMMY_DRIVES = [
-  {
-    _id: "dummy1",
-    companyName: "Google",
-    role: "Software Engineer",
-    package: 24,
-    location: "Bangalore",
-    applicationDeadline: new Date(Date.now() + 86400000 * 5).toISOString(),
-    appliedStudentsCount: 156,
-    status: "open",
-  },
-  {
-    _id: "dummy2",
-    companyName: "Microsoft",
-    role: "Frontend Developer",
-    package: 18,
-    location: "Hyderabad",
-    applicationDeadline: new Date(Date.now() + 86400000 * 2).toISOString(),
-    appliedStudentsCount: 92,
-    status: "open",
-  },
-];
+
 
 const PlacementDrives = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const [drives, setDrives] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,20 +18,20 @@ const PlacementDrives = () => {
       try {
         const response = await api.get("/drives/college");
         const data = response.data?.data || response.data;
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
           setDrives(data);
         } else {
-          setDrives(DUMMY_DRIVES);
+          setDrives([]);
         }
       } catch (error) {
-        console.warn("Backend error fetching drives, using dummy data:", error);
-        setDrives(DUMMY_DRIVES);
+        console.warn("Backend error fetching drives:", error);
+        setDrives([]);
       } finally {
         setLoading(false);
       }
     };
     fetchDrives();
-  }, []);
+  }, [user?.activePlacementSeason]);
 
   if (loading) {
     return (
@@ -79,7 +60,11 @@ const PlacementDrives = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {drives.map((drive) => (
+        {drives.length === 0 ? (
+          <div className="col-span-full flex h-40 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50">
+            <p className="text-slate-500 dark:text-slate-400">No placement drives found.</p>
+          </div>
+        ) : drives.map((drive) => (
           <motion.div
             key={drive._id}
             initial={{ opacity: 0, y: 10 }}

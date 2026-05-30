@@ -16,6 +16,11 @@ const studentSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    placementSeasonYear: {
+      type: Number,
+      required: true,
+      index: true
+    },
     isProfileCompleted: {
       type: Boolean,
       default: false
@@ -35,6 +40,10 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
       select: false,
+    },
+    mustChangePassword: {
+      type: Boolean,
+      default: false,
     },
     phoneNumber: {
       type: String,

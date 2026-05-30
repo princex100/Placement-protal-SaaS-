@@ -54,14 +54,14 @@ const StudentLogin = () => {
   };
 
   return (
-    <div className="h-screen bg-slate-50 flex items-center justify-center p-3 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+    <div className="h-screen bg-transparent flex items-center justify-center p-3 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
       
       {/* Main Container */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="w-full max-w-[1100px] h-full max-h-[620px] bg-white rounded-[24px] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] dark:bg-slate-900 dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row">
+        className="w-full max-w-[1100px] h-full max-h-[620px] bg-white/90 rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:bg-slate-900 dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-blue-100/50 dark:border-slate-800 flex flex-col lg:flex-row">
         
         {/* LEFT SIDE */}
         <div className="w-full lg:w-[55%] relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-white dark:from-slate-800 dark:via-indigo-950/20 dark:to-slate-900 px-8 py-6 flex flex-col justify-between">
@@ -166,7 +166,7 @@ const StudentLogin = () => {
         </div>
 
         {/* RIGHT SIDE: LOGIN FORM */}
-        <div className="w-full lg:w-[45%] px-8 py-6 lg:px-12 flex flex-col justify-between relative bg-white dark:bg-slate-900">
+        <div className="w-full lg:w-[45%] px-8 py-6 lg:px-12 flex flex-col justify-between relative bg-white/60 dark:bg-slate-900">
           <div className="w-full max-w-md mx-auto flex flex-col h-full justify-center">
             
             {/* Header Logo */}
@@ -191,7 +191,7 @@ const StudentLogin = () => {
                   <Hash className="absolute left-3.5 h-4 w-4 text-slate-400" />
                   <input 
                     type="text" placeholder="Enter your roll number" 
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all uppercase"
+                    className="w-full pl-10 pr-4 py-2.5 bg-white/80 dark:bg-slate-950 border border-blue-100/50 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all uppercase"
                     required
                     autoComplete="off"
                     name="rollNo"
@@ -207,7 +207,7 @@ const StudentLogin = () => {
                   <Lock className="absolute left-3.5 h-4 w-4 text-slate-400" />
                   <input 
                     type={showPassword ? "text" : "password"} placeholder="Enter your password"
-                    className="w-full pl-10 pr-11 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                    className="w-full pl-10 pr-11 py-2.5 bg-white/80 dark:bg-slate-950 border border-blue-100/50 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
                     required
                     name="password"
                     value={formData.password}

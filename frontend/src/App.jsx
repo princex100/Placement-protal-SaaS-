@@ -7,7 +7,7 @@ import Footer from "./pages/Footer.jsx";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-slate-50 bg-gradient-to-br from-blue-100/60 via-slate-50 to-white bg-fixed dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 dark:bg-none">
       <Toaster position="top-center" />
       {/* Navbar */}
       <Navbar />

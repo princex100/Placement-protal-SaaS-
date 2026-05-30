@@ -5,11 +5,13 @@ import {
   ChevronLeft, ChevronRight, User, ArrowLeft 
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import api from "../../../api/axios";
 
 const BranchStudents = () => {
   const { branchId } = useParams();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   // Pagination & Data State
   const [students, setStudents] = useState([]);
@@ -53,7 +55,7 @@ const BranchStudents = () => {
   useEffect(() => {
     fetchStudents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, branchId]);
+  }, [page, branchId, user?.activePlacementSeason]);
 
   const handleNextPage = () => {
     if (page < totalPages) setPage((prev) => prev + 1);

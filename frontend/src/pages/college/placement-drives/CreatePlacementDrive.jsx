@@ -89,9 +89,7 @@ const CreatePlacementDrive = () => {
       navigate("/college/dashboard/placement-drives");
     } catch (error) {
       console.error("Error creating drive:", error);
-      // Dummy fallback for UI testing if backend fails
-      toast.error(error.response?.data?.message || "Using dummy fallback: Drive creation simulated");
-      navigate("/college/dashboard/placement-drives");
+      toast.error(error.response?.data?.message || "Failed to create placement drive");
     } finally {
       setLoading(false);
     }

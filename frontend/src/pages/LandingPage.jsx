@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './Header.jsx';
 import Footer from './Footer.jsx';
@@ -57,6 +58,7 @@ const useTypewriter = (words) => {
 
 const LandingPage = () => {
   const [activePortal, setActivePortal] = useState('student');
+  const { user } = useSelector((state) => state.auth);
 
   // Typing effect phrases
   const phrases = [
@@ -92,11 +94,11 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 transition-colors duration-300 selection:bg-blue-200 selection:text-blue-900 dark:bg-slate-950 dark:text-slate-50 dark:selection:bg-blue-900 dark:selection:text-blue-100">
+    <div className="min-h-screen bg-transparent font-sans text-slate-900 transition-colors duration-300 selection:bg-blue-200 selection:text-blue-900 dark:bg-slate-950 dark:text-slate-50 dark:selection:bg-blue-900 dark:selection:text-blue-100">
       
 
       {/* 2. Hero Section */}
-      <section id="home" className="relative overflow-hidden bg-gradient-to-b from-sky-100 via-blue-50 to-white pt-24 pb-16 transition-colors duration-300 dark:from-slate-900 dark:via-slate-950 dark:to-slate-950">
+      <section id="home" className="relative overflow-hidden bg-transparent pt-24 pb-16 transition-colors duration-300">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           
           <div className="mx-auto flex min-h-[140px] max-w-5xl items-center justify-center sm:min-h-[180px]">
@@ -118,9 +120,11 @@ const LandingPage = () => {
             Automate workflows, track applications, and organize campus drives seamlessly.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
-            <button onClick={scrollToPortalSelection} className="rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md">
-              Get Started
-            </button>
+            {!user && (
+              <button onClick={scrollToPortalSelection} className="rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md">
+                Get Started
+              </button>
+            )}
             <button onClick={scrollToPortalPreview} className="rounded-lg border border-slate-200 bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">
               Explore Portal
             </button>
@@ -129,7 +133,7 @@ const LandingPage = () => {
       </section>
 
       {/* 3. Interactive Multi-Portal Dashboard Preview */}
-      <section id="portalPreview" className="scroll-mt-16 bg-white py-12 pb-32 transition-colors duration-300 dark:bg-slate-950">
+      <section id="portalPreview" className="scroll-mt-16 bg-transparent py-12 pb-32 transition-colors duration-300 dark:bg-slate-950">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
           
           <div className="mb-8 flex flex-wrap items-center justify-center gap-4">
@@ -137,7 +141,7 @@ const LandingPage = () => {
             <PortalPreviewButton active={activePortal === 'college'} onClick={() => setActivePortal('college')} icon={<Building2 size={18} />} label="College Portal" />
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl ring-1 ring-slate-900/5 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none dark:ring-white/5 lg:h-[700px]">
+          <div className="relative overflow-hidden rounded-2xl border border-blue-100/50 bg-white/90 shadow-[0_8px_30px_rgb(37,99,235,0.08)] ring-1 ring-slate-900/5 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none dark:ring-white/5 lg:h-[700px]">
             <div className="flex h-12 items-center border-b border-slate-100 bg-white px-4 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
               <div className="flex gap-2">
                 <div className="h-3 w-3 rounded-full bg-slate-200 dark:bg-slate-700"></div>
@@ -158,7 +162,7 @@ const LandingPage = () => {
       </section>
 
       {/* 4. Features Section */}
-      <section id="features" className="bg-white py-24 transition-colors duration-300 dark:bg-slate-950">
+      <section id="features" className="bg-transparent py-24 transition-colors duration-300 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-500">Core Platform</h2>
@@ -173,7 +177,7 @@ const LandingPage = () => {
       </section>
 
       {/* 5. How It Works Section */}
-      <section id="how-it-works" className="border-y border-slate-100 bg-slate-50 py-24 transition-colors duration-300 dark:border-slate-800/60 dark:bg-slate-900/50">
+      <section id="how-it-works" className="bg-transparent py-24 transition-colors duration-300 dark:border-y dark:border-slate-800/60 dark:bg-slate-900/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-500">Workflow</h2>
@@ -191,22 +195,39 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* 6. Choose Your Portal Section */}
-      <section id="portalSelection" className="scroll-mt-16 bg-white py-24 transition-colors duration-300 dark:bg-slate-950">
+      {/* 6. Choose Your Portal Section / Logged In Hero Image */}
+      <section id="portalSelection" className="scroll-mt-16 bg-transparent py-24 transition-colors duration-300 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Choose Your Portal</h2>
-            <p className="mt-4 text-lg text-slate-500 dark:text-slate-400">Select your role to access your personalized dashboard.</p>
-          </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-            <PortalCard icon={<GraduationCap className="h-8 w-8" />} title="Student Portal" desc="Apply to placement drives, track applications, and build your career." link="/student/auth" linkText="Continue as Student" />
-            <PortalCard icon={<Building2 className="h-8 w-8" />} title="College Portal" desc="Manage students, approve placement drives, and coordinate recruitment." link="/college/auth" linkText="Continue as College" />
-          </div>
+          {!user ? (
+            <>
+              <div className="mb-16 text-center">
+                <h2 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Choose Your Portal</h2>
+                <p className="mt-4 text-lg text-slate-500 dark:text-slate-400">Select your role to access your personalized dashboard.</p>
+              </div>
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+                <PortalCard icon={<GraduationCap className="h-8 w-8" />} title="Student Portal" desc="Apply to placement drives, track applications, and build your career." link="/student/auth" linkText="Continue as Student" />
+                <PortalCard icon={<Building2 className="h-8 w-8" />} title="College Portal" desc="Manage students, approve placement drives, and coordinate recruitment." link="/college/auth" linkText="Continue as College" />
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center">
+              <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">You're on your way to success!</h2>
+              <p className="mb-12 text-lg text-slate-500 dark:text-slate-400">Jump right into your personalized dashboard to track your progress.</p>
+              <div className="relative overflow-hidden rounded-3xl border border-blue-100/50 bg-white/40 p-4 shadow-[0_8px_30px_rgb(37,99,235,0.08)] backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/50">
+                <img src="/students_placed.png" alt="Students celebrating placement" className="w-full max-w-4xl aspect-video rounded-2xl object-cover mix-blend-multiply dark:mix-blend-normal" />
+              </div>
+              <div className="mt-12">
+                <Link to={user?.role === 'college' ? '/college/dashboard' : '/student/dashboard'} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white shadow-md transition-all hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl">
+                  Go to Dashboard <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
       {/* 7. Statistics Section */}
-      <section className="border-y border-slate-100 bg-slate-50 py-20 transition-colors duration-300 dark:border-slate-800/60 dark:bg-slate-900/50">
+      <section className="bg-transparent py-20 transition-colors duration-300 dark:border-y dark:border-slate-800/60 dark:bg-slate-900/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 divide-y divide-slate-200 text-center transition-colors duration-300 dark:divide-slate-800 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             <StatColumn value="500+" label="Students Placed" />
@@ -220,11 +241,19 @@ const LandingPage = () => {
       <section className="relative overflow-hidden bg-blue-600 py-24 dark:bg-blue-800">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
         <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Start Your Placement Journey Today</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">Join the ecosystem today. Select your portal to create an account and unlock endless opportunities.</p>
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">{user ? "Resume Your Progress" : "Start Your Placement Journey Today"}</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">{user ? "Head back to your dashboard to track applications, manage drives, and stay on top of your career goals." : "Join the ecosystem today. Select your portal to create an account and unlock endless opportunities."}</p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link to="/student/auth" className="w-full rounded-lg bg-white px-8 py-4 text-sm font-bold text-blue-600 shadow-md transition-all hover:bg-slate-50 hover:shadow-lg sm:w-auto">Student Portal</Link>
-            <Link to="/college/auth" className="w-full rounded-lg border border-blue-500 bg-blue-700 px-8 py-4 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-800 hover:shadow-lg dark:border-blue-600 dark:bg-blue-900 dark:hover:bg-blue-950 sm:w-auto">College Portal</Link>
+            {!user ? (
+              <>
+                <Link to="/student/auth" className="w-full rounded-lg bg-white px-8 py-4 text-sm font-bold text-blue-600 shadow-md transition-all hover:bg-slate-50 hover:shadow-lg sm:w-auto">Student Portal</Link>
+                <Link to="/college/auth" className="w-full rounded-lg border border-blue-500 bg-blue-700 px-8 py-4 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-800 hover:shadow-lg dark:border-blue-600 dark:bg-blue-900 dark:hover:bg-blue-950 sm:w-auto">College Portal</Link>
+              </>
+            ) : (
+              <Link to={user?.role === 'college' ? '/college/dashboard' : '/student/dashboard'} className="w-full rounded-lg bg-white px-8 py-4 text-sm font-bold text-blue-600 shadow-md transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-xl sm:w-auto">
+                Go to Dashboard
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -237,7 +266,7 @@ const LandingPage = () => {
 /* --- GENERAL UI SUB-COMPONENTS --- */
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="group rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition-all duration-300 hover:border-blue-100 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+  <div className="group rounded-2xl border border-blue-50 bg-white/90 backdrop-blur-sm p-8 shadow-[0_4px_20px_rgb(37,99,235,0.03)] transition-all duration-300 hover:border-blue-100 hover:shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
     <div className="mb-4 inline-flex rounded-lg bg-blue-50 p-3 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
       {icon}
     </div>
@@ -257,7 +286,7 @@ const WorkflowStep = ({ icon, step, desc, color }) => (
 );
 
 const PortalCard = ({ icon, title, desc, link, linkText }) => (
-  <div className="group flex flex-col justify-between rounded-3xl bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_30px_rgb(37,99,235,0.12)] hover:ring-blue-200 dark:bg-slate-900 dark:shadow-none dark:ring-slate-800 dark:hover:ring-blue-500/50">
+  <div className="group flex flex-col justify-between rounded-3xl bg-white/90 backdrop-blur-sm p-8 shadow-[0_8px_30px_rgb(37,99,235,0.03)] ring-1 ring-blue-50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_30px_rgb(37,99,235,0.12)] hover:ring-blue-200 dark:bg-slate-900 dark:shadow-none dark:ring-slate-800 dark:hover:ring-blue-500/50">
     <div>
       <div className="mb-6 inline-flex rounded-xl bg-blue-50 p-4 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:bg-slate-800 dark:text-blue-400 dark:group-hover:bg-blue-600 dark:group-hover:text-white">
         {icon}

@@ -112,10 +112,10 @@ const DriveDetails = () => {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
-              onClick={() => navigate(`/college/dashboard/placement-drives/${drive._id}/students`)}
+              onClick={() => navigate(`/college/dashboard/placement-drives/${drive._id}/applications`)}
               className="flex items-center justify-center gap-2 rounded-xl bg-blue-50 px-5 py-2.5 text-sm font-semibold text-blue-600 transition-all hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/40"
             >
-              <Users size={18} /> View Applied Students ({drive.appliedStudentsCount})
+              <CheckCircle2 size={18} /> Applications ({drive.appliedStudentsCount})
             </button>
             <button
               onClick={handleDelete}

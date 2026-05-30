@@ -204,8 +204,31 @@ export const refreshCollegeAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
+export const updatePlacementSeason = asyncHandler(async (req, res) => {
+  const { placementSeasonYear } = req.body;
+
+  if (!placementSeasonYear || isNaN(placementSeasonYear)) {
+    throw new ApiError(400, "Valid placement season year is required");
+  }
+
+  const college = await College.findByIdAndUpdate(
+    req.college._id,
+    { $set: { activePlacementSeason: Number(placementSeasonYear) } },
+    { new: true, runValidators: true }
+  ).select("-password -refreshToken");
+
+  if (!college) {
+    throw new ApiError(404, "College not found");
+  }
+
+  return res.status(200).json(
+    new ApiResponse(200, college, "Placement season updated successfully")
+  );
+});
+
 export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
+  const activeSeason = req.college.activePlacementSeason;
 
   // Run all independent queries in parallel
   const [
@@ -217,11 +240,12 @@ export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
     latestDrives
   ] = await Promise.all([
     // 1. Total Registered Students
-    Student.countDocuments({ college: collegeId }),
+    Student.countDocuments({ college: collegeId, placementSeasonYear: activeSeason }),
 
     // 2. Eligible Students (Profile Complete & Not Blocked)
     Student.countDocuments({ 
       college: collegeId, 
+      placementSeasonYear: activeSeason,
       placementBlocked: false, 
       isProfileCompleted: true 
     }),
@@ -229,21 +253,23 @@ export const getCollegeDashboardStats = asyncHandler(async (req, res) => {
     // 3. Placed Students
     Student.countDocuments({ 
       college: collegeId, 
+      placementSeasonYear: activeSeason,
       placementStatus: { $in: ["placed"] } 
     }),
 
     // 4. Applications Received
-    Application.countDocuments({ college: collegeId }),
+    Application.countDocuments({ college: collegeId, placementSeasonYear: activeSeason }),
 
     // 5. Active Placement Drives
     PlacementDrive.countDocuments({ 
       college: collegeId, 
+      placementSeasonYear: activeSeason,
       status: "open", 
       isActive: true 
     }),
 
     // 6. Latest 4 Drives (Sorted by newest)
-    PlacementDrive.find({ college: collegeId })
+    PlacementDrive.find({ college: collegeId, placementSeasonYear: activeSeason })
       .select("companyName role package applicationDeadline status students")
       .sort({ createdAt: -1 })
       .limit(4)

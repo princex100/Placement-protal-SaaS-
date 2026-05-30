@@ -4,9 +4,9 @@ import { GraduationCap, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer id="contact" className="border-t border-slate-200 bg-white py-12 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-950">
+    <footer id="contact" className="border-t border-blue-100/30 bg-transparent py-12 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 grid grid-cols-1 gap-8 border-b border-slate-100 pb-8 transition-colors duration-300 dark:border-slate-800/60 md:grid-cols-4">
+        <div className="mb-8 grid grid-cols-1 gap-8 border-b border-blue-100/30 pb-8 transition-colors duration-300 dark:border-slate-800/60 md:grid-cols-4">
           <div className="md:col-span-1">
             <div className="mb-4 flex items-center gap-2 text-blue-600 dark:text-blue-500">
               <GraduationCap className="h-6 w-6" />

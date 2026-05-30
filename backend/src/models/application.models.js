@@ -20,6 +20,11 @@ const applicationSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    placementSeasonYear: {
+      type: Number,
+      required: true,
+      index: true
+    },
     status: {
       type: String,
       enum: [

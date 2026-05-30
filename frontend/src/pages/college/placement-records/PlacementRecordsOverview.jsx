@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Building2, Users, GraduationCap, ArrowRight, Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
 import api from "../../../api/axios";
 
 
 const PlacementRecordsOverview = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +28,7 @@ const PlacementRecordsOverview = () => {
     };
 
     fetchRecords();
-  }, []);
+  }, [user?.activePlacementSeason]);
 
   if (loading) {
     return (

@@ -14,6 +14,11 @@ const branchPlacementRecordSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
+    placementSeasonYear: {
+      type: Number,
+      required: true,
+      index: true
+    },
     placedStudents: [
       {
         student: {
@@ -35,8 +40,8 @@ const branchPlacementRecordSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Compound index to ensure one record per branch per college
-branchPlacementRecordSchema.index({ college: 1, branch: 1 }, { unique: true });
+// Compound index to ensure one record per branch per college per placement season
+branchPlacementRecordSchema.index({ college: 1, branch: 1, placementSeasonYear: 1 }, { unique: true });
 
 export const BranchPlacementRecord = mongoose.model(
   "BranchPlacementRecord",

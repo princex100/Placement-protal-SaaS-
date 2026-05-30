@@ -23,6 +23,11 @@ const placementDriveSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    placementSeasonYear: {
+      type: Number,
+      required: true,
+      index: true
+    },
     jobType: {
       type: String,
       enum: ["internship", "fulltime", "internship+fte"],

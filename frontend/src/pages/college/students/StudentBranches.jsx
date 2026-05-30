@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Plus, Loader2, GitBranch, ChevronRight } from "lucide-react";
+import { Users, Loader2, GitBranch, ChevronRight, Upload } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import api from "../../../api/axios";
+import ImportStudentsModal from "./ImportStudentsModal";
 
 const StudentBranches = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const [branches, setBranches] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Add Branch Modal State
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newBranchName, setNewBranchName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Import Modal State
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const fetchBranches = async () => {
     setLoading(true);
@@ -30,28 +31,7 @@ const StudentBranches = () => {
 
   useEffect(() => {
     fetchBranches();
-  }, []);
-
-  const handleAddBranch = async (e) => {
-    e.preventDefault();
-    if (!newBranchName.trim()) {
-      toast.error("Branch name is required");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      await api.post("/branches", { name: newBranchName });
-      toast.success("Branch added successfully!");
-      setNewBranchName("");
-      setIsModalOpen(false);
-      fetchBranches(); // Refetch to show the new branch
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to add branch");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  }, [user?.activePlacementSeason]);
 
   return (
     <div className="mx-auto max-w-7xl p-6 lg:p-8">
@@ -60,14 +40,14 @@ const StudentBranches = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Student Management</h1>
           <p className="mt-2 text-slate-500 dark:text-slate-400">
-            Manage your college branches and students. Select a branch to view its students.
+            Manage your college branches and students. Import your batch data to get started.
           </p>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsImportModalOpen(true)}
           className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
         >
-          <Plus size={18} /> Add Branch
+          <Upload size={18} /> Import Students
         </button>
       </div>
 
@@ -80,19 +60,19 @@ const StudentBranches = () => {
       ) : branches.length === 0 ? (
         <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-[24px] border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-500 dark:bg-blue-900/30 dark:text-blue-400">
-            <GitBranch size={32} />
+            <Users size={32} />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">No branches added yet</h3>
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">No students imported yet</h3>
             <p className="mt-1 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-              Start by adding academic branches (like CSE, IT, Mechanical) to organize your students.
+              Import students in bulk using an Excel sheet. Branches will be created automatically.
             </p>
           </div>
           <button
-            onClick={() => setIsModalOpen(true)}
-            className="mt-2 inline-flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
+            onClick={() => setIsImportModalOpen(true)}
+            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
           >
-            <Plus size={16} /> Create First Branch
+            <Upload size={18} /> Import Students
           </button>
         </div>
       ) : (
@@ -123,53 +103,11 @@ const StudentBranches = () => {
         </div>
       )}
 
-      {/* Add Branch Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 backdrop-blur-sm dark:bg-slate-900/80">
-          <div className="w-full max-w-md animate-in fade-in zoom-in-95 rounded-[24px] bg-white p-6 shadow-xl dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Add New Branch</h2>
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
-              >
-                ✕
-              </button>
-            </div>
-            <form onSubmit={handleAddBranch} className="mt-6">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Branch Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Computer Science (CSE)"
-                  value={newBranchName}
-                  onChange={(e) => setNewBranchName(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500/20"
-                  required
-                />
-              </div>
-              <div className="mt-6 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
-                >
-                  {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : "Save Branch"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <ImportStudentsModal 
+        isOpen={isImportModalOpen} 
+        onClose={() => setIsImportModalOpen(false)} 
+        onSuccess={fetchBranches}
+      />
     </div>
   );
 };

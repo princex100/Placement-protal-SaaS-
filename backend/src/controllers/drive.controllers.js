@@ -12,7 +12,8 @@ export const createDrive = asyncHandler(async (req, res) => {
 
   const drive = await PlacementDrive.create({
     ...driveData,
-    college: collegeId
+    college: collegeId,
+    placementSeasonYear: req.college.activePlacementSeason
   });
 
   return res.status(201).json(new ApiResponse(201, drive, "Placement drive created successfully"));
@@ -58,7 +59,10 @@ export const deleteDrive = asyncHandler(async (req, res) => {
 export const getCollegeDrives = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
 
-  const drives = await PlacementDrive.find({ college: collegeId })
+  const drives = await PlacementDrive.find({ 
+    college: collegeId,
+    placementSeasonYear: req.college.activePlacementSeason 
+  })
     .select("companyName role package location applicationDeadline students status")
     .sort({ createdAt: -1 })
     .lean();
@@ -81,6 +85,7 @@ export const getEligibleDrives = asyncHandler(async (req, res) => {
   // You can add more complex eligibility checks here (e.g., CGPA, branch, etc.)
   const filter = {
     college: student.college,
+    placementSeasonYear: student.placementSeasonYear,
     status: "open",
     isActive: true,
     // Add logic to compare student.cgpa >= minimumCgpa etc. if desired
@@ -118,8 +123,13 @@ export const getDriveById = asyncHandler(async (req, res) => {
     throw new ApiError(403, "Unauthorized access to this drive");
   }
   
-  // Attach applied count for convenience
-  drive.appliedStudentsCount = drive.students ? drive.students.length : 0;
+  // Attach applied count dynamically from Application model
+  const applicationsCount = await Application.countDocuments({ 
+    drive: driveId, 
+    college: req.role === "college-admin" ? req.college._id : drive.college 
+  });
+  
+  drive.appliedStudentsCount = applicationsCount;
   // Remove the actual students array from this endpoint (handled by /students route)
   delete drive.students;
 

@@ -4,13 +4,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GraduationCap, Sun, Moon } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCredentials } from '../redux/features/authSlice';
+import { clearCredentials, updateUser } from '../redux/features/authSlice';
+import api from '../api/axios';
+import { toast } from 'react-hot-toast';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isDark, setIsDark] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showLoginMenu, setShowLoginMenu] = useState(false);
+
+  const currentYear = new Date().getFullYear();
+  const availableSeasons = Array.from({ length: 11 }, (_, i) => currentYear - 5 + i);
+
+  const handleSeasonChange = async (e) => {
+    const selectedSeason = e.target.value;
+    try {
+      const res = await api.patch('/colleges/placement-season', { placementSeasonYear: selectedSeason });
+      if (res.data.success) {
+        dispatch(updateUser({ activePlacementSeason: Number(selectedSeason) }));
+        toast.success(`Switched to season ${selectedSeason}`);
+      }
+    } catch (error) {
+      console.error("Failed to update season", error);
+    }
+  };
 
   // Use Redux state instead of localStorage
   const { user, isAuthenticated, role } = useSelector((state) => state.auth);
@@ -72,7 +91,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900">
+    <nav className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-none">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="flex items-center gap-2 text-blue-600 dark:text-blue-500 transition-transform duration-200 active:scale-95">
           <GraduationCap className="h-8 w-8" />
@@ -107,6 +126,21 @@ const Navbar = () => {
               {isDark ? <Moon size={12} className="text-blue-400" /> : <Sun size={12} className="text-amber-500" />}
             </motion.div>
           </button>
+
+          {isAuthenticated && role === 'college-admin' && (
+            <div className="flex items-center gap-2">
+              <span className="hidden sm:block text-sm font-medium text-slate-500 dark:text-slate-400">Season:</span>
+              <select
+                value={user?.activePlacementSeason || currentYear}
+                onChange={handleSeasonChange}
+                className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors cursor-pointer"
+              >
+                {availableSeasons.map((year) => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {isAuthenticated ? (
             <div className="relative">
@@ -173,14 +207,44 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <>
+            <div className="flex items-center gap-4">
+              {/* Login Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowLoginMenu(!showLoginMenu)}
+                  onBlur={() => setTimeout(() => setShowLoginMenu(false), 200)}
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
+                >
+                  Login
+                  <ChevronDown size={16} className={`transition-transform duration-200 ${showLoginMenu ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showLoginMenu && (
+                  <div className="absolute right-0 top-full mt-2 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900 z-50">
+                    <button
+                      onMouseDown={() => navigate('/college/auth')}
+                      className="flex w-full items-center px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      Login for College
+                    </button>
+                    <div className="h-px w-full bg-slate-100 dark:bg-slate-800"></div>
+                    <button
+                      onMouseDown={() => navigate('/student/auth')}
+                      className="flex w-full items-center px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      Login for Student
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <button
                 onClick={(e) => scrollToSection(e, 'portalSelection')}
                 className="hidden rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 active:scale-95 sm:block"
               >
                 Get Started
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>
