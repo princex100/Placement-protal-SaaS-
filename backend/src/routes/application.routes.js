@@ -1,11 +1,13 @@
 import { Router } from "express";
+import { upload } from "../middlewares/multer.middleware.js";
 import {
   applyToDrive,
   getMyApplications,
   getDriveApplicants,
   updateApplicationStatus,
   getAllCollegeApplications,
-  getApplicationById
+  getApplicationById,
+  advanceDriveWorkflow
 } from "../controllers/application.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -31,6 +33,7 @@ router.route("/student/me")
 router.route("/:driveId/apply")
   .post(
     allowRoles(["student"]),
+    upload.single("resume"),
     ...applyToDriveRules(),
     validateRequest,
     applyToDrive
@@ -51,6 +54,13 @@ router.route("/drive/:driveId")
     getDriveApplicants
   );
 
+router.route("/drive/:driveId/workflow")
+  .post(
+    allowRoles(["college-admin"]),
+    upload.single("file"),
+    advanceDriveWorkflow
+  );
+
 router.route("/:applicationId/status")
   .patch(
     allowRoles(["college-admin"]),
@@ -61,7 +71,7 @@ router.route("/:applicationId/status")
 
 router.route("/:applicationId")
   .get(
-    allowRoles(["college-admin"]),
+    allowRoles(["college-admin", "student"]),
     getApplicationById
   );
 

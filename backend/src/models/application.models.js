@@ -25,17 +25,24 @@ const applicationSchema = new mongoose.Schema(
       required: true,
       index: true
     },
-    status: {
+    applicationStatus: {
       type: String,
       enum: [
-        "Applied",
-        "Shortlisted",
-        "Interview Scheduled",
-        "Selected",
-        "Rejected",
-        "Withdrawn",
+        "applied",
+        "shortlisted",
+        "interview_scheduled",
+        "selected",
+        "rejected",
       ],
-      default: "Applied",
+      default: "applied",
+      index: true
+    },
+    statusUpdatedAt: {
+      type: Date,
+    },
+    statusUpdatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College",
     },
     appliedAt: {
       type: Date,

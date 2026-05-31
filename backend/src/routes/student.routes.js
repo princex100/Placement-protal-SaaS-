@@ -6,7 +6,8 @@ import {
   logoutStudent,
   getCurrentStudent,
   updateStudentProfile,
-  uploadResume
+  uploadResume,
+  getStudentDashboardStats
 } from "../controllers/student.controllers.js";
 
 import { verifyJWT } from "../middlewares/verifyJWT.js";
@@ -60,6 +61,12 @@ router.route("/current").get(
   verifyJWT,
   allowRoles(["student"]),
   getCurrentStudent
+);
+
+router.route("/dashboard-stats").get(
+  verifyJWT,
+  allowRoles(["student"]),
+  getStudentDashboardStats
 );
 
 router.route("/profile").patch(

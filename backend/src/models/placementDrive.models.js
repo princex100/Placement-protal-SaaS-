@@ -86,6 +86,17 @@ const placementDriveSchema = new mongoose.Schema(
       type: Date,
     },
     // Status
+    applicationWorkflowStage: {
+       type: String,
+       enum: [
+          "shortlisting",
+          "interview",
+          "selection",
+          "completed"
+       ],
+       default: "shortlisting",
+       index: true
+    },
     status: {
       type: String,
       enum: ["open", "closed"],

@@ -46,14 +46,14 @@ const Applications = () => {
         setApplications([
           {
             _id: "app1",
-            status: "Applied",
+            applicationStatus: "applied",
             appliedAt: new Date().toISOString(),
             student: { _id: "stu1", fullName: "John Doe", rollNo: "CS2101", branch: "CSE", cgpa: 8.5 },
             drive: { _id: "drv1", companyName: "Google", role: "Software Engineer" }
           },
           {
             _id: "app2",
-            status: "Selected",
+            applicationStatus: "selected",
             appliedAt: new Date(Date.now() - 86400000).toISOString(),
             student: { _id: "stu2", fullName: "Jane Smith", rollNo: "IT2104", branch: "IT", cgpa: 9.1 },
             drive: { _id: "drv2", companyName: "Microsoft", role: "Frontend Developer" }
@@ -82,17 +82,36 @@ const Applications = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Selected":
+      case "selected":
         return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400";
-      case "Rejected":
+      case "rejected":
         return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
-      case "Shortlisted":
-      case "Interview Scheduled":
+      case "shortlisted":
+      case "interview_scheduled":
         return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400";
-      case "Withdrawn":
+      case "withdrawn":
         return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400";
-      default: // Applied
+      default: // applied
         return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400";
+    }
+  };
+
+  const handleStatusUpdate = async (applicationId, newStatus) => {
+    try {
+      const response = await api.patch(`/applications/${applicationId}/status`, { applicationStatus: newStatus });
+      toast.success("Application status updated!");
+      
+      // Update local state instantly
+      setApplications(prevApps => 
+        prevApps.map(app => 
+          app._id === applicationId 
+            ? { ...app, applicationStatus: newStatus } 
+            : app
+        )
+      );
+    } catch (error) {
+      console.error("Error updating status:", error);
+      toast.error(error.response?.data?.message || "Failed to update status");
     }
   };
 
@@ -194,19 +213,27 @@ const Applications = () => {
 
                     {/* Status Badge */}
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${getStatusColor(app.status)}`}>
-                        {app.status}
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${getStatusColor(app.applicationStatus)}`}>
+                        {app.applicationStatus?.replace("_", " ")}
                       </span>
                     </td>
 
                     {/* Action */}
                     <td className="px-6 py-4 text-right">
-                      <button 
-                        onClick={() => navigate(`/college/dashboard/student-profile/${app.student?._id}`)}
-                        className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-semibold text-blue-600 transition hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/30"
-                      >
-                        View Details <ChevronRight size={16} />
-                      </button>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex gap-2">
+                          <button onClick={() => handleStatusUpdate(app._id, "shortlisted")} className="text-xs font-semibold px-2 py-1 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400">Shortlist</button>
+                          <button onClick={() => handleStatusUpdate(app._id, "interview_scheduled")} className="text-xs font-semibold px-2 py-1 bg-purple-50 text-purple-600 rounded hover:bg-purple-100 dark:bg-purple-900/30 dark:text-purple-400">Interview</button>
+                          <button onClick={() => handleStatusUpdate(app._id, "selected")} className="text-xs font-semibold px-2 py-1 bg-emerald-50 text-emerald-600 rounded hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400">Select</button>
+                          <button onClick={() => handleStatusUpdate(app._id, "rejected")} className="text-xs font-semibold px-2 py-1 bg-red-50 text-red-600 rounded hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400">Reject</button>
+                        </div>
+                        <button 
+                          onClick={() => navigate(`/college/dashboard/student-profile/${app.student?._id}`)}
+                          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                        >
+                          View Student <ChevronRight size={14} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

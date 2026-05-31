@@ -56,13 +56,10 @@ export const studentRegistrationRules = () => {
 
 export const studentLoginRules = () => {
   return [
-    body("email")
+    body("rollNo")
       .trim()
       .notEmpty()
-      .withMessage("Email is required")
-      .isEmail()
-      .withMessage("Must be a valid email address")
-      .normalizeEmail(),
+      .withMessage("Roll Number is required"),
 
     body("password")
       .notEmpty()

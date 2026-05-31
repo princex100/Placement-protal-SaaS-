@@ -9,6 +9,13 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (error.response?.status === 401) {
+      toast.error("Session expired. Please log in again.");
+      // Optional: dispatch logout or simply redirect
+      window.location.href = "/student/login"; // Or determine role from local state
+      return Promise.reject(error);
+    }
+
     const data = error.response?.data;
     
     if (data?.errors && Array.isArray(data.errors) && data.errors.length > 0) {
@@ -20,7 +27,9 @@ api.interceptors.response.use(
     } else {
       // Otherwise, fallback to the main message
       const message = data?.message || error.message || "An unexpected error occurred";
-      toast.error(message);
+      if (error.response?.status !== 401) {
+        toast.error(message);
+      }
     }
     
     return Promise.reject(error);

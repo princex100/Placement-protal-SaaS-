@@ -217,7 +217,7 @@ const LandingPage = () => {
                 <img src="/students_placed.png" alt="Students celebrating placement" className="w-full max-w-4xl aspect-video rounded-2xl object-cover mix-blend-multiply dark:mix-blend-normal" />
               </div>
               <div className="mt-12">
-                <Link to={user?.role === 'college' ? '/college/dashboard' : '/student/dashboard'} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white shadow-md transition-all hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl">
+                <Link to={user?.role === 'college-admin' ? '/college/dashboard' : '/student/dashboard'} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white shadow-md transition-all hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl">
                   Go to Dashboard <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
@@ -250,7 +250,7 @@ const LandingPage = () => {
                 <Link to="/college/auth" className="w-full rounded-lg border border-blue-500 bg-blue-700 px-8 py-4 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-800 hover:shadow-lg dark:border-blue-600 dark:bg-blue-900 dark:hover:bg-blue-950 sm:w-auto">College Portal</Link>
               </>
             ) : (
-              <Link to={user?.role === 'college' ? '/college/dashboard' : '/student/dashboard'} className="w-full rounded-lg bg-white px-8 py-4 text-sm font-bold text-blue-600 shadow-md transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-xl sm:w-auto">
+              <Link to={user?.role === 'college-admin' ? '/college/dashboard' : '/student/dashboard'} className="w-full rounded-lg bg-white px-8 py-4 text-sm font-bold text-blue-600 shadow-md transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-xl sm:w-auto">
                 Go to Dashboard
               </Link>
             )}

@@ -3,6 +3,7 @@ import PlacementDrive from "../models/placementDrive.models.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
+import uploadOnCloudinary from "../utils/cloudinary.js";
 
 // Student applies to a drive
 export const applyToDrive = asyncHandler(async (req, res) => {
@@ -20,10 +21,7 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     throw new ApiError(403, "You can only apply to drives from your own college");
   }
 
-  // 3. Ensure student has a resume
-  if (!student.resume) {
-    throw new ApiError(400, "Please upload a resume in your profile before applying");
-  }
+  // 3. (Deferred) We will check resume after eligibility
 
   // 4. Check deadline
   if (new Date(drive.applicationDeadline) < new Date()) {
@@ -59,6 +57,14 @@ export const applyToDrive = asyncHandler(async (req, res) => {
       throw new ApiError(400, "Your passing year is not eligible for this drive");
     }
   }
+  // g) Skills
+  if (drive.skillsRequired && drive.skillsRequired.length > 0) {
+    const studentSkills = student.skills || [];
+    const hasRequiredSkill = drive.skillsRequired.some(skill => studentSkills.includes(skill));
+    if (!hasRequiredSkill) {
+      throw new ApiError(400, "You do not possess the required skills for this drive");
+    }
+  }
 
   // 6. Prevent duplicate applications
   const existingApplication = await Application.findOne({ student: student._id, drive: driveId });
@@ -72,19 +78,40 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     throw new ApiError(400, "You are already registered as an eligible student in this drive");
   }
 
-  // 7. Create application
+  // 7. Handle Resume Upload via Cloudinary if new file provided
+  const Student = (await import("../models/Student.models.js")).default;
+  let finalResumeUrl = student.resume;
+
+  if (req.file) {
+    const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
+    finalResumeUrl = cloudinaryResponse.secure_url || cloudinaryResponse.url;
+    
+    // Update student's default resume
+    await Student.findByIdAndUpdate(student._id, { $set: { resume: finalResumeUrl } });
+  }
+
+  if (!finalResumeUrl) {
+    throw new ApiError(400, "Please upload a resume before applying");
+  }
+
+  // 8. Create application
   const application = await Application.create({
     student: student._id,
     drive: driveId,
     college: student.college,
     placementSeasonYear: drive.placementSeasonYear,
-    resumeSnapshot: student.resume // Snapshot resume at time of applying
+    resumeSnapshot: finalResumeUrl // Snapshot resume at time of applying
   });
 
   // Increment totalApplicants count and add to students array
   await PlacementDrive.findByIdAndUpdate(driveId, { 
     $inc: { totalApplicants: 1 },
     $push: { students: { student: student._id } }
+  });
+
+  // Update student appliedDrives
+  await Student.findByIdAndUpdate(student._id, {
+    $addToSet: { appliedDrives: driveId }
   });
 
   return res.status(201).json(new ApiResponse(201, application, "Successfully applied to drive"));
@@ -118,6 +145,9 @@ export const getDriveApplicants = asyncHandler(async (req, res) => {
   const skip = (page - 1) * limit;
 
   const filter = { drive: driveId, college: collegeId };
+  if (req.query.showRejected !== 'true') {
+    filter.applicationStatus = { $ne: "rejected" };
+  }
 
   // Fetch data concurrently
   const [totalApplications, applications] = await Promise.all([
@@ -127,13 +157,14 @@ export const getDriveApplicants = asyncHandler(async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 })
       .populate("student", "fullName rollNo branch cgpa email placementStatus")
-      .populate("drive", "companyName role")
+      .populate("drive", "companyName role applicationWorkflowStage")
       .lean()
   ]);
 
   const totalPages = Math.ceil(totalApplications / limit);
 
   return res.status(200).json(new ApiResponse(200, {
+    drive,
     applications,
     currentPage: page,
     totalPages: totalPages === 0 ? 1 : totalPages,
@@ -143,11 +174,154 @@ export const getDriveApplicants = asyncHandler(async (req, res) => {
   }, "Applicants fetched successfully"));
 });
 
-// College updates application status
+export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
+  const collegeId = req.college._id;
+  const driveId = req.params.driveId;
+
+  if (!req.file) {
+    throw new ApiError(400, "Please upload an Excel or CSV file");
+  }
+
+  const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
+  if (!drive) {
+    throw new ApiError(404, "Drive not found or unauthorized");
+  }
+
+  if (drive.applicationWorkflowStage === "completed") {
+    throw new ApiError(400, "Drive workflow is already completed");
+  }
+
+  const xlsx = (await import("xlsx")).default;
+  const workbook = xlsx.readFile(req.file.path);
+  const sheetName = workbook.SheetNames[0];
+  const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+  if (!sheetData || sheetData.length === 0) {
+    throw new ApiError(400, "The uploaded file is empty");
+  }
+
+  // Find roll number column using semi-mapping
+  const { studentHeaderMap } = await import("../constants/studentHeaderMap.js");
+  const headers = Object.keys(sheetData[0]);
+  let rollNoKey = null;
+
+  for (const header of headers) {
+    const normalizedHeader = header.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (studentHeaderMap.rollNo.includes(normalizedHeader)) {
+      rollNoKey = header;
+      break;
+    }
+  }
+
+  if (!rollNoKey) {
+    throw new ApiError(400, "Could not detect roll number column in the uploaded file");
+  }
+
+  const uploadedRollNumbers = sheetData
+    .map(row => row[rollNoKey]?.toString().trim().toUpperCase())
+    .filter(Boolean);
+
+  let sourceStatus;
+  let targetStatus;
+  let nextWorkflowStage;
+
+  switch (drive.applicationWorkflowStage) {
+    case "shortlisting":
+      sourceStatus = "applied";
+      targetStatus = "shortlisted";
+      nextWorkflowStage = "interview";
+      break;
+    case "interview":
+      sourceStatus = "shortlisted";
+      targetStatus = "interview_scheduled";
+      nextWorkflowStage = "selection";
+      break;
+    case "selection":
+      sourceStatus = "interview_scheduled";
+      targetStatus = "selected";
+      nextWorkflowStage = "completed";
+      break;
+    default:
+      throw new ApiError(400, "Invalid workflow stage");
+  }
+
+  // Find all current applications for this drive at the source status
+  const currentApplications = await Application.find({ 
+    drive: driveId, 
+    college: collegeId,
+    applicationStatus: sourceStatus
+  }).populate("student", "rollNo");
+
+  const matchedAppIds = [];
+  const unmatchedAppIds = [];
+  const selectedStudentIds = [];
+
+  currentApplications.forEach(app => {
+    if (app.student && app.student.rollNo) {
+      if (uploadedRollNumbers.includes(app.student.rollNo.toUpperCase())) {
+        matchedAppIds.push(app._id);
+        if (targetStatus === "selected") {
+          selectedStudentIds.push(app.student._id);
+        }
+      } else {
+        unmatchedAppIds.push(app._id);
+      }
+    }
+  });
+
+  // Bulk update matched
+  if (matchedAppIds.length > 0) {
+    await Application.updateMany(
+      { _id: { $in: matchedAppIds } },
+      { 
+        $set: { 
+          applicationStatus: targetStatus,
+          statusUpdatedAt: new Date(),
+          statusUpdatedBy: collegeId
+        } 
+      }
+    );
+  }
+
+  // Bulk update unmatched
+  if (unmatchedAppIds.length > 0) {
+    await Application.updateMany(
+      { _id: { $in: unmatchedAppIds } },
+      { 
+        $set: { 
+          applicationStatus: "rejected",
+          statusUpdatedAt: new Date(),
+          statusUpdatedBy: collegeId
+        } 
+      }
+    );
+  }
+
+  // Update placement status if selected
+  if (selectedStudentIds.length > 0) {
+    const StudentModel = req.app.get("mongoose") ? req.app.get("mongoose").model("Student") : null;
+    const Student = StudentModel || (await import("../models/Student.models.js")).default;
+    await Student.updateMany(
+      { _id: { $in: selectedStudentIds } },
+      { $set: { placementStatus: "placed" } }
+    );
+  }
+
+  // Advance drive workflow
+  drive.applicationWorkflowStage = nextWorkflowStage;
+  await drive.save();
+
+  return res.status(200).json(new ApiResponse(200, {
+    matchedCount: matchedAppIds.length,
+    unmatchedCount: unmatchedAppIds.length,
+    newWorkflowStage: nextWorkflowStage
+  }, `Workflow advanced to ${nextWorkflowStage}`));
+});
+
 export const updateApplicationStatus = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
   const applicationId = req.params.applicationId;
-  const { status, remarks } = req.body;
+  const { applicationStatus, remarks } = req.body;
 
   // Find application and ensure it belongs to the college
   const application = await Application.findOne({ _id: applicationId, college: collegeId });
@@ -155,17 +329,17 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Application not found or unauthorized");
   }
 
-  application.status = status;
+  application.applicationStatus = applicationStatus;
+  application.statusUpdatedAt = new Date();
+  application.statusUpdatedBy = collegeId;
   if (remarks) application.remarks = remarks;
   
   await application.save();
 
-  // If status is "Selected", you could also update student's placementStatus
-  if (status === "Selected") {
-    // We only import Student if we need it here, or we can use mongoose.model
+  // Update student's placementStatus if selected
+  if (applicationStatus === "selected") {
     const StudentModel = req.app.get("mongoose") ? req.app.get("mongoose").model("Student") : null;
     if(!StudentModel) {
-       // fallback if we need it, but normally we just import it
        const Student = (await import("../models/Student.models.js")).default;
        await Student.findByIdAndUpdate(application.student, { placementStatus: "placed" });
     }
@@ -214,10 +388,17 @@ export const getAllCollegeApplications = asyncHandler(async (req, res) => {
 
 // College fetches a single application by ID
 export const getApplicationById = asyncHandler(async (req, res) => {
-  const collegeId = req.college._id;
   const applicationId = req.params.applicationId;
+  const isStudent = req.role === "student";
 
-  const application = await Application.findOne({ _id: applicationId, college: collegeId })
+  const query = { _id: applicationId };
+  if (isStudent) {
+    query.student = req.student._id;
+  } else {
+    query.college = req.college._id;
+  }
+
+  const application = await Application.findOne(query)
     .populate("student", "fullName rollNo email branch cgpa passingYear skills resume")
     .populate("drive", "title companyName role package location applicationDeadline")
     .lean();

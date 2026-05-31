@@ -9,16 +9,15 @@ export const applyToDriveRules = () => {
 export const updateApplicationStatusRules = () => {
   return [
     param("applicationId").isMongoId().withMessage("Invalid Application ID"),
-    body("status")
+    body("applicationStatus")
       .isIn([
-        "Applied",
-        "Shortlisted",
-        "Interview Scheduled",
-        "Selected",
-        "Rejected",
-        "Withdrawn",
+        "applied",
+        "shortlisted",
+        "interview_scheduled",
+        "selected",
+        "rejected"
       ])
-      .withMessage("Invalid status"),
+      .withMessage("Invalid application status"),
     body("remarks").optional().isString()
   ];
 };

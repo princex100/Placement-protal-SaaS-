@@ -3,17 +3,7 @@ import fs from "fs";
 
 
 
-// CONFIGURATION
 
-cloudinary.config({
-
-   cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
-
-   api_key:process.env.CLOUDINARY_API_KEY,
-
-   api_secret:process.env.CLOUDINARY_API_SECRET
-
-});
 
 
 
@@ -26,6 +16,12 @@ const uploadOnCloudinary = async (
 ) => {
 
    try {
+      // CONFIGURATION (Lazy load so env vars are available)
+      cloudinary.config({
+         cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+         api_key:process.env.CLOUDINARY_API_KEY,
+         api_secret:process.env.CLOUDINARY_API_SECRET
+      });
 
       if(!localFilePath){
          return null;
@@ -77,14 +73,8 @@ const uploadOnCloudinary = async (
 
 
 
-      console.log(
-         "Cloudinary upload error",
-         error
-      );
-
-
-
-      return null;
+      console.error("Cloudinary upload error:", error);
+      throw error;
 
    }
 

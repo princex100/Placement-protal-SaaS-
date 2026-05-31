@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Search, FileText } from "lucide-react";
+import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Search, FileText, CheckCircle2, Upload, X } from "lucide-react";
 import { toast } from "react-hot-toast";
 import api from "../../../api/axios";
 
@@ -14,33 +14,77 @@ const DriveApplications = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalApplications, setTotalApplications] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [showRejected, setShowRejected] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const limit = 25; // As per requirements
 
-  useEffect(() => {
-    const fetchApplications = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get(`/applications/drive/${driveId}?page=${page}&limit=${limit}`);
-        const data = response.data?.data || response.data;
-        
-        setApplications(data.applications || []);
-        setTotalPages(data.totalPages || 1);
-        setTotalApplications(data.totalApplications || 0);
-        
-        // Extract drive metadata from the first application (if populated)
-        if (data.applications?.length > 0 && data.applications[0].drive) {
-          setDrive(data.applications[0].drive);
-        }
-      } catch (error) {
-        console.error("Failed to fetch applications:", error);
-        toast.error("Failed to load applications for this drive.");
-      } finally {
-        setLoading(false);
+  const fetchApplications = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/applications/drive/${driveId}?page=${page}&limit=${limit}&showRejected=${showRejected}`);
+      const data = response.data?.data || response.data;
+      
+      setApplications(data.applications || []);
+      setTotalPages(data.totalPages || 1);
+      setTotalApplications(data.totalApplications || 0);
+      
+      if (data.drive) {
+        setDrive(data.drive);
+      } else if (data.applications?.length > 0 && data.applications[0].drive) {
+        setDrive(data.applications[0].drive);
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch applications:", error);
+      toast.error("Failed to load applications for this drive.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchApplications();
-  }, [driveId, page]);
+  }, [driveId, page, showRejected]);
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      toast.error("Please select a file to upload");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setUploading(true);
+    try {
+      const response = await api.post(`/applications/drive/${driveId}/workflow`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      toast.success(response.data.message || "Workflow advanced successfully");
+      setShowModal(false);
+      setFile(null);
+      setPage(1);
+      fetchApplications();
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error(error.response?.data?.message || "Failed to upload file");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const workflowStages = ["shortlisting", "interview", "selection", "completed"];
+  
+  const getStageIndex = (stage) => {
+    const idx = workflowStages.indexOf(stage);
+    return idx === -1 ? 0 : idx;
+  };
+  
+  const currentStageIndex = getStageIndex(drive?.applicationWorkflowStage || "shortlisting");
 
   return (
     <div className="mx-auto max-w-7xl p-6 lg:p-8">
@@ -62,12 +106,64 @@ const DriveApplications = () => {
               {drive ? `${drive.companyName} - ${drive.role}` : "Loading drive details..."}
             </p>
           </div>
-          <div className="flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-            <FileText size={18} />
-            <span className="font-semibold">{totalApplications} Total Applications</span>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowRejected(!showRejected)}
+              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition-colors ${showRejected ? 'border-red-200 bg-red-50 text-red-600 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-400' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400'}`}
+            >
+              {showRejected ? "Hide Rejected" : "Show Rejected"}
+            </button>
+            <div className="flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+              <FileText size={18} />
+              <span className="font-semibold">{totalApplications} Applications</span>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Workflow Section */}
+      {drive && (
+        <div className="mb-8 rounded-[24px] border border-blue-100 bg-blue-50/30 p-6 dark:border-blue-900/30 dark:bg-blue-900/10">
+          <div className="mb-4">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Workflow Stage</h2>
+            <p className="text-sm text-slate-500">Advance the drive through placement stages sequentially.</p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {workflowStages.map((stage, index) => {
+              const isPast = index < currentStageIndex;
+              const isActive = index === currentStageIndex;
+              const isFuture = index > currentStageIndex;
+              const isCompleted = stage === "completed" && isActive;
+              
+              let btnClass = "";
+              let statusIcon = null;
+
+              if (isPast || isCompleted) {
+                btnClass = "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30 cursor-default opacity-80";
+                statusIcon = <CheckCircle2 size={16} />;
+              } else if (isActive) {
+                btnClass = "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-md cursor-pointer";
+              } else {
+                btnClass = "bg-slate-50 text-slate-400 border-slate-200 dark:bg-slate-800/50 dark:border-slate-700 dark:text-slate-500 cursor-not-allowed";
+              }
+
+              const formatStage = (s) => s === "shortlisting" ? "Shortlist" : s === "interview" ? "Interview Schedule" : s === "selection" ? "Selection" : "Completed";
+
+              return (
+                <button
+                  key={stage}
+                  onClick={() => isActive && stage !== "completed" && setShowModal(true)}
+                  disabled={!isActive || stage === "completed"}
+                  className={`flex items-center justify-between rounded-xl border px-4 py-3 font-semibold transition-all ${btnClass}`}
+                >
+                  <span className="capitalize">{formatStage(stage)}</span>
+                  {statusIcon}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Applications Table */}
       <div className="rounded-[24px] border border-slate-200 bg-white shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
@@ -200,6 +296,62 @@ const DriveApplications = () => {
           </div>
         )}
       </div>
+
+      {/* Upload Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-[32px] bg-white p-8 shadow-2xl dark:bg-slate-900">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Upload Candidates</h2>
+              <button 
+                onClick={() => setShowModal(false)}
+                className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="mb-6 rounded-2xl bg-blue-50 p-4 text-sm text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
+              Upload an Excel or CSV file containing a column for <strong>Roll Number</strong>. All matching students will be moved to the next stage.
+            </div>
+
+            <form onSubmit={handleUpload}>
+              <div className="mb-6">
+                <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  Select File (.xlsx, .csv)
+                </label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept=".xlsx, .csv"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="flex-1 rounded-xl border border-slate-200 bg-white py-3 font-semibold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={uploading}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-70"
+                >
+                  {uploading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
+                  {uploading ? "Uploading..." : "Upload File"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

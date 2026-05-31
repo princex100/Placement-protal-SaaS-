@@ -90,36 +90,6 @@ const ApplicationDetails = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => handleUpdateStatus('Shortlisted')}
-              disabled={updating || application.status === 'Shortlisted'}
-              className="rounded-xl border border-blue-200 bg-blue-50 px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:opacity-50 dark:border-blue-900/50 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
-            >
-              Shortlist
-            </button>
-            <button
-              onClick={() => handleUpdateStatus('Interview Scheduled')}
-              disabled={updating || application.status === 'Interview Scheduled'}
-              className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-2.5 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 disabled:opacity-50 dark:border-amber-900/50 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50"
-            >
-              Schedule Interview
-            </button>
-            <button
-              onClick={() => handleUpdateStatus('Selected')}
-              disabled={updating || application.status === 'Selected'}
-              className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-900/50 dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/50"
-            >
-              Select
-            </button>
-            <button
-              onClick={() => handleUpdateStatus('Rejected')}
-              disabled={updating || application.status === 'Rejected'}
-              className="rounded-xl border border-red-200 bg-red-50 px-5 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50 dark:border-red-900/50 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50"
-            >
-              Reject
-            </button>
-          </div>
         </div>
       </div>
 
