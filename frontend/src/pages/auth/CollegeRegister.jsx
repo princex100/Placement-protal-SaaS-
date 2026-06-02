@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import {
   Building2,
-  GraduationCap,
+  Network,
   Mail,
   Lock,
   Eye,
@@ -113,10 +113,10 @@ const CollegeRegister = () => {
             {/* Logo */}
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 backdrop-blur-xl">
-                <GraduationCap className="h-5 w-5 text-violet-300" />
+                <Network className="h-5 w-5 text-violet-300" />
               </div>
               <div>
-                <h3 className="font-bold text-lg">PlacementPortal</h3>
+                <h3 className="font-bold text-lg">CampusFlow</h3>
                 <p className="text-xs text-slate-400">College Placement Cell</p>
               </div>
             </div>
@@ -197,10 +197,10 @@ const CollegeRegister = () => {
               {/* Mobile Logo */}
               <div className="mb-6 flex items-center gap-3 lg:hidden">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 dark:bg-slate-800">
-                  <LayoutDashboard className="h-5 w-5 text-blue-600" />
+                  <Network className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">PlacementPortal</h2>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">CampusFlow</h2>
                   <p className="text-xs text-slate-500">College Placement Portal</p>
                 </div>
               </div>

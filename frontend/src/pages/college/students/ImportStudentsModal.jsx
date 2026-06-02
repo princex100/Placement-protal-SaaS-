@@ -85,13 +85,13 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 backdrop-blur-sm dark:bg-slate-900/80">
-      <div className="w-full max-w-lg animate-in fade-in zoom-in-95 rounded-[24px] border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800/60">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Import Students</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-2xl border border-white/[0.08] bg-[#12121e] p-6 shadow-2xl shadow-black/40">
+        <div className="flex items-center justify-between border-b border-white/[0.06] pb-4">
+          <h2 className="text-xl font-bold text-white">Import Students</h2>
           <button
             onClick={onClose}
-            className="rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+            className="rounded-lg p-2 text-neutral-500 transition hover:bg-white/[0.06] hover:text-neutral-300"
           >
             <X size={20} />
           </button>
@@ -102,7 +102,7 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 transition-colors hover:border-blue-400 hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-blue-500/50 dark:hover:bg-blue-900/20"
+            className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/[0.08] bg-white/[0.02] p-8 transition-colors hover:border-indigo-500/30 hover:bg-white/[0.04]"
           >
             <input
               type="file"
@@ -112,38 +112,38 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
               onChange={handleFileChange}
             />
             
-            <div className="mb-4 rounded-full bg-blue-100 p-4 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+            <div className="mb-4 rounded-full bg-indigo-500/10 p-4 text-indigo-400 border border-indigo-500/20">
               <Upload size={32} />
             </div>
             
             {file ? (
               <div className="text-center">
-                <p className="font-semibold text-slate-900 dark:text-white">{file.name}</p>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                <p className="font-semibold text-white">{file.name}</p>
+                <p className="mt-1 text-sm text-neutral-500">
                   {(file.size / 1024).toFixed(2)} KB
                 </p>
               </div>
             ) : (
               <div className="text-center">
-                <p className="font-semibold text-slate-900 dark:text-white">
+                <p className="font-semibold text-white">
                   Click to upload or drag and drop
                 </p>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                <p className="mt-1 text-sm text-neutral-500">
                   Excel (.xlsx) or CSV files only
                 </p>
               </div>
             )}
           </div>
 
-          <div className="mt-6 rounded-xl bg-blue-50 p-4 dark:bg-blue-900/20">
+          <div className="mt-6 rounded-xl bg-indigo-500/5 border border-indigo-500/10 p-4">
             <div className="flex gap-3">
-              <Info className="mt-0.5 h-5 w-5 shrink-0 text-blue-600 dark:text-blue-400" />
-              <div className="text-sm text-blue-800 dark:text-blue-300">
-                <p className="font-semibold">Supported column names (auto-detected):</p>
+              <Info className="mt-0.5 h-5 w-5 shrink-0 text-indigo-400" />
+              <div className="text-sm text-indigo-300/80">
+                <p className="font-semibold text-indigo-300">Supported column names (auto-detected):</p>
                 <p className="mt-1">
                   Student Name, Roll Number, Branch, Email, CGPA, Phone, LinkedIn, GitHub, Portfolio, etc.
                 </p>
-                <p className="mt-2 font-medium">
+                <p className="mt-2 font-medium text-indigo-300">
                   Note: Default passwords will be automatically generated and provided to students.
                 </p>
               </div>
@@ -154,14 +154,14 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
         <div className="mt-8 flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-neutral-400 transition hover:bg-white/[0.04] hover:text-neutral-200"
           >
             Cancel
           </button>
           <button
             onClick={handleUpload}
             disabled={!file || isUploading}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:shadow-xl hover:shadow-indigo-500/30 disabled:opacity-50 disabled:shadow-none"
           >
             {isUploading ? (
               <>

@@ -72,54 +72,54 @@ const DriveStudents = () => {
   if (loading) {
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
-        <Loader2 className="h-10 w-10 animate-spin text-blue-600 dark:text-blue-500" />
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-6 lg:p-8">
+    <div className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="mb-8">
         <button 
           onClick={() => navigate(`/college/dashboard/placement-drives/${driveId}`)}
-          className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+          className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Drive Details
         </button>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Applied Students</h1>
-            <p className="mt-2 text-slate-500 dark:text-slate-400">Review and manage students who applied for this drive.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Applied Students</h1>
+            <p className="mt-2 text-sm text-neutral-400">Review and manage students who applied for this drive.</p>
           </div>
-          <div className="flex items-center gap-4 rounded-2xl bg-white px-6 py-4 shadow-sm dark:bg-slate-900">
+          <div className="flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl px-6 py-4">
             <div className="text-center">
-              <p className="text-xs font-semibold text-slate-400">Total Applied</p>
-              <p className="text-2xl font-bold text-slate-900 dark:text-white">{students.length}</p>
+              <p className="text-xs font-semibold text-neutral-500 uppercase">Total Applied</p>
+              <p className="text-2xl font-bold text-white">{students.length}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Toolbar */}
-      <div className="mb-6 flex items-center justify-between rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
+      <div className="mb-6 flex items-center justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
         <div className="relative w-full max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" size={18} />
           <input
             type="text"
             placeholder="Search by name, roll no, or branch..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border-none bg-slate-50 py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500 dark:bg-slate-800/50 dark:text-white"
+            className="w-full rounded-xl border-none bg-white/[0.04] py-3 pl-12 pr-4 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
           />
         </div>
       </div>
 
       {/* Students List */}
-      <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
+      <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-slate-500 dark:bg-slate-800/50 dark:text-slate-400">
+            <thead className="bg-white/[0.04] text-neutral-400">
               <tr>
                 <th className="px-6 py-4 font-semibold">Student Name</th>
                 <th className="px-6 py-4 font-semibold">Roll No</th>
@@ -128,42 +128,42 @@ const DriveStudents = () => {
                 <th className="px-6 py-4 font-semibold text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+            <tbody className="divide-y divide-white/[0.04]">
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="py-12 text-center text-slate-500">No students found matching your search.</td>
+                  <td colSpan="5" className="py-12 text-center text-neutral-500">No students found matching your search.</td>
                 </tr>
               ) : (
                 filteredStudents.map((student) => (
                   <tr 
                     key={student._id} 
-                    className="group cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/30"
+                    className="group cursor-pointer transition-colors hover:bg-white/[0.03]"
                     onClick={() => navigate(`/college/dashboard/student-profile/${student._id}`)}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-sm font-bold text-indigo-400 border border-indigo-500/20">
                           {student.fullName?.charAt(0) || "?"}
                         </div>
-                        <span className="font-semibold text-slate-900 dark:text-white">{student.fullName}</span>
+                        <span className="font-semibold text-white">{student.fullName}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-500 dark:text-slate-400">{student.rollNo}</td>
+                    <td className="px-6 py-4 font-medium text-neutral-400">{student.rollNo}</td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                        <GraduationCap size={14} className="text-slate-400" />
+                      <div className="flex items-center gap-2 text-neutral-300">
+                        <GraduationCap size={14} className="text-neutral-500" />
                         {student.branch}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-semibold text-slate-900 dark:text-white">
+                      <span className="font-semibold text-white">
                         {student.cgpa}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={(e) => handleRemoveStudent(student._id, student.fullName, e)}
-                        className="inline-flex items-center gap-1.5 rounded-lg p-2 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                        className="inline-flex items-center gap-1.5 rounded-lg p-2 text-neutral-500 transition-colors hover:bg-red-500/10 hover:text-red-400"
                         title="Remove Student"
                       >
                         <Trash2 size={16} />

@@ -87,33 +87,33 @@ const DriveApplications = () => {
   const currentStageIndex = getStageIndex(drive?.applicationWorkflowStage || "shortlisting");
 
   return (
-    <div className="mx-auto max-w-7xl p-6 lg:p-8">
+    <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="mb-8">
         <button 
           onClick={() => navigate(`/college/dashboard/placement-drives/${driveId}`)}
-          className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+          className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Drive Details
         </button>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Drive Applications
             </h1>
-            <p className="mt-1 text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-sm text-neutral-400">
               {drive ? `${drive.companyName} - ${drive.role}` : "Loading drive details..."}
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <button
               onClick={() => setShowRejected(!showRejected)}
-              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition-colors ${showRejected ? 'border-red-200 bg-red-50 text-red-600 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-400' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400'}`}
+              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition-colors ${showRejected ? 'border-red-500/20 bg-red-500/10 text-red-400' : 'border-white/[0.06] bg-white/[0.04] text-neutral-400 hover:bg-white/[0.06]'}`}
             >
               {showRejected ? "Hide Rejected" : "Show Rejected"}
             </button>
-            <div className="flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+            <div className="flex items-center gap-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 text-indigo-400">
               <FileText size={18} />
               <span className="font-semibold">{totalApplications} Applications</span>
             </div>
@@ -123,12 +123,12 @@ const DriveApplications = () => {
 
       {/* Workflow Section */}
       {drive && (
-        <div className="mb-8 rounded-[24px] border border-blue-100 bg-blue-50/30 p-6 dark:border-blue-900/30 dark:bg-blue-900/10">
+        <div className="mb-8 rounded-2xl border border-indigo-500/10 bg-indigo-500/5 p-5 sm:p-6">
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Workflow Stage</h2>
-            <p className="text-sm text-slate-500">Advance the drive through placement stages sequentially.</p>
+            <h2 className="text-lg font-bold text-white">Workflow Stage</h2>
+            <p className="text-sm text-neutral-400">Advance the drive through placement stages sequentially.</p>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {workflowStages.map((stage, index) => {
               const isPast = index < currentStageIndex;
               const isActive = index === currentStageIndex;
@@ -139,12 +139,12 @@ const DriveApplications = () => {
               let statusIcon = null;
 
               if (isPast || isCompleted) {
-                btnClass = "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30 cursor-default opacity-80";
+                btnClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 cursor-default opacity-80";
                 statusIcon = <CheckCircle2 size={16} />;
               } else if (isActive) {
-                btnClass = "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-md cursor-pointer";
+                btnClass = "bg-gradient-to-r from-indigo-500 to-violet-600 text-white border-transparent shadow-lg shadow-indigo-500/25 cursor-pointer";
               } else {
-                btnClass = "bg-slate-50 text-slate-400 border-slate-200 dark:bg-slate-800/50 dark:border-slate-700 dark:text-slate-500 cursor-not-allowed";
+                btnClass = "bg-white/[0.02] text-neutral-500 border-white/[0.06] cursor-not-allowed";
               }
 
               const formatStage = (s) => s === "shortlisting" ? "Shortlist" : s === "interview" ? "Interview Schedule" : s === "selection" ? "Selection" : "Completed";
@@ -166,20 +166,20 @@ const DriveApplications = () => {
       )}
 
       {/* Applications Table */}
-      <div className="rounded-[24px] border border-slate-200 bg-white shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
+      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl overflow-hidden">
         <div className="overflow-x-auto p-4">
           {loading ? (
             <div className="flex h-[40vh] items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600 dark:text-blue-500" />
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
             </div>
           ) : applications.length === 0 ? (
-            <div className="flex h-[40vh] flex-col items-center justify-center text-slate-500">
+            <div className="flex h-[40vh] flex-col items-center justify-center text-neutral-500">
               <Search size={48} className="mb-4 opacity-20" />
               <p>No applications found for this drive.</p>
             </div>
           ) : (
-            <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
-              <thead className="bg-slate-50 text-xs uppercase text-slate-500 dark:bg-slate-800/50 dark:text-slate-400 rounded-t-xl">
+            <table className="w-full text-left text-sm text-neutral-400">
+              <thead className="bg-white/[0.04] text-xs uppercase text-neutral-400 rounded-t-xl">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Student Name</th>
                   <th className="px-6 py-4 font-semibold">Roll Number</th>
@@ -190,37 +190,37 @@ const DriveApplications = () => {
                   <th className="px-6 py-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+              <tbody className="divide-y divide-white/[0.04]">
                 {applications.map((app) => (
-                  <tr key={app._id} className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                  <tr key={app._id} className="transition-colors hover:bg-white/[0.03]">
                     <td className="px-6 py-4">
                       <button 
                         onClick={() => navigate(`/college/dashboard/student-profile/${app.student._id}`)}
-                        className="font-medium text-slate-900 hover:text-blue-600 hover:underline dark:text-white dark:hover:text-blue-400"
+                        className="font-medium text-white hover:text-indigo-400 hover:underline"
                       >
                         {app.student.fullName}
                       </button>
                     </td>
                     <td className="px-6 py-4">{app.student.rollNo}</td>
                     <td className="px-6 py-4">{app.student.branch}</td>
-                    <td className="px-6 py-4 font-medium">{app.student.cgpa}</td>
+                    <td className="px-6 py-4 font-medium text-neutral-300">{app.student.cgpa}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-                        app.status === 'Applied' ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' :
-                        app.status === 'Selected' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                        app.status === 'Rejected' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
-                        'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                        app.status === 'Applied' ? 'bg-white/[0.06] text-neutral-300' :
+                        app.status === 'Selected' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                        app.status === 'Rejected' ? 'bg-red-500/10 text-red-400 border border-red-500/20' :
+                        'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
                       }`}>
                         {app.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 text-neutral-400">
                       {new Date(app.appliedAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button
                         onClick={() => navigate(`/college/dashboard/applications/${app._id}`)}
-                        className="font-medium text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                        className="font-medium text-indigo-400 hover:text-indigo-300 hover:underline text-sm"
                       >
                         View Application →
                       </button>
@@ -234,15 +234,15 @@ const DriveApplications = () => {
         
         {/* Pagination Controls */}
         {!loading && applications.length > 0 && (
-          <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 dark:border-slate-800/60">
-            <span className="text-sm text-slate-500 dark:text-slate-400">
-              Showing <span className="font-semibold text-slate-900 dark:text-white">{(page - 1) * limit + 1}</span> to <span className="font-semibold text-slate-900 dark:text-white">{Math.min(page * limit, totalApplications)}</span> of <span className="font-semibold text-slate-900 dark:text-white">{totalApplications}</span> Entries
+          <div className="flex items-center justify-between border-t border-white/[0.06] px-6 py-4">
+            <span className="text-sm text-neutral-500">
+              Showing <span className="font-semibold text-white">{(page - 1) * limit + 1}</span> to <span className="font-semibold text-white">{Math.min(page * limit, totalApplications)}</span> of <span className="font-semibold text-white">{totalApplications}</span> Entries
             </span>
             <div className="flex gap-2">
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-50 disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] text-neutral-400 transition-colors hover:bg-white/[0.06] disabled:opacity-50"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -255,13 +255,13 @@ const DriveApplications = () => {
                   if (idx > 0 && arr[idx - 1] !== p - 1) {
                     return (
                       <React.Fragment key={`ellipsis-${p}`}>
-                        <span className="flex h-9 w-9 items-center justify-center text-slate-500">...</span>
+                        <span className="flex h-9 w-9 items-center justify-center text-neutral-500">...</span>
                         <button
                           onClick={() => setPage(p)}
                           className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
                             page === p
-                              ? "bg-blue-600 text-white"
-                              : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50"
+                              ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white"
+                              : "border border-white/[0.06] bg-white/[0.04] text-neutral-300 hover:bg-white/[0.06]"
                           }`}
                         >
                           {p}
@@ -275,8 +275,8 @@ const DriveApplications = () => {
                       onClick={() => setPage(p)}
                       className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
                         page === p
-                          ? "bg-blue-600 text-white border border-blue-600 dark:border-blue-500"
-                          : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50"
+                          ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white border border-transparent"
+                          : "border border-white/[0.06] bg-white/[0.04] text-neutral-300 hover:bg-white/[0.06]"
                       }`}
                     >
                       {p}
@@ -288,7 +288,7 @@ const DriveApplications = () => {
               <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-50 disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] text-neutral-400 transition-colors hover:bg-white/[0.06] disabled:opacity-50"
               >
                 <ChevronRight size={16} />
               </button>
@@ -299,25 +299,25 @@ const DriveApplications = () => {
 
       {/* Upload Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-[32px] bg-white p-8 shadow-2xl dark:bg-slate-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-[#12121e] p-6 sm:p-8 shadow-2xl shadow-black/40">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Upload Candidates</h2>
+              <h2 className="text-xl font-bold text-white">Upload Candidates</h2>
               <button 
                 onClick={() => setShowModal(false)}
-                className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+                className="rounded-lg p-2 text-neutral-500 hover:bg-white/[0.06] hover:text-neutral-300 transition"
               >
                 <X size={20} />
               </button>
             </div>
             
-            <div className="mb-6 rounded-2xl bg-blue-50 p-4 text-sm text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
-              Upload an Excel or CSV file containing a column for <strong>Roll Number</strong>. All matching students will be moved to the next stage.
+            <div className="mb-6 rounded-xl bg-indigo-500/5 border border-indigo-500/10 p-4 text-sm text-indigo-300/80">
+              Upload an Excel or CSV file containing a column for <strong className="text-indigo-300">Roll Number</strong>. All matching students will be moved to the next stage.
             </div>
 
             <form onSubmit={handleUpload}>
               <div className="mb-6">
-                <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+                <label className="mb-2 block text-sm font-semibold text-neutral-300">
                   Select File (.xlsx, .csv)
                 </label>
                 <div className="relative">
@@ -325,7 +325,7 @@ const DriveApplications = () => {
                     type="file"
                     accept=".xlsx, .csv"
                     onChange={(e) => setFile(e.target.files[0])}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:focus:border-blue-500"
+                    className="w-full rounded-xl border border-white/[0.06] bg-white/[0.04] px-4 py-3 text-sm text-neutral-300 outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-500/10 file:px-3 file:py-1 file:text-sm file:font-semibold file:text-indigo-400"
                     required
                   />
                 </div>
@@ -335,14 +335,14 @@ const DriveApplications = () => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 rounded-xl border border-slate-200 bg-white py-3 font-semibold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/50"
+                  className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.04] py-3 font-semibold text-neutral-400 hover:bg-white/[0.06] transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-70"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 py-3 font-semibold text-white shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 disabled:opacity-70 transition"
                 >
                   {uploading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
                   {uploading ? "Uploading..." : "Upload File"}

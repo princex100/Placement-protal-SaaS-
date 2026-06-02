@@ -95,69 +95,74 @@ const CreatePlacementDrive = () => {
     }
   };
 
+  const inputClasses = "w-full rounded-xl border border-white/[0.06] bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/30";
+
   return (
-    <div className="mx-auto max-w-4xl p-6 lg:p-8">
+    <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <button 
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+          className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Drives
         </button>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Create Placement Drive</h1>
-        <p className="mt-2 text-slate-500 dark:text-slate-400">Publish a new job opportunity for your students.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Create Placement Drive</h1>
+        <p className="mt-2 text-sm text-neutral-400">Publish a new job opportunity for your students.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
         {/* SECTION: Basic Info */}
-        <div className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800/60 dark:bg-slate-900 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white">
-            <Building2 size={20} className="text-blue-500" /> Basic Information
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+              <Building2 size={16} className="text-indigo-400" />
+            </div>
+            Basic Information
           </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
             <div className="col-span-1 md:col-span-2">
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Drive Title *</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Drive Title *</label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g. Google Software Engineer 2024"
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
                 required
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Company Name *</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Company Name *</label>
               <input
                 type="text"
                 name="companyName"
                 value={formData.companyName}
                 onChange={handleChange}
                 placeholder="e.g. Google"
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
                 required
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Role / Designation *</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Role / Designation *</label>
               <input
                 type="text"
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
                 placeholder="e.g. Frontend Developer"
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
                 required
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Job Type</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Job Type</label>
               <select
                 name="jobType"
                 value={formData.jobType}
                 onChange={handleChange}
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
               >
                 <option value="fulltime">Full-Time (FTE)</option>
                 <option value="internship">Internship</option>
@@ -165,12 +170,12 @@ const CreatePlacementDrive = () => {
               </select>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Work Mode</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Work Mode</label>
               <select
                 name="mode"
                 value={formData.mode}
                 onChange={handleChange}
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
               >
                 <option value="on-site">On-site</option>
                 <option value="hybrid">Hybrid</option>
@@ -178,9 +183,9 @@ const CreatePlacementDrive = () => {
               </select>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Package (LPA) *</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Package (LPA) *</label>
               <div className="relative">
-                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={16} />
                 <input
                   type="number"
                   step="0.1"
@@ -188,22 +193,22 @@ const CreatePlacementDrive = () => {
                   value={formData.package}
                   onChange={handleChange}
                   placeholder="e.g. 12.5"
-                  className="w-full rounded-xl border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                  className={`${inputClasses} pl-10`}
                   required
                 />
               </div>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Location</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={16} />
                 <input
                   type="text"
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="e.g. Bangalore"
-                  className="w-full rounded-xl border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                  className={`${inputClasses} pl-10`}
                 />
               </div>
             </div>
@@ -211,13 +216,16 @@ const CreatePlacementDrive = () => {
         </div>
 
         {/* SECTION: Eligibility */}
-        <div className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800/60 dark:bg-slate-900 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white">
-            <GraduationCap size={20} className="text-emerald-500" /> Eligibility Criteria
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+              <GraduationCap size={16} className="text-emerald-400" />
+            </div>
+            Eligibility Criteria
           </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Minimum CGPA</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Minimum CGPA</label>
               <input
                 type="number"
                 step="0.01"
@@ -227,11 +235,11 @@ const CreatePlacementDrive = () => {
                 value={formData.minimumCgpa}
                 onChange={handleChange}
                 placeholder="e.g. 7.5"
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Max Active Backlogs Allowed</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Max Active Backlogs Allowed</label>
               <input
                 type="number"
                 min="0"
@@ -239,37 +247,45 @@ const CreatePlacementDrive = () => {
                 value={formData.backlogAllowed}
                 onChange={handleChange}
                 placeholder="e.g. 0"
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
               />
             </div>
             <div className="col-span-1 md:col-span-2">
-              <label className="mb-3 block text-sm font-semibold text-slate-700 dark:text-slate-300">Eligible Branches</label>
+              <label className="mb-3 block text-sm font-semibold text-neutral-300">Eligible Branches</label>
               <div className="flex flex-wrap gap-3">
                 {PREDEFINED_BRANCHES.map((branch) => (
-                  <label key={branch} className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:bg-slate-800">
+                  <label key={branch} className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 transition-colors ${
+                    formData.eligibleBranches.includes(branch) 
+                      ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' 
+                      : 'border-white/[0.06] bg-white/[0.04] text-neutral-400 hover:bg-white/[0.06]'
+                  }`}>
                     <input
                       type="checkbox"
-                      className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 rounded border-neutral-600 bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
                       checked={formData.eligibleBranches.includes(branch)}
                       onChange={() => handleCheckboxChange("eligibleBranches", branch)}
                     />
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{branch}</span>
+                    <span className="text-sm font-medium">{branch}</span>
                   </label>
                 ))}
               </div>
             </div>
             <div className="col-span-1 md:col-span-2">
-              <label className="mb-3 block text-sm font-semibold text-slate-700 dark:text-slate-300">Passing Years Allowed</label>
+              <label className="mb-3 block text-sm font-semibold text-neutral-300">Passing Years Allowed</label>
               <div className="flex flex-wrap gap-3">
                 {PREDEFINED_YEARS.map((year) => (
-                  <label key={year} className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:bg-slate-800">
+                  <label key={year} className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 transition-colors ${
+                    formData.passingYearsAllowed.includes(year) 
+                      ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' 
+                      : 'border-white/[0.06] bg-white/[0.04] text-neutral-400 hover:bg-white/[0.06]'
+                  }`}>
                     <input
                       type="checkbox"
-                      className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 rounded border-neutral-600 bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
                       checked={formData.passingYearsAllowed.includes(year)}
                       onChange={() => handleCheckboxChange("passingYearsAllowed", year)}
                     />
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{year}</span>
+                    <span className="text-sm font-medium">{year}</span>
                   </label>
                 ))}
               </div>
@@ -278,43 +294,49 @@ const CreatePlacementDrive = () => {
         </div>
 
         {/* SECTION: Timeline */}
-        <div className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800/60 dark:bg-slate-900 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white">
-            <Clock size={20} className="text-orange-500" /> Timeline
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <Clock size={16} className="text-amber-400" />
+            </div>
+            Timeline
           </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Application Deadline *</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Application Deadline *</label>
               <input
                 type="date"
                 name="applicationDeadline"
                 value={formData.applicationDeadline}
                 onChange={handleChange}
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
                 required
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Interview / Drive Date</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Interview / Drive Date</label>
               <input
                 type="date"
                 name="driveDate"
                 value={formData.driveDate}
                 onChange={handleChange}
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={inputClasses}
               />
             </div>
           </div>
         </div>
 
         {/* SECTION: Details */}
-        <div className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800/60 dark:bg-slate-900 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white">
-            <Briefcase size={20} className="text-purple-500" /> Additional Details
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-500/10 border border-violet-500/20">
+              <Briefcase size={16} className="text-violet-400" />
+            </div>
+            Additional Details
           </h2>
           <div className="space-y-6">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Required Skills</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Required Skills</label>
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -322,12 +344,12 @@ const CreatePlacementDrive = () => {
                   onChange={(e) => setSkillInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addSkill(e)}
                   placeholder="e.g. React, Node.js"
-                  className="flex-1 rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                  className={`${inputClasses} flex-1`}
                 />
                 <button
                   onClick={addSkill}
                   type="button"
-                  className="flex items-center gap-1 rounded-xl bg-slate-100 px-4 font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                  className="flex items-center gap-1 rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 font-semibold text-neutral-300 transition hover:bg-white/[0.06]"
                 >
                   <Plus size={18} /> Add
                 </button>
@@ -335,12 +357,12 @@ const CreatePlacementDrive = () => {
               {formData.skillsRequired.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {formData.skillsRequired.map((skill, idx) => (
-                    <span key={idx} className="flex items-center gap-1 rounded-lg bg-blue-50 py-1 pl-3 pr-1 text-sm font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                    <span key={idx} className="flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 py-1 pl-3 pr-1 text-sm font-medium text-indigo-300">
                       {skill}
                       <button
                         type="button"
                         onClick={() => removeSkill(skill)}
-                        className="rounded-md p-1 hover:bg-blue-100 hover:text-blue-800 dark:hover:bg-blue-900 dark:hover:text-blue-100"
+                        className="rounded-md p-1 hover:bg-indigo-500/20 hover:text-white transition"
                       >
                         <X size={14} />
                       </button>
@@ -351,26 +373,26 @@ const CreatePlacementDrive = () => {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Job Description</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Job Description</label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 rows="4"
                 placeholder="Describe the company and the role..."
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={`${inputClasses} resize-none`}
               ></textarea>
             </div>
             
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Key Responsibilities</label>
+              <label className="mb-2 block text-sm font-semibold text-neutral-300">Key Responsibilities</label>
               <textarea
                 name="responsibilities"
                 value={formData.responsibilities}
                 onChange={handleChange}
                 rows="4"
                 placeholder="What will the student do on a day-to-day basis?"
-                className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white"
+                className={`${inputClasses} resize-none`}
               ></textarea>
             </div>
           </div>
@@ -381,14 +403,14 @@ const CreatePlacementDrive = () => {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="rounded-xl px-6 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="rounded-xl px-6 py-3 text-sm font-semibold text-neutral-400 transition-colors hover:bg-white/[0.04] hover:text-neutral-200"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 disabled:pointer-events-none disabled:opacity-70"
+            className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/30 disabled:pointer-events-none disabled:opacity-70"
           >
             {loading ? <Loader2 size={18} className="animate-spin" /> : "Publish Drive"}
           </button>

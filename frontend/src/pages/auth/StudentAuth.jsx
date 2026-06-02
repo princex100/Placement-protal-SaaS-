@@ -7,7 +7,7 @@ import api from '../../api/axios';
 import { toast } from 'react-hot-toast';
 import { 
   Mail, Lock, Eye, EyeOff, Briefcase, TrendingUp, GraduationCap, 
-  CheckCircle2, Calendar, Sparkles, ChevronRight, Hash
+  CheckCircle2, Calendar, Network, ChevronRight, Hash
 } from 'lucide-react';
 
 const StudentLogin = () => {
@@ -74,9 +74,11 @@ const StudentLogin = () => {
           </div>
 
           <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-5 lg:hidden text-indigo-600 dark:text-indigo-400">
-              <Sparkles className="h-5 w-5" />
-              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">PlacementPortal</span>
+            <div className="flex items-center gap-2 mb-5 lg:hidden text-violet-600 dark:text-violet-400">
+              <div className="flex size-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
+                <Network className="h-4 w-4 text-white" />
+              </div>
+              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Campus<span className="text-violet-600 dark:text-violet-400">Flow</span></span>
             </div>
 
             <motion.h1 
@@ -172,9 +174,11 @@ const StudentLogin = () => {
           <div className="w-full max-w-md mx-auto flex flex-col h-full justify-center">
             
             {/* Header Logo */}
-            <div className="hidden lg:flex items-center gap-2 mb-6 text-indigo-600 dark:text-indigo-400">
-              <Sparkles className="h-6 w-6" />
-              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">PlacementPortal</span>
+            <div className="hidden lg:flex items-center gap-2 mb-6 text-violet-600 dark:text-violet-400">
+              <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
+                <Network className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Campus<span className="text-violet-600 dark:text-violet-400">Flow</span></span>
             </div>
 
             {/* Form Header */}
@@ -250,7 +254,7 @@ const StudentLogin = () => {
 
           {/* Footer */}
           <div className="absolute bottom-3 left-0 right-0 px-8 sm:px-12 flex items-center justify-between text-[10px] font-medium text-slate-400 dark:text-slate-500">
-            <span>© 2026 Placement Portal</span>
+            <span>© 2026 CampusFlow</span>
             <a href="#" className="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
           </div>
         </div>
