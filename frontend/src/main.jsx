@@ -10,6 +10,7 @@ import {
 import "./index.css";
 
 import App from "./App";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 import LandingPage from "./pages/LandingPage";
 
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
 
           {/* Shared Layout */}
@@ -90,3 +92,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </Provider>
   </React.StrictMode>
 );
+

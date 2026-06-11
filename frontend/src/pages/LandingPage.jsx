@@ -109,13 +109,13 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#06060a] font-sans text-white antialiased selection:bg-indigo-500/30 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#06060a] font-sans text-slate-900 dark:text-white antialiased selection:bg-indigo-500/30 selection:text-slate-900 dark:text-white">
       
       {/* Ambient Background */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-indigo-600/20 blur-[120px]" />
-        <div className="absolute -right-1/4 top-1/3 h-[500px] w-[500px] rounded-full bg-violet-600/15 blur-[100px]" />
-        <div className="absolute bottom-0 left-1/3 h-[400px] w-[400px] rounded-full bg-cyan-600/10 blur-[80px]" />
+        <div className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-indigo-400/30 dark:bg-indigo-600/20 blur-[120px]" />
+        <div className="absolute -right-1/4 top-1/3 h-[500px] w-[500px] rounded-full bg-violet-400/20 dark:bg-violet-600/15 blur-[100px]" />
+        <div className="absolute bottom-0 left-1/3 h-[400px] w-[400px] rounded-full bg-cyan-400/20 dark:bg-cyan-600/10 blur-[80px]" />
       </div>
 
       {/* Hero Section */}
@@ -131,7 +131,7 @@ const LandingPage = () => {
             <h1 className="flex items-center justify-center text-center text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
               <span className="pb-2">
                 <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-indigo-400 bg-clip-text text-transparent">{typedBase}</span>
-                <span className="text-white">{typedHighlight}</span>
+                <span className="text-slate-900 dark:text-white">{typedHighlight}</span>
               </span>
               <motion.span
                 animate={{ opacity: [1, 0] }}
@@ -141,7 +141,7 @@ const LandingPage = () => {
             </h1>
           </motion.div>
 
-          <motion.p variants={fadeInUp} className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60">
+          <motion.p variants={fadeInUp} className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-white/60">
             Connecting Students and Colleges in one streamlined placement ecosystem. 
             Automate workflows, track applications, and organize campus drives seamlessly.
           </motion.p>
@@ -161,7 +161,7 @@ const LandingPage = () => {
             )}
             <button 
               onClick={scrollToPortalPreview} 
-              className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:border-white/20"
+              className="rounded-xl border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/5 dark:shadow-none px-8 py-4 text-base font-semibold text-slate-900 dark:text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:border-slate-300 dark:border-white/20"
             >
               Explore Portal
             </button>
@@ -189,22 +189,22 @@ const LandingPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] shadow-2xl shadow-black/40 backdrop-blur-xl lg:h-[700px]"
+            className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none shadow-2xl shadow-black/40 backdrop-blur-xl lg:h-[700px]"
           >
             {/* Browser Chrome */}
-            <div className="flex h-12 items-center border-b border-white/[0.06] bg-white/[0.03] px-4">
+            <div className="flex h-12 items-center border-b border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.03] px-4">
               <div className="flex gap-2">
                 <div className="h-3 w-3 rounded-full bg-white/10 transition-colors hover:bg-red-500/60"></div>
                 <div className="h-3 w-3 rounded-full bg-white/10 transition-colors hover:bg-yellow-500/60"></div>
                 <div className="h-3 w-3 rounded-full bg-white/10 transition-colors hover:bg-green-500/60"></div>
               </div>
-              <div className="mx-auto flex items-center gap-2 rounded-lg bg-white/[0.05] px-4 py-1.5">
+              <div className="mx-auto flex items-center gap-2 rounded-lg bg-slate-200 dark:bg-white/[0.05] px-4 py-1.5">
                 <div className="h-2 w-2 rounded-full bg-green-500/60"></div>
-                <span className="text-xs text-white/40">campusflow.edu</span>
+                <span className="text-xs text-slate-500 dark:text-white/40">campusflow.edu</span>
               </div>
             </div>
             
-            <div className="relative h-[calc(100%-3rem)] w-full overflow-hidden bg-[#0a0a12]">
+            <div className="relative h-[calc(100%-3rem)] w-full overflow-hidden bg-slate-50 dark:bg-[#0a0a12]">
               <AnimatePresence mode="wait">
                 <motion.div key={activePortal} variants={portalPreviewVariants} initial="initial" animate="animate" exit="exit" className="h-full w-full">
                   {activePortal === 'student' && <StudentPortalPreview />}
@@ -228,7 +228,7 @@ const LandingPage = () => {
             <span className="inline-block rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-medium text-indigo-400">
               Core Platform
             </span>
-            <p className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <p className="mt-6 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
               Built for scale, designed for <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">simplicity</span>
             </p>
           </motion.div>
@@ -259,7 +259,7 @@ const LandingPage = () => {
             <span className="inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-400">
               Workflow
             </span>
-            <p className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">A streamlined process</p>
+            <p className="mt-6 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">A streamlined process</p>
           </motion.div>
           <motion.div 
             initial="initial"
@@ -269,11 +269,11 @@ const LandingPage = () => {
             className="relative flex flex-col items-center justify-between gap-8 md:flex-row"
           >
             <WorkflowStep icon={<Briefcase className="h-7 w-7" />} step="1. College Creates Drive" desc="Colleges set criteria and post placement openings." color="indigo" />
-            <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-white/20 md:block" />
+            <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-slate-400 dark:text-white/20 md:block" />
             <WorkflowStep icon={<CheckCircle2 className="h-7 w-7" />} step="2. Verification" desc="Placement cell verifies the drive requirements." color="violet" />
-            <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-white/20 md:block" />
+            <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-slate-400 dark:text-white/20 md:block" />
             <WorkflowStep icon={<GraduationCap className="h-7 w-7" />} step="3. Students Apply" desc="Eligible students submit their applications." color="cyan" />
-            <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-white/20 md:block" />
+            <ChevronRight className="hidden h-6 w-6 flex-shrink-0 text-slate-400 dark:text-white/20 md:block" />
             <WorkflowStep icon={<Users className="h-7 w-7" />} step="4. Recruitment Process" desc="Interviews are held and offers are made." color="emerald" />
           </motion.div>
         </div>
@@ -290,8 +290,8 @@ const LandingPage = () => {
                 viewport={{ once: true }}
                 className="mb-16 text-center"
               >
-                <h2 className="text-4xl font-bold tracking-tight text-white">Choose Your Portal</h2>
-                <p className="mt-4 text-lg text-white/50">Select your role to access your personalized dashboard.</p>
+                <h2 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">Choose Your Portal</h2>
+                <p className="mt-4 text-lg text-slate-500 dark:text-white/50">Select your role to access your personalized dashboard.</p>
               </motion.div>
               <motion.div 
                 initial="initial"
@@ -311,13 +311,13 @@ const LandingPage = () => {
               viewport={{ once: true }}
               className="flex flex-col items-center justify-center text-center"
             >
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">{"You're on your way to success!"}</h2>
-              <p className="mb-12 text-lg text-white/50">Jump right into your personalized dashboard to track your progress.</p>
-              <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] p-4 shadow-2xl backdrop-blur-xl">
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">{"You're on your way to success!"}</h2>
+              <p className="mb-12 text-lg text-slate-500 dark:text-white/50">Jump right into your personalized dashboard to track your progress.</p>
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200 dark:border-white/[0.08] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-4 shadow-2xl backdrop-blur-xl">
                 <img src="/students_placed.png" alt="Students celebrating placement" className="w-full max-w-4xl aspect-video rounded-2xl object-cover" />
               </div>
               <div className="mt-12">
-                <Link to={user?.role === 'college-admin' ? '/college/dashboard' : '/student/dashboard'} className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-4 font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/40">
+                <Link to={user?.role === 'college-admin' ? '/college/dashboard' : '/student/dashboard'} className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-4 font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/40">
                   Go to Dashboard <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -354,8 +354,8 @@ const LandingPage = () => {
           viewport={{ once: true }}
           className="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">{user ? "Resume Your Progress" : "Start Your Placement Journey Today"}</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/60">{user ? "Head back to your dashboard to track applications, manage drives, and stay on top of your career goals." : "Join the ecosystem today. Select your portal to create an account and unlock endless opportunities."}</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">{user ? "Resume Your Progress" : "Start Your Placement Journey Today"}</h2>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600 dark:text-white/60">{user ? "Head back to your dashboard to track applications, manage drives, and stay on top of your career goals." : "Join the ecosystem today. Select your portal to create an account and unlock endless opportunities."}</p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             {!user ? (
               <>
@@ -365,7 +365,7 @@ const LandingPage = () => {
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </Link>
-                <Link to="/college/auth" className="w-full rounded-xl border border-white/20 bg-white/10 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20 sm:w-auto">
+                <Link to="/college/auth" className="w-full rounded-xl border border-slate-300 dark:border-white/20 bg-white/10 px-8 py-4 text-sm font-bold text-slate-900 dark:text-white backdrop-blur-sm transition-all hover:bg-white/20 sm:w-auto">
                   College Portal
                 </Link>
               </>
@@ -408,8 +408,8 @@ const FeatureCard = ({ icon, title, description, color }) => {
       <div className={`mb-5 inline-flex rounded-xl p-3 transition-colors ${iconStyles[color]}`}>
         {icon}
       </div>
-      <h3 className="mb-3 text-xl font-bold text-white">{title}</h3>
-      <p className="leading-relaxed text-white/50">{description}</p>
+      <h3 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+      <p className="leading-relaxed text-slate-500 dark:text-white/50">{description}</p>
     </motion.div>
   );
 };
@@ -427,8 +427,8 @@ const WorkflowStep = ({ icon, step, desc, color }) => {
       <div className={`flex h-16 w-16 items-center justify-center rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-110 ${colorStyles[color]}`}>
         {icon}
       </div>
-      <h4 className="mt-6 font-bold text-white">{step}</h4>
-      <p className="mt-2 text-sm text-white/50">{desc}</p>
+      <h4 className="mt-6 font-bold text-slate-900 dark:text-white">{step}</h4>
+      <p className="mt-2 text-sm text-slate-500 dark:text-white/50">{desc}</p>
     </motion.div>
   );
 };
@@ -452,16 +452,16 @@ const PortalCard = ({ icon, title, desc, link, linkText, color }) => {
   return (
     <motion.div 
       variants={scaleIn}
-      className={`group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${colorStyles[color]}`}
+      className={`group flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-8 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${colorStyles[color]}`}
     >
       <div>
         <div className={`mb-6 inline-flex rounded-xl p-4 transition-colors ${iconBgStyles[color]}`}>
           {icon}
         </div>
-        <h3 className="mb-3 text-2xl font-bold text-white">{title}</h3>
-        <p className="mb-8 leading-relaxed text-white/50">{desc}</p>
+        <h3 className="mb-3 text-2xl font-bold text-slate-900 dark:text-white">{title}</h3>
+        <p className="mb-8 leading-relaxed text-slate-500 dark:text-white/50">{desc}</p>
       </div>
-      <Link to={link} className={`group/btn inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r px-6 py-4 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-xl ${buttonStyles[color]}`}>
+      <Link to={link} className={`group/btn inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r px-6 py-4 text-sm font-semibold text-slate-900 dark:text-white shadow-lg transition-all hover:shadow-xl ${buttonStyles[color]}`}>
         {linkText} <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
       </Link>
     </motion.div>
@@ -469,9 +469,9 @@ const PortalCard = ({ icon, title, desc, link, linkText, color }) => {
 };
 
 const StatColumn = ({ value, label }) => (
-  <motion.div variants={fadeInUp} className="flex flex-col rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 backdrop-blur-xl">
+  <motion.div variants={fadeInUp} className="flex flex-col rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-8 backdrop-blur-xl">
     <dt className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-5xl font-bold text-transparent">{value}</dt>
-    <dd className="mt-3 text-sm font-medium uppercase tracking-wider text-white/40">{label}</dd>
+    <dd className="mt-3 text-sm font-medium uppercase tracking-wider text-slate-500 dark:text-white/40">{label}</dd>
   </motion.div>
 );
 
@@ -482,8 +482,8 @@ const PortalPreviewButton = ({ active, onClick, icon, label }) => (
     onClick={onClick}
     className={`flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 ${
       active 
-        ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/25' 
-        : 'border border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+        ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25' 
+        : 'border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/5 dark:shadow-none text-slate-600 dark:text-white/60 hover:bg-white/10 hover:text-slate-900 dark:hover:text-white'
     }`}
   >
     {icon} {label}
@@ -492,7 +492,7 @@ const PortalPreviewButton = ({ active, onClick, icon, label }) => (
 
 const StudentPortalPreview = () => (
   <div className="flex h-full w-full">
-    <div className="hidden w-64 flex-col border-r border-white/[0.06] bg-white/[0.02] p-4 lg:flex">
+    <div className="hidden w-64 flex-col border-r border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-4 lg:flex">
       <div className="space-y-1">
         <SidebarItem icon={<LayoutDashboard size={18} />} label="Dashboard" active />
         <SidebarItem icon={<FileText size={18} />} label="My Applications" />
@@ -508,18 +508,18 @@ const StudentPortalPreview = () => (
     <div className="flex-1 overflow-y-auto p-6">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Welcome back, Ankit</h2>
-          <p className="mt-1 text-sm text-white/50">{"Here's what's happening with your placements."}</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, Ankit</h2>
+          <p className="mt-1 text-sm text-slate-500 dark:text-white/50">{"Here's what's happening with your placements."}</p>
         </div>
         <div className="flex items-center gap-4">
-          <button className="relative rounded-full border border-white/10 bg-white/5 p-2 text-white/50 transition-colors hover:bg-white/10 hover:text-white">
+          <button className="relative rounded-full border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/5 dark:shadow-none p-2 text-slate-500 dark:text-white/50 transition-colors hover:bg-white/10 hover:text-slate-900 dark:hover:text-white">
             <Bell size={20} />
             <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500"></span>
           </button>
-          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 pr-3">
+          <div className="flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/5 dark:shadow-none p-1 pr-3">
             <img src="https://ui-avatars.com/api/?name=Ankit+Sharma&background=6366f1&color=fff" alt="User" className="h-8 w-8 rounded-full" />
-            <span className="text-sm font-medium text-white/80">Ankit Sharma</span>
-            <ChevronDown size={14} className="text-white/40" />
+            <span className="text-sm font-medium text-slate-700 dark:text-white/80">Ankit Sharma</span>
+            <ChevronDown size={14} className="text-slate-500 dark:text-white/40" />
           </div>
         </div>
       </div>
@@ -532,9 +532,9 @@ const StudentPortalPreview = () => (
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-xl lg:col-span-2">
+        <div className="rounded-xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-5 backdrop-blur-xl lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-bold text-white">Upcoming Placement Drives</h3>
+            <h3 className="font-bold text-slate-900 dark:text-white">Upcoming Placement Drives</h3>
             <button className="text-sm font-medium text-indigo-400 transition-colors hover:text-indigo-300">View All</button>
           </div>
           <div className="space-y-3">
@@ -544,13 +544,13 @@ const StudentPortalPreview = () => (
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-xl">
-          <h3 className="mb-4 font-bold text-white">Application Status</h3>
+        <div className="rounded-xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-5 backdrop-blur-xl">
+          <h3 className="mb-4 font-bold text-slate-900 dark:text-white">Application Status</h3>
           <div className="relative flex h-36 items-center justify-center">
-            <div className="h-28 w-28 rounded-full border-[10px] border-white/[0.06] border-b-amber-500/60 border-l-violet-500/60 border-r-emerald-500/60 border-t-indigo-500/60"></div>
+            <div className="h-28 w-28 rounded-full border-[10px] border-slate-200 dark:border-white/[0.06] border-b-amber-500/60 border-l-violet-500/60 border-r-emerald-500/60 border-t-indigo-500/60"></div>
             <div className="absolute flex flex-col items-center">
-              <span className="text-xl font-bold text-white">12</span>
-              <span className="text-[10px] text-white/50">Total</span>
+              <span className="text-xl font-bold text-slate-900 dark:text-white">12</span>
+              <span className="text-[10px] text-slate-500 dark:text-white/50">Total</span>
             </div>
           </div>
           <div className="mt-2 space-y-1.5">
@@ -567,7 +567,7 @@ const StudentPortalPreview = () => (
 
 const CollegePortalPreview = () => (
   <div className="flex h-full w-full">
-    <div className="hidden w-64 flex-col border-r border-white/[0.06] bg-white/[0.02] p-4 lg:flex">
+    <div className="hidden w-64 flex-col border-r border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-4 lg:flex">
       <div className="space-y-1">
         <SidebarItem icon={<LayoutDashboard size={18} />} label="Dashboard" active />
         <SidebarItem icon={<Users size={18} />} label="Students" />
@@ -581,8 +581,8 @@ const CollegePortalPreview = () => (
     
     <div className="flex-1 overflow-y-auto p-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white">Placement Cell Overview</h2>
-        <p className="mt-1 text-sm text-white/50">Manage and coordinate student placements effectively.</p>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Placement Cell Overview</h2>
+        <p className="mt-1 text-sm text-slate-500 dark:text-white/50">Manage and coordinate student placements effectively.</p>
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
@@ -593,8 +593,8 @@ const CollegePortalPreview = () => (
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-xl lg:col-span-2">
-          <h3 className="mb-4 font-bold text-white">Incoming Placement Drives</h3>
+        <div className="rounded-xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-5 backdrop-blur-xl lg:col-span-2">
+          <h3 className="mb-4 font-bold text-slate-900 dark:text-white">Incoming Placement Drives</h3>
           <div className="space-y-3">
             <DriveApprovalRow company="Google" role="SDE Internship" packages="12 LPA" />
             <DriveApprovalRow company="Amazon" role="Full Time Engineer" packages="16 LPA" />
@@ -602,12 +602,12 @@ const CollegePortalPreview = () => (
           </div>
         </div>
         
-        <div className="flex flex-col justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-xl">
-          <h3 className="font-bold text-white">Placement Analytics</h3>
+        <div className="flex flex-col justify-between rounded-xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-5 backdrop-blur-xl">
+          <h3 className="font-bold text-slate-900 dark:text-white">Placement Analytics</h3>
           <div className="flex flex-1 items-center justify-center my-4">
-             <BarChart3 className="h-28 w-28 text-white/10" />
+             <BarChart3 className="h-28 w-28 text-slate-900 dark:text-white/10" />
           </div>
-          <button className="w-full rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-medium text-indigo-400 transition-all hover:bg-white/10">
+          <button className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/5 dark:shadow-none py-3 text-sm font-medium text-indigo-400 transition-all hover:bg-white/10">
             Generate Full Report
           </button>
         </div>
@@ -620,7 +620,7 @@ const CollegePortalPreview = () => (
 
 const SidebarItem = ({ icon, label, active }) => (
   <button className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-    active ? 'bg-gradient-to-r from-indigo-500/20 to-violet-500/10 text-indigo-400' : 'text-white/50 hover:bg-white/5 hover:text-white'
+    active ? 'bg-gradient-to-r from-indigo-500/20 to-violet-500/10 text-indigo-400' : 'text-slate-500 dark:text-white/50 hover:bg-white shadow-sm dark:bg-white/5 dark:shadow-none hover:text-slate-900 dark:hover:text-white'
   }`}>
     {icon}
     {label}
@@ -636,15 +636,15 @@ const StatCard = ({ title, value, trend, icon, color }) => {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-xl transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04]">
+    <div className="rounded-xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-5 backdrop-blur-xl transition-all duration-300 hover:border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/[0.04]">
       <div className="mb-3 flex items-center gap-3">
         <div className={`rounded-lg p-2 ${colorStyles[color]}`}>
           {icon}
         </div>
-        <h4 className="text-sm font-medium text-white/50">{title}</h4>
+        <h4 className="text-sm font-medium text-slate-500 dark:text-white/50">{title}</h4>
       </div>
       <div className="mt-2 flex items-baseline gap-2">
-        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className="text-2xl font-bold text-slate-900 dark:text-white">{value}</span>
         <span className={`text-xs font-medium ${color === 'amber' ? 'text-amber-400/70' : 'text-emerald-400/70'}`}>
           {trend}
         </span>
@@ -654,19 +654,19 @@ const StatCard = ({ title, value, trend, icon, color }) => {
 };
 
 const DriveRow = ({ company, role, package: pkg, eligible, date, status }) => (
-  <div className="flex items-center justify-between rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 transition-all hover:border-white/10 hover:bg-white/[0.04]">
+  <div className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-white/[0.04] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-4 transition-all hover:border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/[0.04]">
     <div className="flex items-center gap-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 font-bold text-white/70">
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/5 dark:shadow-none font-bold text-slate-600 dark:text-white/70">
         {company[0]}
       </div>
       <div>
-        <h4 className="font-semibold text-white">{company} <span className="text-sm font-normal text-white/40">{role}</span></h4>
-        <p className="mt-1 text-xs text-white/40">Eligible: {eligible}</p>
+        <h4 className="font-semibold text-slate-900 dark:text-white">{company} <span className="text-sm font-normal text-slate-500 dark:text-white/40">{role}</span></h4>
+        <p className="mt-1 text-xs text-slate-500 dark:text-white/40">Eligible: {eligible}</p>
       </div>
     </div>
-    <div className="hidden text-sm font-medium text-white/60 md:block">{pkg}</div>
-    <div className="hidden flex-col items-end text-xs text-white/40 md:flex">
-      <Calendar size={14} className="mb-1 text-white/30" />
+    <div className="hidden text-sm font-medium text-slate-600 dark:text-white/60 md:block">{pkg}</div>
+    <div className="hidden flex-col items-end text-xs text-slate-500 dark:text-white/40 md:flex">
+      <Calendar size={14} className="mb-1 text-slate-400 dark:text-white/30" />
       {date}
     </div>
     <button className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-all ${
@@ -680,10 +680,10 @@ const DriveRow = ({ company, role, package: pkg, eligible, date, status }) => (
 );
 
 const DriveApprovalRow = ({ company, role, packages }) => (
-  <div className="flex items-center justify-between rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 transition-all hover:border-white/10 hover:bg-white/[0.04]">
+  <div className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-white/[0.04] bg-white shadow-md dark:bg-white/[0.02] dark:shadow-none p-4 transition-all hover:border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/[0.04]">
     <div>
-      <h4 className="font-semibold text-white">{company} <span className="px-2 text-sm font-normal text-white/20">•</span> <span className="text-sm font-normal text-white/60">{role}</span></h4>
-      <p className="mt-1 text-xs text-white/40">Package: {packages}</p>
+      <h4 className="font-semibold text-slate-900 dark:text-white">{company} <span className="px-2 text-sm font-normal text-slate-400 dark:text-white/20">•</span> <span className="text-sm font-normal text-slate-600 dark:text-white/60">{role}</span></h4>
+      <p className="mt-1 text-xs text-slate-500 dark:text-white/40">Package: {packages}</p>
     </div>
     <div className="flex gap-2">
       <button className="rounded-lg bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-400 transition-all hover:bg-red-500/30">Reject</button>
@@ -696,9 +696,9 @@ const ChartLegend = ({ label, value, color }) => (
   <div className="flex items-center justify-between text-sm">
     <div className="flex items-center gap-2">
       <span className={`h-2.5 w-2.5 rounded-full ${color}`}></span>
-      <span className="text-white/50">{label}</span>
+      <span className="text-slate-500 dark:text-white/50">{label}</span>
     </div>
-    <span className="font-semibold text-white">{value}</span>
+    <span className="font-semibold text-slate-900 dark:text-white">{value}</span>
   </div>
 );
 

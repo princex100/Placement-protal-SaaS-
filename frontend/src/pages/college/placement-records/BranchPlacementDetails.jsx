@@ -53,23 +53,23 @@ const BranchPlacementDetails = () => {
       <div className="mb-8">
         <button 
           onClick={() => navigate("/college/dashboard/placement-records")}
-          className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
+          className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Overview
         </button>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">{record.branch?.name} Placements</h1>
-            <p className="mt-2 text-sm text-neutral-400">Detailed list of placed students and offers</p>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{record.branch?.name} Placements</h1>
+            <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">Detailed list of placed students and offers</p>
           </div>
-          <div className="flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
+          <div className="flex items-center gap-4 rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
             <div className="text-center">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Eligible</p>
-              <p className="text-xl font-bold text-white">{record.eligibleStudents}</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Eligible</p>
+              <p className="text-xl font-bold text-slate-900 dark:text-white">{record.eligibleStudents}</p>
             </div>
-            <div className="h-8 w-px bg-white/[0.06]"></div>
+            <div className="h-8 w-px bg-slate-200 dark:bg-white/[0.06]"></div>
             <div className="text-center">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Placed</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Placed</p>
               <p className="text-xl font-bold text-emerald-400">{record.placedStudentsCount}</p>
             </div>
           </div>
@@ -77,24 +77,24 @@ const BranchPlacementDetails = () => {
       </div>
 
       {/* Toolbar */}
-      <div className="mb-6 flex items-center justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
+      <div className="mb-6 flex items-center justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
         <div className="relative w-full max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-neutral-500" size={18} />
           <input
             type="text"
             placeholder="Search by name, roll no, or company..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border-none bg-white/[0.04] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
+            className="w-full rounded-xl border-none bg-slate-100 dark:bg-white/[0.04] py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
           />
         </div>
       </div>
 
       {/* Students List */}
-      <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-white/[0.04] text-neutral-400">
+            <thead className="bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400">
               <tr>
                 <th className="px-6 py-4 font-semibold">Student Name</th>
                 <th className="px-6 py-4 font-semibold">Roll No</th>
@@ -106,7 +106,7 @@ const BranchPlacementDetails = () => {
             <tbody className="divide-y divide-white/[0.04]">
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="py-8 text-center text-neutral-500">No placed students found.</td>
+                  <td colSpan="5" className="py-8 text-center text-slate-600 dark:text-neutral-500">No placed students found.</td>
                 </tr>
               ) : (
                 filteredStudents.map((item) => (
@@ -120,13 +120,13 @@ const BranchPlacementDetails = () => {
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500/10 text-xs font-bold text-indigo-400 border border-indigo-500/20">
                           {item.student.fullName?.charAt(0) || "?"}
                         </div>
-                        <span className="font-semibold text-white">{item.student.fullName}</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">{item.student.fullName}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-neutral-400">{item.student.rollNo}</td>
+                    <td className="px-6 py-4 text-slate-500 dark:text-neutral-400">{item.student.rollNo}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <Briefcase size={14} className="text-neutral-500" />
+                        <Briefcase size={14} className="text-slate-600 dark:text-neutral-500" />
                         <span className="font-medium text-neutral-300">{item.company}</span>
                       </div>
                     </td>

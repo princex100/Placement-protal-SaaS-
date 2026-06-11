@@ -184,7 +184,7 @@ const StudentApplyDrive = () => {
     <div className="space-y-6 max-w-5xl mx-auto pb-24">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:hover:text-white transition-colors"
       >
         <ArrowLeft size={16} /> Cancel & Go Back
       </button>
@@ -268,7 +268,7 @@ const StudentApplyDrive = () => {
                         if (!resumeFile) return toast.error("Please select a file");
                         toast.success("Resume attached. It will be uploaded when you click Apply.");
                         setEditingField(null);
-                      }} className="px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Confirm</button>
+                      }} className="px-3 py-1.5 text-xs font-bold text-slate-900 dark:text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Confirm</button>
                     </div>
                   </div>
                 ) : (
@@ -366,7 +366,7 @@ const StudentApplyDrive = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {formData.skills.map((skill, idx) => (
-                    <span key={idx} className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white">
+                    <span key={idx} className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-slate-900 dark:text-white">
                       {skill}
                       <button onClick={() => handleRemoveSkill(skill)} className="ml-1 hover:text-red-300"><X size={14}/></button>
                     </span>
@@ -374,7 +374,7 @@ const StudentApplyDrive = () => {
                 </div>
                 <div className="flex gap-2 justify-end pt-2">
                   <button onClick={() => { setFormData(prev => ({...prev, skills: student.skills || []})); setEditingField(null); }} className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-200 rounded-xl dark:text-slate-300">Cancel</button>
-                  <button onClick={() => handleInlineSave('skills')} className="px-4 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl">Save Skills</button>
+                  <button onClick={() => handleInlineSave('skills')} className="px-4 py-2 text-sm font-bold text-slate-900 dark:text-white bg-blue-600 hover:bg-blue-700 rounded-xl">Save Skills</button>
                 </div>
               </div>
             ) : (
@@ -422,7 +422,7 @@ const StudentApplyDrive = () => {
                 </button>
                 <div className="flex gap-2 justify-end pt-2">
                   <button onClick={() => { setFormData(prev => ({...prev, projects: student.projects || []})); setEditingField(null); }} className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-200 rounded-xl dark:text-slate-300">Cancel</button>
-                  <button onClick={() => handleInlineSave('projects')} className="px-4 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl">Save Projects</button>
+                  <button onClick={() => handleInlineSave('projects')} className="px-4 py-2 text-sm font-bold text-slate-900 dark:text-white bg-blue-600 hover:bg-blue-700 rounded-xl">Save Projects</button>
                 </div>
               </div>
             ) : (
@@ -453,7 +453,7 @@ const StudentApplyDrive = () => {
           <button
             onClick={handleSubmitApplication}
             disabled={applying}
-            className="w-full md:w-auto rounded-2xl bg-blue-600 px-10 py-4 font-bold text-white shadow-lg hover:-translate-y-1 hover:shadow-xl hover:bg-blue-700 transition-all disabled:opacity-70 flex justify-center items-center gap-2"
+            className="w-full md:w-auto rounded-2xl bg-blue-600 px-10 py-4 font-bold text-slate-900 dark:text-white shadow-lg hover:-translate-y-1 hover:shadow-xl hover:bg-blue-700 transition-all disabled:opacity-70 flex justify-center items-center gap-2"
           >
             {applying ? <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : "Apply To Drive"}
           </button>
@@ -501,7 +501,7 @@ const InlineEditableField = ({ label, icon, name, value, editValue, isEditing, o
           />
           <div className="flex gap-2 justify-end">
             <button onClick={onCancel} className="px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-200 rounded-lg dark:text-slate-400">Cancel</button>
-            <button onClick={onSave} className="px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Save</button>
+            <button onClick={onSave} className="px-3 py-1.5 text-xs font-bold text-slate-900 dark:text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Save</button>
           </div>
         </div>
       ) : (

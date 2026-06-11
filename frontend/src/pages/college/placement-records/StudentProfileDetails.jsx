@@ -205,42 +205,42 @@ const StudentProfileDetails = () => {
       <div className="mb-8">
         <button 
           onClick={() => navigate(-1)}
-          className="mb-6 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
+          className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back
         </button>
 
-        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
           <div className="flex items-center gap-5">
             <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 text-2xl sm:text-3xl font-bold text-indigo-400 border border-indigo-500/10">
               {student.fullName?.charAt(0) || "?"}
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                 {isEditing ? (
                   <input
                     type="text"
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-b-2 border-indigo-500 bg-transparent px-1 py-1 text-2xl sm:text-3xl font-bold text-white outline-none"
+                    className="w-full rounded-lg border-b-2 border-indigo-500 bg-transparent px-1 py-1 text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white outline-none"
                   />
                 ) : (
                   student.fullName
                 )}
               </h1>
               <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium">
-                <span className="flex items-center gap-1 text-neutral-400">
+                <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <User size={16} /> 
                   {isEditing ? (
-                    <input type="text" name="rollNo" value={formData.rollNo} onChange={handleChange} className="w-24 rounded border border-white/[0.1] bg-white/[0.04] px-1 text-white" />
+                    <input type="text" name="rollNo" value={formData.rollNo} onChange={handleChange} className="w-24 rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-1 text-slate-900 dark:text-white" />
                   ) : student.rollNo}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-neutral-600"></span>
-                <span className="flex items-center gap-1 text-neutral-400">
+                <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <GraduationCap size={16} /> 
                   {isEditing ? (
-                    <input type="text" name="branch" value={formData.branch} onChange={handleChange} className="w-32 rounded border border-white/[0.1] bg-white/[0.04] px-1 text-white" />
+                    <input type="text" name="branch" value={formData.branch} onChange={handleChange} className="w-32 rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-1 text-slate-900 dark:text-white" />
                   ) : student.branch}
                 </span>
               </div>
@@ -252,14 +252,14 @@ const StudentProfileDetails = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleEditToggle}
-                  className="flex items-center justify-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-neutral-300 hover:bg-white/[0.06] transition"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-neutral-300 hover:bg-slate-200 dark:hover:bg-white/[0.06] transition"
                 >
                   <X size={18} /> Cancel
                 </button>
                 <button
                   onClick={handleUpdateSubmit}
                   disabled={updateLoading}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25"
                 >
                   {updateLoading ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />} Save
                 </button>
@@ -267,7 +267,7 @@ const StudentProfileDetails = () => {
             ) : (
               <button
                 onClick={handleEditToggle}
-                className="flex items-center justify-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-neutral-300 transition-all hover:bg-white/[0.06]"
+                className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-neutral-300 transition-all hover:bg-slate-200 dark:hover:bg-white/[0.06]"
               >
                 <Edit size={18} /> Edit Student
               </button>
@@ -298,29 +298,29 @@ const StudentProfileDetails = () => {
         {/* Left Column - Details */}
         <div className="col-span-1 flex flex-col gap-6 md:col-span-2">
           {/* Contact Details */}
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6">
-            <h2 className="mb-4 text-lg font-bold text-white">Contact Information</h2>
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+            <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Contact Information</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.04] p-3">
-                <Mail size={18} className="text-neutral-500" />
+              <div className="flex items-center gap-3 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.04] p-3">
+                <Mail size={18} className="text-slate-600 dark:text-neutral-500" />
                 {isEditing ? (
-                  <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full rounded border border-white/[0.1] bg-white/[0.04] px-2 py-1 text-sm text-white" />
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-sm text-slate-900 dark:text-white" />
                 ) : (
                   <span className="text-sm font-medium text-neutral-300">{student.email || "Not provided"}</span>
                 )}
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.04] p-3">
-                <LinkIcon size={18} className="text-neutral-500" />
+              <div className="flex items-center gap-3 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.04] p-3">
+                <LinkIcon size={18} className="text-slate-600 dark:text-neutral-500" />
                 {isEditing ? (
-                  <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="LinkedIn URL" className="w-full rounded border border-white/[0.1] bg-white/[0.04] px-2 py-1 text-sm text-white" />
+                  <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="LinkedIn URL" className="w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-sm text-slate-900 dark:text-white" />
                 ) : (
                   <a href={student.linkedin} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-400 hover:underline">LinkedIn Profile</a>
                 )}
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.04] p-3">
-                <FileText size={18} className="text-neutral-500" />
+              <div className="flex items-center gap-3 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.04] p-3">
+                <FileText size={18} className="text-slate-600 dark:text-neutral-500" />
                 {isEditing ? (
-                  <input type="text" name="resume" value={formData.resume} onChange={handleChange} placeholder="Resume URL" className="w-full rounded border border-white/[0.1] bg-white/[0.04] px-2 py-1 text-sm text-white" />
+                  <input type="text" name="resume" value={formData.resume} onChange={handleChange} placeholder="Resume URL" className="w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-sm text-slate-900 dark:text-white" />
                 ) : (
                   <a href={student.resume} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-400 hover:underline">View Resume</a>
                 )}
@@ -329,8 +329,8 @@ const StudentProfileDetails = () => {
           </div>
 
           {/* Skills */}
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6">
-            <h2 className="mb-4 text-lg font-bold text-white">Technical Skills</h2>
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+            <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Technical Skills</h2>
             
             {isEditing && (
               <div className="mb-4 flex gap-2">
@@ -340,7 +340,7 @@ const StudentProfileDetails = () => {
                   onChange={(e) => setSkillInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addSkill(e)}
                   placeholder="Add a skill..."
-                  className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.04] px-3 py-2 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500/50"
+                  className="flex-1 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:outline-none focus:border-indigo-500/50"
                 />
                 <button
                   type="button"
@@ -365,7 +365,7 @@ const StudentProfileDetails = () => {
                   </span>
                 ))
               ) : (
-                <p className="text-sm text-neutral-500">No skills listed</p>
+                <p className="text-sm text-slate-600 dark:text-neutral-500">No skills listed</p>
               )}
             </div>
           </div>
@@ -373,29 +373,29 @@ const StudentProfileDetails = () => {
 
         {/* Right Column - Status */}
         <div className="flex flex-col gap-6">
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6">
-            <h2 className="mb-4 text-lg font-bold text-white">Academic Status</h2>
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+            <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Academic Status</h2>
             <div className="space-y-4">
               <div>
-                <p className="text-xs font-semibold text-neutral-500 uppercase">CGPA</p>
+                <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">CGPA</p>
                 {isEditing ? (
-                  <input type="number" step="0.01" name="cgpa" value={formData.cgpa} onChange={handleChange} className="mt-1 w-full rounded border border-white/[0.1] bg-white/[0.04] px-2 py-1 text-xl font-bold text-white" />
+                  <input type="number" step="0.01" name="cgpa" value={formData.cgpa} onChange={handleChange} className="mt-1 w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-xl font-bold text-slate-900 dark:text-white" />
                 ) : (
-                  <p className="mt-1 text-2xl font-bold text-white">{student.cgpa || "N/A"}</p>
+                  <p className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{student.cgpa || "N/A"}</p>
                 )}
               </div>
-              <div className="h-px w-full bg-white/[0.06]"></div>
+              <div className="h-px w-full bg-slate-200 dark:bg-white/[0.06]"></div>
               <div>
-                <p className="text-xs font-semibold text-neutral-500 uppercase">Passing Year</p>
+                <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Passing Year</p>
                 {isEditing ? (
-                  <input type="number" name="passingYear" value={formData.passingYear} onChange={handleChange} className="mt-1 w-full rounded border border-white/[0.1] bg-white/[0.04] px-2 py-1 text-base font-semibold text-white" />
+                  <input type="number" name="passingYear" value={formData.passingYear} onChange={handleChange} className="mt-1 w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-base font-semibold text-slate-900 dark:text-white" />
                 ) : (
-                  <p className="mt-1 text-lg font-semibold text-white">{student.passingYear || "N/A"}</p>
+                  <p className="mt-1 text-lg font-semibold text-slate-900 dark:text-white">{student.passingYear || "N/A"}</p>
                 )}
               </div>
-              <div className="h-px w-full bg-white/[0.06]"></div>
+              <div className="h-px w-full bg-slate-200 dark:bg-white/[0.06]"></div>
               <div>
-                <p className="mb-2 text-xs font-semibold text-neutral-500 uppercase">Placement Status</p>
+                <p className="mb-2 text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Placement Status</p>
                 
                 <div className="flex flex-wrap gap-2">
                   <button 
@@ -403,8 +403,8 @@ const StudentProfileDetails = () => {
                     onClick={() => handleStatusUpdate('unplaced')}
                     className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-all ${
                       student.placementStatus === 'unplaced' 
-                        ? 'bg-neutral-500 text-white ring-2 ring-neutral-400 ring-offset-2 ring-offset-[#0a0a12]' 
-                        : 'bg-white/[0.06] text-neutral-400 hover:bg-white/[0.1]'
+                        ? 'bg-neutral-500 text-slate-900 dark:text-white ring-2 ring-neutral-400 ring-offset-2 ring-offset-[#0a0a12]' 
+                        : 'bg-slate-200 dark:bg-white/[0.06] text-slate-500 dark:text-neutral-400 hover:bg-white/[0.1]'
                     }`}
                   >
                     Unplaced
@@ -414,7 +414,7 @@ const StudentProfileDetails = () => {
                     onClick={() => handleStatusUpdate('placed')}
                     className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-all ${
                       student.placementStatus === 'placed' 
-                        ? 'bg-emerald-500 text-white ring-2 ring-emerald-400 ring-offset-2 ring-offset-[#0a0a12]' 
+                        ? 'bg-emerald-500 text-slate-900 dark:text-white ring-2 ring-emerald-400 ring-offset-2 ring-offset-[#0a0a12]' 
                         : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
                     }`}
                   >
@@ -425,7 +425,7 @@ const StudentProfileDetails = () => {
                     onClick={() => handleStatusUpdate('internship')}
                     className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-all ${
                       student.placementStatus === 'internship' 
-                        ? 'bg-blue-500 text-white ring-2 ring-blue-400 ring-offset-2 ring-offset-[#0a0a12]' 
+                        ? 'bg-blue-500 text-slate-900 dark:text-white ring-2 ring-blue-400 ring-offset-2 ring-offset-[#0a0a12]' 
                         : 'bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20'
                     }`}
                   >

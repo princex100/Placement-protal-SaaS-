@@ -3,6 +3,7 @@ import { LayoutDashboard, User, Briefcase, FileText, LogOut } from "lucide-react
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "../../../redux/features/authSlice";
+import api from "../../../api/axios";
 
 const SIDEBAR_NAV = [
   { label: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/student/dashboard" },
@@ -16,10 +17,16 @@ const StudentSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(clearCredentials());
-    localStorage.removeItem("user");
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await api.post('/students/logout');
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      dispatch(clearCredentials());
+      localStorage.removeItem("user");
+      navigate("/");
+    }
   };
 
   return (

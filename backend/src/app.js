@@ -11,6 +11,8 @@ import branchRouter from "./routes/branch.routes.js"
 
 export const app = express()
 console.log("CORS CONFIG LOADED");
+
+//allowing all frontend origins 
 app.use(
   cors({
     origin: true,
@@ -32,8 +34,11 @@ app.use(cookieParser());
 app.get("/test-server", (req, res) => {
   res.send("THIS IS MY REAL SERVER");
 });
+
 app.use("/api/v1/students", studentRouter);
-app.use("/api/v1/colleges", collegeRouter);
+
+app.use("/api/v1/colleges", collegeRouter);//this is we have just worked upon
+
 app.use("/api/v1/drives", driveRouter);
 app.use("/api/v1/applications", applicationRouter);
 app.use("/api/v1/placement-records", placementRecordRouter);

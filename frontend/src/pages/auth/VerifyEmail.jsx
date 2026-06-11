@@ -78,7 +78,7 @@ const VerifyEmail = () => {
             <p className="mt-2 text-slate-500 dark:text-slate-400">{errorMessage}</p>
             <button 
               onClick={() => navigate("/college/auth")}
-              className="mt-6 w-full rounded-xl bg-blue-600 py-2.5 font-semibold text-white transition hover:bg-blue-700"
+              className="mt-6 w-full rounded-xl bg-blue-600 py-2.5 font-semibold text-slate-900 dark:text-white transition hover:bg-blue-700"
             >
               Return to Login
             </button>

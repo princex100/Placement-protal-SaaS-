@@ -39,8 +39,8 @@ const StudentBranches = () => {
       {/* Header */}
       <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Student Management</h1>
-          <p className="mt-2 text-sm text-neutral-400">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Student Management</h1>
+          <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">
             Manage your college branches and students. Import your batch data to get started.
           </p>
         </div>
@@ -48,7 +48,7 @@ const StudentBranches = () => {
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setIsImportModalOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
         >
           <Upload size={18} /> Import Students
         </motion.button>
@@ -56,20 +56,20 @@ const StudentBranches = () => {
 
       {/* Main Content */}
       {loading ? (
-        <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl">
+        <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl">
           <div className="relative">
             <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
           </div>
-          <p className="text-sm font-medium text-neutral-500">Loading branches...</p>
+          <p className="text-sm font-medium text-slate-600 dark:text-neutral-500">Loading branches...</p>
         </div>
       ) : branches.length === 0 ? (
-        <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-8 text-center">
+        <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-8 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
             <Users size={32} />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">No students imported yet</h3>
-            <p className="mt-1 max-w-sm text-sm text-neutral-400">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">No students imported yet</h3>
+            <p className="mt-1 max-w-sm text-sm text-slate-500 dark:text-neutral-400">
               Import students in bulk using an Excel sheet. Branches will be created automatically.
             </p>
           </div>
@@ -77,7 +77,7 @@ const StudentBranches = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setIsImportModalOpen(true)}
-            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25"
+            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25"
           >
             <Upload size={18} /> Import Students
           </motion.button>
@@ -92,19 +92,19 @@ const StudentBranches = () => {
               transition={{ delay: index * 0.06 }}
               whileHover={{ scale: 1.02, y: -4 }}
               onClick={() => navigate(`/college/dashboard/students/${branch._id}`)}
-              className="group cursor-pointer rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6 transition-all hover:border-indigo-500/20 hover:bg-white/[0.04] hover:shadow-lg hover:shadow-indigo-500/5"
+              className="group cursor-pointer rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 transition-all hover:border-indigo-500/20 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:shadow-lg hover:shadow-indigo-500/5"
             >
               <div className="flex items-start justify-between">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-violet-500/10 text-indigo-400 border border-indigo-500/10 transition-colors group-hover:from-indigo-500/30 group-hover:to-violet-500/20">
                   <GitBranch size={24} />
                 </div>
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.04] text-neutral-600 transition-all group-hover:bg-indigo-500 group-hover:text-white">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/[0.04] text-slate-700 dark:text-neutral-600 transition-all group-hover:bg-indigo-500 group-hover:text-slate-900 dark:group-hover:text-white">
                   <ChevronRight size={18} />
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className="text-xl font-bold text-white">{branch.name}</h3>
-                <div className="mt-2 flex items-center gap-2 text-sm text-neutral-400">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">{branch.name}</h3>
+                <div className="mt-2 flex items-center gap-2 text-sm text-slate-500 dark:text-neutral-400">
                   <Users size={16} />
                   <span>{branch.totalStudents} Students enrolled</span>
                 </div>

@@ -86,12 +86,12 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl border border-white/[0.08] bg-[#12121e] p-6 shadow-2xl shadow-black/40">
-        <div className="flex items-center justify-between border-b border-white/[0.06] pb-4">
-          <h2 className="text-xl font-bold text-white">Import Students</h2>
+      <div className="w-full max-w-lg rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 shadow-2xl shadow-black/40">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] pb-4">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Import Students</h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-2 text-neutral-500 transition hover:bg-white/[0.06] hover:text-neutral-300"
+            className="rounded-lg p-2 text-slate-600 dark:text-neutral-500 transition hover:bg-slate-200 dark:hover:bg-white/[0.06] hover:text-neutral-300"
           >
             <X size={20} />
           </button>
@@ -102,7 +102,7 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/[0.08] bg-white/[0.02] p-8 transition-colors hover:border-indigo-500/30 hover:bg-white/[0.04]"
+            className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.02] p-8 transition-colors hover:border-indigo-500/30 hover:bg-slate-100 dark:hover:bg-white/[0.04]"
           >
             <input
               type="file"
@@ -118,17 +118,17 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
             
             {file ? (
               <div className="text-center">
-                <p className="font-semibold text-white">{file.name}</p>
-                <p className="mt-1 text-sm text-neutral-500">
+                <p className="font-semibold text-slate-900 dark:text-white">{file.name}</p>
+                <p className="mt-1 text-sm text-slate-600 dark:text-neutral-500">
                   {(file.size / 1024).toFixed(2)} KB
                 </p>
               </div>
             ) : (
               <div className="text-center">
-                <p className="font-semibold text-white">
+                <p className="font-semibold text-slate-900 dark:text-white">
                   Click to upload or drag and drop
                 </p>
-                <p className="mt-1 text-sm text-neutral-500">
+                <p className="mt-1 text-sm text-slate-600 dark:text-neutral-500">
                   Excel (.xlsx) or CSV files only
                 </p>
               </div>
@@ -154,14 +154,14 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
         <div className="mt-8 flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-neutral-400 transition hover:bg-white/[0.04] hover:text-neutral-200"
+            className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-500 dark:text-neutral-400 transition hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-neutral-200"
           >
             Cancel
           </button>
           <button
             onClick={handleUpload}
             disabled={!file || isUploading}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:shadow-xl hover:shadow-indigo-500/30 disabled:opacity-50 disabled:shadow-none"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition hover:shadow-xl hover:shadow-indigo-500/30 disabled:opacity-50 disabled:shadow-none"
           >
             {isUploading ? (
               <>

@@ -81,18 +81,18 @@ const CollegeRegister = () => {
 
   const FeatureRow = ({ icon, title, subtitle }) => (
     <div className="flex items-start gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 backdrop-blur-xl">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/10 dark:shadow-none backdrop-blur-xl">
         {icon}
       </div>
       <div>
-        <h4 className="text-sm font-semibold text-white">{title}</h4>
-        <p className="mt-0.5 text-xs text-slate-400 leading-relaxed">{subtitle}</p>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{title}</h4>
+        <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{subtitle}</p>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent dark:bg-slate-950 p-4 transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-transparent dark:bg-slate-950 p-0 pb-32 lg:pb-48 transition-colors duration-300">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -100,7 +100,7 @@ const CollegeRegister = () => {
         className="relative flex w-full max-w-[1200px] max-h-[95vh] overflow-hidden rounded-[24px] border border-blue-100/50 bg-white/90 shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:border-slate-800 dark:bg-slate-900"
       >
         {/* LEFT PANEL */}
-        <div className="hidden lg:flex w-[45%] relative overflow-hidden bg-gradient-to-br from-slate-950 via-[#0B1437] to-slate-950 text-white p-8 xl:p-10 flex-col justify-between">
+        <div className="hidden lg:flex w-[45%] relative overflow-hidden bg-gradient-to-br from-indigo-50 via-blue-50 to-white dark:from-slate-950 dark:via-[#0B1437] dark:to-slate-950 text-slate-900 dark:text-white p-8 xl:p-10 flex-col justify-between">
           {/* Background Glow */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-[-10%] left-[-10%] w-[420px] h-[420px] rounded-full bg-blue-600/20 blur-[120px]" />
@@ -112,12 +112,12 @@ const CollegeRegister = () => {
           <div className="relative z-10">
             {/* Logo */}
             <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 backdrop-blur-xl">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/10 dark:shadow-none backdrop-blur-xl">
                 <Network className="h-5 w-5 text-violet-300" />
               </div>
               <div>
                 <h3 className="font-bold text-lg">CampusFlow</h3>
-                <p className="text-xs text-slate-400">College Placement Cell</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">College Placement Cell</p>
               </div>
             </div>
 
@@ -131,7 +131,7 @@ const CollegeRegister = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-300">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               Coordinate placement drives, approve company recruitment, manage student opportunities, and streamline campus placements from one modern platform.
             </p>
 
@@ -157,33 +157,33 @@ const CollegeRegister = () => {
 
           {/* Floating Dashboard Preview */}
           <div className="relative z-10 mt-8">
-            <div className="absolute left-0 bottom-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-2xl shadow-2xl w-[180px]">
-              <p className="text-[10px] text-slate-400 mb-1.5">Placement Status</p>
+            <div className="absolute left-0 bottom-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-white/5 p-4 backdrop-blur-2xl shadow-2xl w-[180px]">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 mb-1.5">Placement Status</p>
               <div className="flex items-center gap-2 mb-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
                 <span className="text-xs font-medium">Drive Approved</span>
               </div>
-              <div className="flex items-center justify-between rounded-xl bg-white/5 px-2 py-1.5">
-                <span className="text-xs text-slate-300">Google Hiring</span>
-                <ChevronRight className="h-3 w-3 text-slate-400" />
+              <div className="flex items-center justify-between rounded-xl bg-slate-50/80 dark:bg-white/5 px-2 py-1.5">
+                <span className="text-xs text-slate-600 dark:text-slate-300">Google Hiring</span>
+                <ChevronRight className="h-3 w-3 text-slate-500 dark:text-slate-400" />
               </div>
             </div>
 
-            <div className="ml-auto w-[220px] rounded-[24px] border border-white/10 bg-white/10 p-4 backdrop-blur-2xl shadow-xl">
+            <div className="ml-auto w-[220px] rounded-[24px] border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/10 dark:shadow-none p-4 backdrop-blur-2xl shadow-xl">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <p className="text-[10px] text-slate-400">Campus Recruitment</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">Campus Recruitment</p>
                   <h4 className="font-semibold text-sm">TCS Campus Drive</h4>
                 </div>
                 <div className="rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] text-green-400">
                   Active
                 </div>
               </div>
-              <button className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 py-2 text-xs font-semibold hover:opacity-90 transition">
+              <button className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 py-2 text-xs font-semibold text-slate-900 dark:text-white hover:opacity-90 transition">
                 Manage Drive
               </button>
-              <div className="mt-3 rounded-xl bg-white/5 p-3">
-                <p className="text-[10px] text-slate-400">Applications</p>
+              <div className="mt-3 rounded-xl bg-slate-50/80 dark:bg-white/5 p-3">
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Applications</p>
                 <h3 className="text-lg font-bold">286</h3>
               </div>
             </div>
@@ -285,7 +285,7 @@ const CollegeRegister = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 disabled:opacity-70"
+                  className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <>
@@ -349,7 +349,7 @@ export const FeatureCard = ({ icon, title, subtitle }) => (
     <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
       {icon}
     </div>
-    <h4 className="text-sm font-semibold text-white">{title}</h4>
+    <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{title}</h4>
     <p className="mt-1 text-xs text-blue-100">{subtitle}</p>
   </div>
 );

@@ -55,6 +55,12 @@ const applicationSchema = new mongoose.Schema(
     remarks: {
       type: String,
     },
+    interviewDetails: {
+      interviewDate: String,
+      interviewTime: String,
+      venue: String,
+      meetingLink: String
+    }
   },
   {
     timestamps: true,

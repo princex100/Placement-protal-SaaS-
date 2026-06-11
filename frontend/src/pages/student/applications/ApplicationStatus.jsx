@@ -53,7 +53,7 @@ const ApplicationStatus = () => {
             <FileText className="mb-4 h-12 w-12 text-slate-300 dark:text-slate-600" />
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">No Applications Yet</h3>
             <p className="text-sm text-slate-500 mt-1">Apply for placement drives to see them here.</p>
-            <button onClick={() => navigate('/student/dashboard/drives')} className="mt-4 rounded-xl bg-blue-600 px-6 py-2.5 font-semibold text-white hover:bg-blue-700">
+            <button onClick={() => navigate('/student/dashboard/drives')} className="mt-4 rounded-xl bg-blue-600 px-6 py-2.5 font-semibold text-slate-900 dark:text-white hover:bg-blue-700">
               Browse Drives
             </button>
           </div>
@@ -83,7 +83,7 @@ const ApplicationStatus = () => {
                   <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${getStatusColor(app.applicationStatus)}`}>
                     {app.applicationStatus?.replace("_", " ") || "APPLIED"}
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm transition-colors group-hover:bg-blue-600 group-hover:text-white dark:bg-slate-800">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm transition-colors group-hover:bg-blue-600 group-hover:text-slate-900 dark:group-hover:text-white dark:bg-slate-800">
                     <ChevronRight size={16} />
                   </div>
                 </div>

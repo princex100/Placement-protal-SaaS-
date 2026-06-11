@@ -63,7 +63,7 @@ export const getCollegeDrives = asyncHandler(async (req, res) => {
     college: collegeId,
     placementSeasonYear: req.college.activePlacementSeason 
   })
-    .select("companyName role package location applicationDeadline students status")
+    .select("companyName role package location applicationDeadline students status applicationWorkflowStage")
     .sort({ createdAt: -1 })
     .lean();
     

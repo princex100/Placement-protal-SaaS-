@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, User, LayoutDashboard, LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -14,6 +14,23 @@ const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showLoginMenu, setShowLoginMenu] = useState(false);
+  const profileMenuRef = useRef(null);
+  const loginMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+      if (loginMenuRef.current && !loginMenuRef.current.contains(event.target)) {
+        setShowLoginMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const currentYear = new Date().getFullYear();
   const availableSeasons = Array.from({ length: 11 }, (_, i) => currentYear - 5 + i);
@@ -80,9 +97,19 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    dispatch(clearCredentials());
-    localStorage.removeItem("user");
-    navigate("/");
+    try {
+      if (role === 'student') {
+        await api.post('/students/logout');
+      } else if (role === 'college-admin') {
+        await api.post('/colleges/logout');
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      dispatch(clearCredentials());
+      localStorage.removeItem("user");
+      navigate("/");
+    }
   };
 
   return (
@@ -90,7 +117,7 @@ const Navbar = () => {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="flex items-center gap-2 text-violet-600 dark:text-violet-400 transition-transform duration-200 active:scale-95">
           <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
-            <Network className="h-5 w-5 text-white" />
+            <Network className="h-5 w-5 text-slate-900 dark:text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             Campus<span className="text-violet-600 dark:text-violet-400">Flow</span>
@@ -98,10 +125,10 @@ const Navbar = () => {
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
-          <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">Home</a>
-          <a href="/#features" onClick={(e) => scrollToSection(e, 'features')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">Features</a>
-          <a href="/#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">How It Works</a>
-          <a href="/#contact" onClick={(e) => scrollToSection(e, 'contact')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">Contact</a>
+          <a href="/" onClick={(e) => scrollToSection(e, 'top')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-slate-900 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">Home</a>
+          <a href="/#features" onClick={(e) => scrollToSection(e, 'features')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-slate-900 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">Features</a>
+          <a href="/#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-slate-900 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">How It Works</a>
+          <a href="/#contact" onClick={(e) => scrollToSection(e, 'contact')} className="inline-block text-sm font-medium text-slate-600 transition-all duration-200 hover:text-indigo-600 dark:text-neutral-400 dark:hover:text-slate-900 dark:hover:text-white hover:-translate-y-0.5 active:scale-95">Contact</a>
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6">
@@ -139,10 +166,10 @@ const Navbar = () => {
           )}
 
           {isAuthenticated ? (
-            <div className="relative">
+            <div className="relative" ref={profileMenuRef}>
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition-all hover:shadow-md active:scale-95 dark:border-white/[0.06] dark:bg-white/[0.02] dark:hover:bg-white/[0.04]"
+                className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm transition-all hover:shadow-md active:scale-95 dark:border-white/[0.06] dark:bg-white/[0.02] dark:hover:bg-slate-100 dark:hover:bg-white/[0.04]"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border dark:border-indigo-500/20">
                   <User size={18} />
@@ -175,15 +202,21 @@ const Navbar = () => {
                   </div>
 
                   <button
-                    onClick={() => navigate(user?.role === 'student' ? '/student/dashboard' : (user?.role === 'college-admin' ? '/college/dashboard' : '/'))}
-                    className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition-all hover:bg-slate-50 active:scale-95 dark:text-neutral-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+                    onMouseDown={() => {
+                      setShowProfileMenu(false);
+                      navigate(user?.role === 'student' ? '/student/dashboard' : (user?.role === 'college-admin' ? '/college/dashboard' : '/'));
+                    }}
+                    className="flex w-full items-center gap-3 px-5 py-3 text-sm text-slate-700 transition-all hover:bg-slate-50 active:scale-95 dark:text-neutral-300 dark:hover:bg-slate-100 dark:hover:bg-white/[0.04] dark:hover:text-slate-900 dark:hover:text-white"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
                   </button>
 
                   <button
-                    onClick={handleLogout}
+                    onMouseDown={() => {
+                      setShowProfileMenu(false);
+                      handleLogout();
+                    }}
                     className="flex w-full items-center gap-3 px-5 py-3 text-sm text-red-500 transition-all hover:bg-red-50 active:scale-95 dark:hover:bg-red-500/10"
                   >
                     <LogOut size={18} />
@@ -194,11 +227,10 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <div className="relative">
+              <div className="relative" ref={loginMenuRef}>
                 <button
                   onClick={() => setShowLoginMenu(!showLoginMenu)}
-                  onBlur={() => setTimeout(() => setShowLoginMenu(false), 200)}
-                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-slate-100 dark:hover:bg-white/[0.04] dark:hover:text-slate-900 dark:hover:text-white"
                 >
                   Login
                   <ChevronDown size={16} className={`transition-transform duration-200 ${showLoginMenu ? 'rotate-180' : ''}`} />
@@ -207,15 +239,21 @@ const Navbar = () => {
                 {showLoginMenu && (
                   <div className="absolute right-0 top-full mt-2 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg dark:border-white/[0.08] dark:bg-[#12121e] z-50">
                     <button
-                      onMouseDown={() => navigate('/college/auth')}
-                      className="flex w-full items-center px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-neutral-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+                      onMouseDown={() => {
+                        setShowLoginMenu(false);
+                        navigate('/college/auth');
+                      }}
+                      className="flex w-full items-center px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-neutral-300 dark:hover:bg-slate-100 dark:hover:bg-white/[0.04] dark:hover:text-slate-900 dark:hover:text-white"
                     >
                       Login for College
                     </button>
                     <div className="h-px w-full bg-slate-100 dark:bg-white/[0.06]"></div>
                     <button
-                      onMouseDown={() => navigate('/student/auth')}
-                      className="flex w-full items-center px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-neutral-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+                      onMouseDown={() => {
+                        setShowLoginMenu(false);
+                        navigate('/student/auth');
+                      }}
+                      className="flex w-full items-center px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-neutral-300 dark:hover:bg-slate-100 dark:hover:bg-white/[0.04] dark:hover:text-slate-900 dark:hover:text-white"
                     >
                       Login for Student
                     </button>
@@ -225,7 +263,7 @@ const Navbar = () => {
 
               <button
                 onClick={(e) => scrollToSection(e, 'portalSelection')}
-                className="hidden rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:scale-95 sm:block"
+                className="hidden rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:scale-95 sm:block"
               >
                 Get Started
               </button>

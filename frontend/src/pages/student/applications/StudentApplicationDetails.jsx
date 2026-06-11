@@ -63,7 +63,7 @@ const StudentApplicationDetails = () => {
     <div className="space-y-6">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:hover:text-white transition-colors"
       >
         <ArrowLeft size={16} /> Back to Applications
       </button>
@@ -162,12 +162,12 @@ const TimelineItem = ({ icon, title, date, isActive, isCompleted, isError }) => 
   let titleColor = 'text-slate-500 dark:text-slate-400';
   
   if (isCompleted) {
-    iconBg = 'bg-blue-600 text-white shadow-md shadow-blue-500/20';
+    iconBg = 'bg-blue-600 text-slate-900 dark:text-white shadow-md shadow-blue-500/20';
     titleColor = 'text-slate-900 dark:text-white';
   } else if (isActive) {
     iconBg = isError 
-      ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
-      : 'bg-blue-500 text-white shadow-md shadow-blue-500/20 ring-4 ring-blue-50 dark:ring-blue-900/20';
+      ? 'bg-red-500 text-slate-900 dark:text-white shadow-md shadow-red-500/20'
+      : 'bg-blue-500 text-slate-900 dark:text-white shadow-md shadow-blue-500/20 ring-4 ring-blue-50 dark:ring-blue-900/20';
     titleColor = isError ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
   }
 

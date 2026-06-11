@@ -83,43 +83,43 @@ const DriveStudents = () => {
       <div className="mb-8">
         <button 
           onClick={() => navigate(`/college/dashboard/placement-drives/${driveId}`)}
-          className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
+          className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Drive Details
         </button>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Applied Students</h1>
-            <p className="mt-2 text-sm text-neutral-400">Review and manage students who applied for this drive.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Applied Students</h1>
+            <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">Review and manage students who applied for this drive.</p>
           </div>
-          <div className="flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl px-6 py-4">
+          <div className="flex items-center gap-4 rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl px-6 py-4">
             <div className="text-center">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Total Applied</p>
-              <p className="text-2xl font-bold text-white">{students.length}</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Total Applied</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-white">{students.length}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Toolbar */}
-      <div className="mb-6 flex items-center justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
+      <div className="mb-6 flex items-center justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
         <div className="relative w-full max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-neutral-500" size={18} />
           <input
             type="text"
             placeholder="Search by name, roll no, or branch..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border-none bg-white/[0.04] py-3 pl-12 pr-4 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
+            className="w-full rounded-xl border-none bg-slate-100 dark:bg-white/[0.04] py-3 pl-12 pr-4 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
           />
         </div>
       </div>
 
       {/* Students List */}
-      <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-white/[0.04] text-neutral-400">
+            <thead className="bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400">
               <tr>
                 <th className="px-6 py-4 font-semibold">Student Name</th>
                 <th className="px-6 py-4 font-semibold">Roll No</th>
@@ -131,7 +131,7 @@ const DriveStudents = () => {
             <tbody className="divide-y divide-white/[0.04]">
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="py-12 text-center text-neutral-500">No students found matching your search.</td>
+                  <td colSpan="5" className="py-12 text-center text-slate-600 dark:text-neutral-500">No students found matching your search.</td>
                 </tr>
               ) : (
                 filteredStudents.map((student) => (
@@ -145,25 +145,25 @@ const DriveStudents = () => {
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-sm font-bold text-indigo-400 border border-indigo-500/20">
                           {student.fullName?.charAt(0) || "?"}
                         </div>
-                        <span className="font-semibold text-white">{student.fullName}</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">{student.fullName}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-medium text-neutral-400">{student.rollNo}</td>
+                    <td className="px-6 py-4 font-medium text-slate-500 dark:text-neutral-400">{student.rollNo}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 text-neutral-300">
-                        <GraduationCap size={14} className="text-neutral-500" />
+                        <GraduationCap size={14} className="text-slate-600 dark:text-neutral-500" />
                         {student.branch}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-semibold text-white">
+                      <span className="font-semibold text-slate-900 dark:text-white">
                         {student.cgpa}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={(e) => handleRemoveStudent(student._id, student.fullName, e)}
-                        className="inline-flex items-center gap-1.5 rounded-lg p-2 text-neutral-500 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                        className="inline-flex items-center gap-1.5 rounded-lg p-2 text-slate-600 dark:text-neutral-500 transition-colors hover:bg-red-500/10 hover:text-red-400"
                         title="Remove Student"
                       >
                         <Trash2 size={16} />

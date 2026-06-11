@@ -86,25 +86,25 @@ const DriveDetails = () => {
       <div className="mb-8">
         <button 
           onClick={() => navigate("/college/dashboard/placement-drives")}
-          className="mb-6 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
+          className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Drives
         </button>
 
-        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
           <div className="flex items-center gap-5">
             <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 text-indigo-400 border border-indigo-500/10">
               <Building2 size={32} className="hidden sm:block" />
               <Building2 size={24} className="sm:hidden" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">{drive.companyName}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{drive.companyName}</h1>
               <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium">
-                <span className="flex items-center gap-1 text-neutral-400">
+                <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <Briefcase size={16} /> {drive.role}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-neutral-600"></span>
-                <span className="flex items-center gap-1 text-neutral-400">
+                <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <MapPin size={16} /> {drive.location || "Location TBD"}
                 </span>
               </div>
@@ -134,36 +134,36 @@ const DriveDetails = () => {
         <div className="col-span-1 flex flex-col gap-6 md:col-span-2">
           {/* Overview Stats */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Package</p>
+            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Package</p>
               <p className="mt-2 flex items-center gap-1 text-xl font-bold text-emerald-400">
                 <IndianRupee size={18} /> {drive.package} LPA
               </p>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Job Type</p>
-              <p className="mt-2 text-lg font-bold capitalize text-white">{drive.jobType}</p>
+            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Job Type</p>
+              <p className="mt-2 text-lg font-bold capitalize text-slate-900 dark:text-white">{drive.jobType}</p>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Work Mode</p>
-              <p className="mt-2 text-lg font-bold capitalize text-white">{drive.mode}</p>
+            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Work Mode</p>
+              <p className="mt-2 text-lg font-bold capitalize text-slate-900 dark:text-white">{drive.mode}</p>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4">
-              <p className="text-xs font-semibold text-neutral-500 uppercase">Status</p>
-              <p className={`mt-2 text-lg font-bold capitalize ${drive.status === 'open' ? 'text-emerald-400' : 'text-neutral-500'}`}>{drive.status}</p>
+            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Status</p>
+              <p className={`mt-2 text-lg font-bold capitalize ${drive.status === 'open' ? 'text-emerald-400' : 'text-slate-600 dark:text-neutral-500'}`}>{drive.status}</p>
             </div>
           </div>
 
           {/* Description & Responsibilities */}
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
-            <h2 className="mb-4 text-xl font-bold text-white">Job Description</h2>
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+            <h2 className="mb-4 text-xl font-bold text-slate-900 dark:text-white">Job Description</h2>
             <p className="whitespace-pre-wrap text-neutral-300 leading-relaxed">
               {drive.description || "No description provided."}
             </p>
 
             {drive.responsibilities && (
               <>
-                <h2 className="mb-4 mt-8 text-xl font-bold text-white">Key Responsibilities</h2>
+                <h2 className="mb-4 mt-8 text-xl font-bold text-slate-900 dark:text-white">Key Responsibilities</h2>
                 <p className="whitespace-pre-wrap text-neutral-300 leading-relaxed">
                   {drive.responsibilities}
                 </p>
@@ -175,16 +175,16 @@ const DriveDetails = () => {
         {/* Sidebar (Right) */}
         <div className="flex flex-col gap-6">
           {/* Timeline */}
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6">
-            <h3 className="mb-4 text-lg font-bold text-white">Timeline</h3>
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+            <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Timeline</h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                   <Calendar size={16} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">Application Deadline</p>
-                  <p className="text-sm text-neutral-400">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">Application Deadline</p>
+                  <p className="text-sm text-slate-500 dark:text-neutral-400">
                     {new Date(drive.applicationDeadline).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                 </div>
@@ -194,8 +194,8 @@ const DriveDetails = () => {
                   <Calendar size={16} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">Interview Date</p>
-                  <p className="text-sm text-neutral-400">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">Interview Date</p>
+                  <p className="text-sm text-slate-500 dark:text-neutral-400">
                     {drive.driveDate ? new Date(drive.driveDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : "To be decided"}
                   </p>
                 </div>
@@ -204,21 +204,21 @@ const DriveDetails = () => {
           </div>
 
           {/* Eligibility Criteria */}
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6">
-            <h3 className="mb-4 text-lg font-bold text-white">Eligibility Criteria</h3>
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+            <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Eligibility Criteria</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-sm text-neutral-300">
                 <CheckCircle2 size={18} className="mt-0.5 text-indigo-400 shrink-0" />
-                <span><span className="font-semibold text-white">Min CGPA:</span> {drive.minimumCgpa}</span>
+                <span><span className="font-semibold text-slate-900 dark:text-white">Min CGPA:</span> {drive.minimumCgpa}</span>
               </li>
               <li className="flex items-start gap-2 text-sm text-neutral-300">
                 <CheckCircle2 size={18} className="mt-0.5 text-indigo-400 shrink-0" />
-                <span><span className="font-semibold text-white">Allowed Branches:</span> {drive.eligibleBranches?.length > 0 ? drive.eligibleBranches.join(', ') : 'All Branches'}</span>
+                <span><span className="font-semibold text-slate-900 dark:text-white">Allowed Branches:</span> {drive.eligibleBranches?.length > 0 ? drive.eligibleBranches.join(', ') : 'All Branches'}</span>
               </li>
               {drive.passingYearsAllowed?.length > 0 && (
                 <li className="flex items-start gap-2 text-sm text-neutral-300">
                   <CheckCircle2 size={18} className="mt-0.5 text-indigo-400 shrink-0" />
-                  <span><span className="font-semibold text-white">Batch:</span> {drive.passingYearsAllowed.join(', ')}</span>
+                  <span><span className="font-semibold text-slate-900 dark:text-white">Batch:</span> {drive.passingYearsAllowed.join(', ')}</span>
                 </li>
               )}
             </ul>
@@ -226,8 +226,8 @@ const DriveDetails = () => {
 
           {/* Required Skills */}
           {drive.skillsRequired?.length > 0 && (
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-6">
-              <h3 className="mb-4 text-lg font-bold text-white">Required Skills</h3>
+            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+              <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Required Skills</h3>
               <div className="flex flex-wrap gap-2">
                 {drive.skillsRequired.map((skill, idx) => (
                   <span key={idx} className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-sm font-medium text-indigo-300">
@@ -241,16 +241,16 @@ const DriveDetails = () => {
       </div>
 
       {/* Eligible Students List */}
-      <div className="mt-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+      <div className="mt-8 rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-xl font-bold text-white">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
             Eligible Students <span className="ml-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-sm text-indigo-400">{drive.students?.length || 0}</span>
           </h2>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-white/[0.04] text-neutral-400">
+            <thead className="bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400">
               <tr>
                 <th className="px-6 py-4 font-semibold">Student Name</th>
                 <th className="px-6 py-4 font-semibold">Roll No</th>
@@ -274,11 +274,11 @@ const DriveDetails = () => {
                           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500/10 text-xs font-bold text-indigo-400 border border-indigo-500/20">
                             {item.student.fullName?.charAt(0) || "?"}
                           </div>
-                          <span className="font-semibold text-white">{item.student.fullName}</span>
+                          <span className="font-semibold text-slate-900 dark:text-white">{item.student.fullName}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-neutral-400">{item.student.rollNo}</td>
-                      <td className="px-6 py-4 text-neutral-400">{item.student.branch}</td>
+                      <td className="px-6 py-4 text-slate-500 dark:text-neutral-400">{item.student.rollNo}</td>
+                      <td className="px-6 py-4 text-slate-500 dark:text-neutral-400">{item.student.branch}</td>
                       <td className="px-6 py-4 font-semibold text-neutral-300">{item.student.cgpa}</td>
                       <td className="px-6 py-4 text-right">
                         <button className="text-indigo-400 opacity-0 transition-opacity group-hover:opacity-100 font-medium text-sm">
@@ -290,7 +290,7 @@ const DriveDetails = () => {
                 })
               ) : (
                 <tr>
-                  <td colSpan="5" className="py-8 text-center text-neutral-500">
+                  <td colSpan="5" className="py-8 text-center text-slate-600 dark:text-neutral-500">
                     No eligible students have applied to this drive yet.
                   </td>
                 </tr>

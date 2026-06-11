@@ -56,7 +56,7 @@ const StudentLogin = () => {
   };
 
   return (
-    <div className="h-screen bg-transparent flex items-center justify-center p-3 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+    <div className="h-screen bg-transparent flex items-center justify-center p-3 pb-24 lg:pb-32 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
       
       {/* Main Container */}
       <motion.div
@@ -76,7 +76,7 @@ const StudentLogin = () => {
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-5 lg:hidden text-violet-600 dark:text-violet-400">
               <div className="flex size-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
-                <Network className="h-4 w-4 text-white" />
+                <Network className="h-4 w-4 text-slate-900 dark:text-white" />
               </div>
               <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Campus<span className="text-violet-600 dark:text-violet-400">Flow</span></span>
             </div>
@@ -131,7 +131,7 @@ const StudentLogin = () => {
                   <p className="text-[10px] text-slate-500 dark:text-slate-400">Google</p>
                 </div>
               </div>
-              <button className="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-semibold py-1.5 rounded-lg transition-colors">Apply Now</button>
+              <button className="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-slate-900 dark:text-white text-[10px] font-semibold py-1.5 rounded-lg transition-colors">Apply Now</button>
             </motion.div>
 
             <motion.div 
@@ -176,7 +176,7 @@ const StudentLogin = () => {
             {/* Header Logo */}
             <div className="hidden lg:flex items-center gap-2 mb-6 text-violet-600 dark:text-violet-400">
               <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
-                <Network className="h-5 w-5 text-white" />
+                <Network className="h-5 w-5 text-slate-900 dark:text-white" />
               </div>
               <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Campus<span className="text-violet-600 dark:text-violet-400">Flow</span></span>
             </div>
@@ -233,7 +233,7 @@ const StudentLogin = () => {
               <button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="w-full mt-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm disabled:opacity-70 flex justify-center items-center gap-2"
+                className="w-full mt-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-slate-900 dark:text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm disabled:opacity-70 flex justify-center items-center gap-2"
               >
                 {isSubmitting ? (
                   <>

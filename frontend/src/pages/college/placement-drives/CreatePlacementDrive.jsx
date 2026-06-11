@@ -95,25 +95,25 @@ const CreatePlacementDrive = () => {
     }
   };
 
-  const inputClasses = "w-full rounded-xl border border-white/[0.06] bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/30";
+  const inputClasses = "w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/30";
 
   return (
     <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <button 
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
+          className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Drives
         </button>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Create Placement Drive</h1>
-        <p className="mt-2 text-sm text-neutral-400">Publish a new job opportunity for your students.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Create Placement Drive</h1>
+        <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">Publish a new job opportunity for your students.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
         {/* SECTION: Basic Info */}
-        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+        <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 border border-indigo-500/20">
               <Building2 size={16} className="text-indigo-400" />
             </div>
@@ -185,7 +185,7 @@ const CreatePlacementDrive = () => {
             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Package (LPA) *</label>
               <div className="relative">
-                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={16} />
+                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-neutral-500" size={16} />
                 <input
                   type="number"
                   step="0.1"
@@ -201,7 +201,7 @@ const CreatePlacementDrive = () => {
             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={16} />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-neutral-500" size={16} />
                 <input
                   type="text"
                   name="location"
@@ -216,8 +216,8 @@ const CreatePlacementDrive = () => {
         </div>
 
         {/* SECTION: Eligibility */}
-        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+        <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
               <GraduationCap size={16} className="text-emerald-400" />
             </div>
@@ -257,11 +257,11 @@ const CreatePlacementDrive = () => {
                   <label key={branch} className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 transition-colors ${
                     formData.eligibleBranches.includes(branch) 
                       ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' 
-                      : 'border-white/[0.06] bg-white/[0.04] text-neutral-400 hover:bg-white/[0.06]'
+                      : 'border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06]'
                   }`}>
                     <input
                       type="checkbox"
-                      className="h-4 w-4 rounded border-neutral-600 bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
+                      className="h-4 w-4 rounded border-neutral-600 bg-slate-100 dark:bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
                       checked={formData.eligibleBranches.includes(branch)}
                       onChange={() => handleCheckboxChange("eligibleBranches", branch)}
                     />
@@ -277,11 +277,11 @@ const CreatePlacementDrive = () => {
                   <label key={year} className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 transition-colors ${
                     formData.passingYearsAllowed.includes(year) 
                       ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' 
-                      : 'border-white/[0.06] bg-white/[0.04] text-neutral-400 hover:bg-white/[0.06]'
+                      : 'border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06]'
                   }`}>
                     <input
                       type="checkbox"
-                      className="h-4 w-4 rounded border-neutral-600 bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
+                      className="h-4 w-4 rounded border-neutral-600 bg-slate-100 dark:bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
                       checked={formData.passingYearsAllowed.includes(year)}
                       onChange={() => handleCheckboxChange("passingYearsAllowed", year)}
                     />
@@ -294,8 +294,8 @@ const CreatePlacementDrive = () => {
         </div>
 
         {/* SECTION: Timeline */}
-        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+        <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20">
               <Clock size={16} className="text-amber-400" />
             </div>
@@ -327,8 +327,8 @@ const CreatePlacementDrive = () => {
         </div>
 
         {/* SECTION: Details */}
-        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
-          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-white">
+        <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
+          <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-500/10 border border-violet-500/20">
               <Briefcase size={16} className="text-violet-400" />
             </div>
@@ -349,7 +349,7 @@ const CreatePlacementDrive = () => {
                 <button
                   onClick={addSkill}
                   type="button"
-                  className="flex items-center gap-1 rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 font-semibold text-neutral-300 transition hover:bg-white/[0.06]"
+                  className="flex items-center gap-1 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] px-4 font-semibold text-neutral-300 transition hover:bg-slate-200 dark:hover:bg-white/[0.06]"
                 >
                   <Plus size={18} /> Add
                 </button>
@@ -362,7 +362,7 @@ const CreatePlacementDrive = () => {
                       <button
                         type="button"
                         onClick={() => removeSkill(skill)}
-                        className="rounded-md p-1 hover:bg-indigo-500/20 hover:text-white transition"
+                        className="rounded-md p-1 hover:bg-indigo-500/20 hover:text-slate-900 dark:hover:text-white transition"
                       >
                         <X size={14} />
                       </button>
@@ -403,14 +403,14 @@ const CreatePlacementDrive = () => {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="rounded-xl px-6 py-3 text-sm font-semibold text-neutral-400 transition-colors hover:bg-white/[0.04] hover:text-neutral-200"
+            className="rounded-xl px-6 py-3 text-sm font-semibold text-slate-500 dark:text-neutral-400 transition-colors hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-neutral-200"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/30 disabled:pointer-events-none disabled:opacity-70"
+            className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-3 text-sm font-bold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/30 disabled:pointer-events-none disabled:opacity-70"
           >
             {loading ? <Loader2 size={18} className="animate-spin" /> : "Publish Drive"}
           </button>

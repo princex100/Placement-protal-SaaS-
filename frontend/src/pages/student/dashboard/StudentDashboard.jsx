@@ -160,7 +160,7 @@ const StudentDashboard = () => {
             <div className="shrink-0 mt-4 md:mt-0">
               <button 
                 onClick={() => navigate('/student/dashboard/profile')}
-                className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-600/20 dark:bg-blue-500 dark:hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-slate-900 dark:text-white shadow-sm transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-600/20 dark:bg-blue-500 dark:hover:bg-blue-600"
               >
                 Complete Profile
               </button>
@@ -215,7 +215,7 @@ const StudentDashboard = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-2">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm transition-colors group-hover:bg-blue-600 group-hover:text-white dark:bg-slate-700">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm transition-colors group-hover:bg-blue-600 group-hover:text-slate-900 dark:group-hover:text-white dark:bg-slate-700">
                     <ChevronRight size={16} />
                   </div>
                 </div>

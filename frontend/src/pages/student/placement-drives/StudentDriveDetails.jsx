@@ -65,7 +65,7 @@ const StudentDriveDetails = () => {
     <div className="space-y-6">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:hover:text-white transition-colors"
       >
         <ArrowLeft size={16} /> Back to Drives
       </button>
@@ -90,7 +90,7 @@ const StudentDriveDetails = () => {
           ) : (
             <button 
               onClick={handleApply}
-              className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-white shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all flex items-center gap-2"
+              className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-slate-900 dark:text-white shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all flex items-center gap-2"
             >
               Apply Now
             </button>

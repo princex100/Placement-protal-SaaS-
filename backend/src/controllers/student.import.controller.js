@@ -112,6 +112,7 @@ export const importStudents = asyncHandler(async (req, res) => {
 
     // Track unique branches (case-insensitive deduplication for this batch)
     const branchName = String(studentData.branch).trim();
+    studentData.branch = branchName;
     const branchKey = branchName.toLowerCase();
     
     if (uniqueBranches[branchKey]) {

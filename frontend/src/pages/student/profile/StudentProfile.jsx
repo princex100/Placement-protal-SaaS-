@@ -143,7 +143,7 @@ const StudentProfile = () => {
             </div>
             {isEditing && (
               <div className="absolute inset-0 bg-black/40 rounded-[28px] opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-                <Camera className="text-white h-8 w-8" />
+                <Camera className="text-slate-900 dark:text-white h-8 w-8" />
               </div>
             )}
           </div>
@@ -198,7 +198,7 @@ const StudentProfile = () => {
               <button 
                 onClick={handleSaveProfile}
                 disabled={isSubmitting}
-                className="flex-1 rounded-2xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 disabled:opacity-70 whitespace-nowrap flex justify-center items-center"
+                className="flex-1 rounded-2xl bg-blue-600 px-6 py-3 font-semibold text-slate-900 dark:text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 disabled:opacity-70 whitespace-nowrap flex justify-center items-center"
               >
                 {isSubmitting ? <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : "Save Changes"}
               </button>
@@ -206,7 +206,7 @@ const StudentProfile = () => {
           ) : (
             <button 
               onClick={() => setIsEditing(true)}
-              className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 w-full md:w-auto whitespace-nowrap"
+              className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 w-full md:w-auto whitespace-nowrap"
             >
               {user?.isProfileCompleted ? "Edit Profile" : "Complete Profile"}
             </button>

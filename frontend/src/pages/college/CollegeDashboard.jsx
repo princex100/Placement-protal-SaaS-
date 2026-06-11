@@ -168,9 +168,16 @@ const CollegeDashboard = () => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const handleLogout = () => {
-    dispatch(clearCredentials());
-    navigate("/college/auth");
+  const handleLogout = async () => {
+    try {
+      await api.post('/colleges/logout');
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      dispatch(clearCredentials());
+      localStorage.removeItem("user");
+      navigate("/");
+    }
   };
 
   const actionColorClasses = {
@@ -181,29 +188,29 @@ const CollegeDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a12] text-neutral-100">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a12] text-slate-900 dark:text-neutral-100">
       {/* Ambient background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-indigo-500/5 rounded-full blur-[100px] sm:blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-violet-500/5 rounded-full blur-[100px] sm:blur-[150px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[800px] h-[400px] sm:h-[800px] bg-blue-500/3 rounded-full blur-[150px] sm:blur-[200px]" />
+        <div className="absolute top-0 left-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-indigo-200/40 dark:bg-indigo-500/5 rounded-full blur-[100px] sm:blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-violet-200/40 dark:bg-violet-500/5 rounded-full blur-[100px] sm:blur-[150px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[800px] h-[400px] sm:h-[800px] bg-blue-200/30 dark:bg-blue-500/3 rounded-full blur-[150px] sm:blur-[200px]" />
       </div>
 
       {/* Mobile Header */}
       <div className="sticky top-0 z-50 lg:hidden">
-        <div className="flex items-center justify-between px-4 py-3 bg-[#0a0a12]/80 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-[#0a0a12]/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/[0.06]">
           <div className="flex items-center gap-3">
             <div className="size-9 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex justify-center items-center shadow-lg shadow-indigo-500/25">
-              <GraduationCap className="size-4 text-white" />
+              <GraduationCap className="size-4 text-slate-900 dark:text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-semibold text-xs tracking-tight text-white">Placement</span>
-              <span className="text-neutral-500 text-[10px] font-medium">Portal</span>
+              <span className="font-semibold text-xs tracking-tight text-slate-900 dark:text-white">Placement</span>
+              <span className="text-slate-500 dark:text-neutral-500 text-[10px] font-medium">Portal</span>
             </div>
           </div>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="size-10 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.06] text-neutral-400 hover:text-white transition-colors"
+            className="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -226,16 +233,16 @@ const CollegeDashboard = () => {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed top-0 left-0 z-50 h-full w-[280px] bg-[#0a0a12] border-r border-white/[0.06] p-5 lg:hidden"
+              className="fixed top-0 left-0 z-50 h-full w-[280px] bg-slate-50 dark:bg-[#0a0a12] border-r border-slate-200 dark:border-white/[0.06] p-5 lg:hidden"
             >
               {/* Mobile Logo */}
               <div className="flex items-center gap-3 px-3 mb-8">
                 <div className="size-11 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex justify-center items-center shadow-lg shadow-indigo-500/25">
-                  <GraduationCap className="size-5 text-white" />
+                  <GraduationCap className="size-5 text-slate-900 dark:text-white" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-sm tracking-tight text-white">Placement</span>
-                  <span className="text-neutral-500 text-xs font-medium">Portal</span>
+                  <span className="font-semibold text-sm tracking-tight text-slate-900 dark:text-white">Placement</span>
+                  <span className="text-slate-500 dark:text-neutral-500 text-xs font-medium">Portal</span>
                 </div>
               </div>
 
@@ -253,8 +260,8 @@ const CollegeDashboard = () => {
                       whileTap={{ scale: 0.98 }}
                       className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-300 ${
                         isItemActive
-                          ? "bg-gradient-to-r from-indigo-500/20 to-violet-500/10 border border-indigo-500/20 text-white font-medium shadow-lg shadow-indigo-500/5"
-                          : "text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                          ? "bg-gradient-to-r from-indigo-500/20 to-violet-500/10 border border-indigo-500/20 text-indigo-700 dark:text-white font-medium shadow-lg shadow-indigo-500/5"
+                          : "text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]"
                       }`}
                     >
                       <Icon size={18} className={isItemActive ? "text-indigo-400" : ""} />
@@ -275,7 +282,7 @@ const CollegeDashboard = () => {
                 <motion.button
                   onClick={handleLogout}
                   whileTap={{ scale: 0.98 }}
-                  className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-neutral-500 transition-all hover:bg-red-500/10 hover:text-red-400"
+                  className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 dark:text-neutral-500 transition-all hover:bg-red-500/10 hover:text-red-400"
                 >
                   <LogOut size={18} />
                   Logout Account
@@ -292,17 +299,17 @@ const CollegeDashboard = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="sticky top-5 hidden h-[calc(100vh-40px)] w-[280px] flex-col justify-between rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-5 lg:flex"
+          className="sticky top-5 hidden h-[calc(100vh-40px)] w-[280px] flex-col justify-between rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none backdrop-blur-xl p-5 lg:flex"
         >
           {/* Logo */}
           <div>
             <div className="flex items-center gap-3 px-3 mb-8">
               <div className="size-11 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex justify-center items-center shadow-lg shadow-indigo-500/25">
-                <GraduationCap className="size-5 text-white" />
+                <GraduationCap className="size-5 text-slate-900 dark:text-white" />
               </div>
               <div className="flex flex-col">
-                <span className="font-semibold text-sm tracking-tight text-white">Placement</span>
-                <span className="text-neutral-500 text-xs font-medium">Portal</span>
+                <span className="font-semibold text-sm tracking-tight text-slate-900 dark:text-white">Placement</span>
+                <span className="text-slate-500 dark:text-neutral-500 text-xs font-medium">Portal</span>
               </div>
             </div>
 
@@ -321,8 +328,8 @@ const CollegeDashboard = () => {
                     whileTap={{ scale: 0.98 }}
                     className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-300 ${
                       isItemActive
-                        ? "bg-gradient-to-r from-indigo-500/20 to-violet-500/10 border border-indigo-500/20 text-white font-medium shadow-lg shadow-indigo-500/5"
-                        : "text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                        ? "bg-gradient-to-r from-indigo-500/20 to-violet-500/10 border border-indigo-500/20 text-indigo-700 dark:text-white font-medium shadow-lg shadow-indigo-500/5"
+                        : "text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]"
                     }`}
                   >
                     <Icon size={18} className={isItemActive ? "text-indigo-400" : ""} />
@@ -344,7 +351,7 @@ const CollegeDashboard = () => {
             onClick={handleLogout}
             whileHover={{ x: -4 }}
             whileTap={{ scale: 0.98 }}
-            className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-neutral-500 transition-all hover:bg-red-500/10 hover:text-red-400"
+            className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 dark:text-neutral-500 transition-all hover:bg-red-500/10 hover:text-red-400"
           >
             <LogOut size={18} className="transition-transform group-hover:-translate-x-0.5" />
             Logout Account
@@ -368,7 +375,7 @@ const CollegeDashboard = () => {
                       <div className="h-12 w-12 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
                       <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border border-indigo-500/20" />
                     </div>
-                    <p className="text-sm font-medium text-neutral-500">Loading dashboard...</p>
+                    <p className="text-sm font-medium text-slate-500 dark:text-neutral-500">Loading dashboard...</p>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -381,7 +388,7 @@ const CollegeDashboard = () => {
                     {/* Top Welcome Section */}
                     <motion.div
                       variants={fadeInUp}
-                      className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-xl p-4 sm:p-6 lg:p-8"
+                      className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-gradient-to-br from-white to-slate-50 dark:from-white/[0.04] dark:to-white/[0.01] shadow-sm dark:shadow-none backdrop-blur-xl p-4 sm:p-6 lg:p-8"
                     >
                       {/* Decorative elements */}
                       <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-gradient-to-br from-indigo-500/10 to-violet-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -396,10 +403,10 @@ const CollegeDashboard = () => {
                             <Sparkles className="size-3 sm:size-3.5 text-indigo-400" />
                             <span className="text-[10px] sm:text-xs font-medium text-indigo-300">Dashboard Overview</span>
                           </motion.div>
-                          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-2 sm:mb-3">
+                          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-2 sm:mb-3">
                             Welcome back, <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">{collegeData?.name || "College"}</span>
                           </h1>
-                          <p className="text-neutral-400 text-xs sm:text-sm lg:text-base max-w-lg leading-relaxed">
+                          <p className="text-slate-500 dark:text-neutral-400 text-xs sm:text-sm lg:text-base max-w-lg leading-relaxed">
                             Manage students, track active placement drives, and monitor campus recruitment analytics.
                           </p>
                         </div>
@@ -407,15 +414,15 @@ const CollegeDashboard = () => {
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                           <motion.div
                             whileHover={{ scale: 1.02 }}
-                            className="flex items-center gap-3 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.06] px-4 sm:px-5 py-3 sm:py-3.5 backdrop-blur-sm"
+                            className="flex items-center gap-3 rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] px-4 sm:px-5 py-3 sm:py-3.5 backdrop-blur-sm"
                           >
                             <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 text-indigo-400">
                               <Calendar size={16} className="sm:hidden" />
                               <Calendar size={18} className="hidden sm:block" />
                             </div>
                             <div>
-                              <p className="text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold text-neutral-500">Current Session</p>
-                              <p className="text-xs sm:text-sm font-bold text-white">
+                              <p className="text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-neutral-500">Current Session</p>
+                              <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                                 {user?.activePlacementSeason || collegeData?.currentSession || "Placement Season"}
                               </p>
                             </div>
@@ -425,7 +432,7 @@ const CollegeDashboard = () => {
                             onClick={() => navigate('/college/dashboard/placement-drives/create')}
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
-                            className="flex h-12 sm:h-[60px] items-center justify-center gap-2 rounded-xl sm:rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 sm:px-6 font-semibold text-white text-sm sm:text-base shadow-lg shadow-indigo-500/25 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
+                            className="flex h-12 sm:h-[60px] items-center justify-center gap-2 rounded-xl sm:rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 sm:px-6 font-semibold text-slate-900 dark:text-white text-sm sm:text-base shadow-lg shadow-indigo-500/25 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
                           >
                             <PlusSquare size={16} className="sm:hidden" />
                             <PlusSquare size={18} className="hidden sm:block" />
@@ -480,12 +487,12 @@ const CollegeDashboard = () => {
                       {/* Latest Placement Drives */}
                       <motion.div
                         variants={fadeInUp}
-                        className="flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4 sm:p-6 lg:col-span-2"
+                        className="flex flex-col rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none backdrop-blur-xl p-4 sm:p-6 lg:col-span-2"
                       >
                         <div className="mb-4 sm:mb-6 flex items-center justify-between">
                           <div>
-                            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-white">Latest Placement Drives</h2>
-                            <p className="text-xs sm:text-sm text-neutral-500 mt-0.5 sm:mt-1">Recently created job opportunities</p>
+                            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-900 dark:text-white">Latest Placement Drives</h2>
+                            <p className="text-xs sm:text-sm text-slate-500 dark:text-neutral-500 mt-0.5 sm:mt-1">Recently created job opportunities</p>
                           </div>
                           <motion.button
                             onClick={() => navigate('/college/dashboard/placement-drives')}
@@ -500,13 +507,13 @@ const CollegeDashboard = () => {
 
                         <div className="flex-1 space-y-2 sm:space-y-3">
                           {!Array.isArray(dashboardStats?.latestDrives) || dashboardStats.latestDrives.length === 0 ? (
-                            <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-xl sm:rounded-2xl border border-dashed border-white/[0.06] bg-white/[0.01]">
-                              <p className="text-sm font-medium text-neutral-500">
+                            <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-xl sm:rounded-2xl border border-dashed border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.01]">
+                              <p className="text-sm font-medium text-slate-500 dark:text-neutral-500">
                                 No placement drives yet
                               </p>
                               <button 
                                 onClick={() => navigate('/college/dashboard/placement-drives/create')}
-                                className="rounded-xl bg-white/[0.04] px-4 py-2 text-sm font-semibold text-indigo-400 transition hover:bg-white/[0.06]"
+                                className="rounded-xl bg-slate-100 dark:bg-white/[0.04] px-4 py-2 text-sm font-semibold text-indigo-400 transition hover:bg-slate-200 dark:hover:bg-white/[0.06]"
                               >
                                 Create First Drive
                               </button>
@@ -520,17 +527,17 @@ const CollegeDashboard = () => {
                                 transition={{ delay: index * 0.1 }}
                                 onClick={() => navigate(`/college/dashboard/placement-drives/${drive._id}`)}
                                 whileHover={{ scale: 1.01, x: 4 }}
-                                className="group relative flex cursor-pointer flex-col gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-white/[0.04] bg-white/[0.02] p-3 sm:p-4 lg:p-5 transition-all hover:border-indigo-500/20 hover:bg-white/[0.04] sm:flex-row sm:items-center sm:justify-between"
+                                className="group relative flex cursor-pointer flex-col gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/[0.04] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none p-3 sm:p-4 lg:p-5 transition-all hover:border-indigo-500/20 hover:bg-slate-100 dark:hover:bg-white/[0.04] sm:flex-row sm:items-center sm:justify-between"
                               >
                                 <div className="flex items-center gap-3 sm:gap-4">
                                   <div className="flex h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 text-base sm:text-lg lg:text-xl font-bold text-indigo-300 border border-indigo-500/10 shrink-0">
                                     {drive.logo || <Building2 size={24} className="text-indigo-400" />}
                                   </div>
                                   <div className="min-w-0">
-                                    <h4 className="font-bold text-sm sm:text-base text-white group-hover:text-indigo-300 transition-colors truncate">
+                                    <h4 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white group-hover:text-indigo-300 transition-colors truncate">
                                       {drive.companyName || "Unknown Company"}
                                     </h4>
-                                    <div className="mt-0.5 sm:mt-1 flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-neutral-500">
+                                    <div className="mt-0.5 sm:mt-1 flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-500 dark:text-neutral-500">
                                       <span className="truncate">{drive.role || "Role not specified"}</span>
                                       <span className="h-1 w-1 rounded-full bg-neutral-700 hidden sm:block" />
                                       <span className="font-semibold text-emerald-400">{drive.package} LPA</span>
@@ -544,16 +551,16 @@ const CollegeDashboard = () => {
                                       className={`rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider ${
                                         drive.status === "open"
                                           ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                          : "bg-neutral-800 text-neutral-400"
+                                          : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-neutral-400"
                                       }`}
                                     >
                                       {drive.status}
                                     </span>
-                                    <span className="mt-1 sm:mt-2 text-[10px] sm:text-xs font-medium text-neutral-500">
+                                    <span className="mt-1 sm:mt-2 text-[10px] sm:text-xs font-medium text-slate-500 dark:text-neutral-500">
                                       {drive.appliedStudentsCount} Applied
                                     </span>
                                   </div>
-                                  <div className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-white/[0.04] text-neutral-500 transition-all group-hover:bg-indigo-500 group-hover:text-white">
+                                  <div className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-500 transition-all group-hover:bg-indigo-500 group-hover:text-slate-900 dark:group-hover:text-white">
                                     <ChevronRight size={16} className="sm:hidden" />
                                     <ChevronRight size={18} className="hidden sm:block" />
                                   </div>
@@ -586,9 +593,9 @@ const CollegeDashboard = () => {
                         {/* Quick Actions */}
                         <motion.div
                           variants={fadeInUp}
-                          className="flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-4 sm:p-5"
+                          className="flex flex-col rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none backdrop-blur-xl p-4 sm:p-5"
                         >
-                          <h3 className="mb-3 sm:mb-4 text-base sm:text-lg font-bold text-white">Quick Actions</h3>
+                          <h3 className="mb-3 sm:mb-4 text-base sm:text-lg font-bold text-slate-900 dark:text-white">Quick Actions</h3>
                           <div className="space-y-2">
                             {[
                               { icon: Briefcase, label: "Add Placement Drive", color: "indigo", path: '/college/dashboard/placement-drives/create' },
@@ -604,19 +611,19 @@ const CollegeDashboard = () => {
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ x: 4 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="flex w-full items-center justify-between rounded-lg sm:rounded-xl border border-white/[0.04] bg-white/[0.02] p-3 sm:p-4 transition-all hover:border-indigo-500/20 hover:bg-white/[0.04] group"
+                                className="flex w-full items-center justify-between rounded-lg sm:rounded-xl border border-slate-200 dark:border-white/[0.04] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none p-3 sm:p-4 transition-all hover:border-indigo-500/20 hover:bg-slate-100 dark:hover:bg-white/[0.04] group"
                               >
                                 <div className="flex items-center gap-2 sm:gap-3">
                                   <div className={`size-7 sm:size-9 rounded-md sm:rounded-lg ${actionColorClasses[action.color].bg} flex items-center justify-center`}>
                                     <action.icon size={14} className={`${actionColorClasses[action.color].text} sm:hidden`} />
                                     <action.icon size={16} className={`${actionColorClasses[action.color].text} hidden sm:block`} />
                                   </div>
-                                  <span className="font-medium text-xs sm:text-sm text-neutral-300 group-hover:text-white transition-colors">
+                                  <span className="font-medium text-xs sm:text-sm text-slate-700 dark:text-neutral-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
                                     {action.label}
                                   </span>
                                 </div>
-                                <ChevronRight size={14} className="text-neutral-600 group-hover:text-neutral-400 transition-colors sm:hidden" />
-                                <ChevronRight size={16} className="text-neutral-600 group-hover:text-neutral-400 transition-colors hidden sm:block" />
+                                <ChevronRight size={14} className="text-slate-400 dark:text-neutral-600 group-hover:text-slate-500 dark:group-hover:text-neutral-400 transition-colors sm:hidden" />
+                                <ChevronRight size={16} className="text-slate-400 dark:text-neutral-600 group-hover:text-slate-500 dark:group-hover:text-neutral-400 transition-colors hidden sm:block" />
                               </motion.button>
                             ))}
                           </div>
@@ -694,7 +701,7 @@ const StatCard = ({ title, value, icon: Icon, trend, progress, color, delay = 0 
       animate="animate"
       transition={{ delay }}
       whileHover={{ scale: 1.02, y: -4 }}
-      className={`relative overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-3 sm:p-4 lg:p-6 transition-shadow hover:shadow-lg hover:shadow-${color}-500/5`}
+      className={`relative overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none backdrop-blur-xl p-3 sm:p-4 lg:p-6 transition-shadow hover:shadow-lg hover:shadow-${color}-500/5`}
     >
       {/* Gradient overlay */}
       <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-50`} />
@@ -711,10 +718,10 @@ const StatCard = ({ title, value, icon: Icon, trend, progress, color, delay = 0 
           <span className={`text-[9px] sm:text-[10px] lg:text-xs font-semibold ${colors.icon} hidden sm:block`}>{trend}</span>
         </div>
 
-        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold tracking-tight text-white">{value}</h3>
-        <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs lg:text-sm font-medium text-neutral-500 truncate">{title}</p>
+        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{value}</h3>
+        <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs lg:text-sm font-medium text-slate-500 dark:text-neutral-500 truncate">{title}</p>
 
-        <div className="mt-2 sm:mt-3 lg:mt-5 h-1 sm:h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+        <div className="mt-2 sm:mt-3 lg:mt-5 h-1 sm:h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/[0.06]">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
@@ -736,18 +743,18 @@ const QuickStatCard = ({ title, value, icon: Icon, color, onClick }) => {
       whileHover={{ scale: 1.03, y: -2 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className={`cursor-pointer rounded-xl sm:rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-3 sm:p-4 lg:p-5 transition-all hover:border-indigo-500/20 ${onClick ? 'hover:shadow-md hover:shadow-indigo-500/10' : ''}`}
+      className={`cursor-pointer rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white shadow-sm dark:bg-white/[0.02] dark:shadow-none backdrop-blur-xl p-3 sm:p-4 lg:p-5 transition-all hover:border-indigo-500/20 ${onClick ? 'hover:shadow-md hover:shadow-indigo-500/10' : ''}`}
     >
       <div className={`size-8 sm:size-9 lg:size-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${colors.bg} flex items-center justify-center mb-2 sm:mb-3`}>
         <Icon size={14} className={`${colors.icon} sm:hidden`} />
         <Icon size={16} className={`${colors.icon} hidden sm:block lg:hidden`} />
         <Icon size={18} className={`${colors.icon} hidden lg:block`} />
       </div>
-      <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{value.toLocaleString()}</h4>
+      <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">{value.toLocaleString()}</h4>
       <div className="mt-0.5 sm:mt-1 flex items-center justify-between">
-        <p className="text-[10px] sm:text-xs font-medium text-neutral-500 truncate">{title}</p>
-        <ChevronRight size={12} className="text-neutral-700 sm:hidden shrink-0" />
-        <ChevronRight size={14} className="text-neutral-700 hidden sm:block shrink-0" />
+        <p className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-neutral-500 truncate">{title}</p>
+        <ChevronRight size={12} className="text-slate-400 dark:text-neutral-700 sm:hidden shrink-0" />
+        <ChevronRight size={14} className="text-slate-400 dark:text-neutral-700 hidden sm:block shrink-0" />
       </div>
     </motion.div>
   );
