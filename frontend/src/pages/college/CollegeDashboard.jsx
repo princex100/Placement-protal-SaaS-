@@ -549,12 +549,12 @@ const CollegeDashboard = () => {
                                   <div className="flex flex-col sm:items-end">
                                     <span
                                       className={`rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider ${
-                                        drive.status === "open"
-                                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                          : "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-neutral-400"
+                                        (drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date())
+                                          ? "bg-slate-200 dark:bg-neutral-800 text-slate-500 dark:text-neutral-400"
+                                          : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                                       }`}
                                     >
-                                      {drive.status}
+                                      {drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? 'Closed' : 'Open'}
                                     </span>
                                     <span className="mt-1 sm:mt-2 text-[10px] sm:text-xs font-medium text-slate-500 dark:text-neutral-500">
                                       {drive.appliedStudentsCount} Applied

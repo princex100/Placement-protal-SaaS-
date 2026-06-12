@@ -124,11 +124,11 @@ const PlacementDrives = () => {
               <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${
                 drive.applicationWorkflowStage === 'completed'
                   ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                  : drive.status === 'open' 
-                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                  : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                  : (drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date())
+                  ? 'bg-red-500/10 text-red-400 border border-red-500/20'
+                  : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
               }`}>
-                {drive.applicationWorkflowStage === 'completed' ? 'Completed' : drive.status}
+                {drive.applicationWorkflowStage === 'completed' ? 'Completed' : (drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? 'Closed' : 'Open')}
               </span>
             </div>
           </motion.div>

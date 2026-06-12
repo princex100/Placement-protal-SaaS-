@@ -31,19 +31,13 @@ const uploadOnCloudinary = async (
 
       // UPLOAD FILE
 
-      const response =
-      await cloudinary.uploader.upload(
-
+      const isPDF = localFilePath.toLowerCase().endsWith(".pdf");
+      const response = await cloudinary.uploader.upload(
          localFilePath,
-
          {
-
-            resource_type:"auto",
-
-            folder:"placement-portal"
-
+            resource_type: isPDF ? "raw" : "auto",
+            folder: "placement-portal"
          }
-
       );
 
 

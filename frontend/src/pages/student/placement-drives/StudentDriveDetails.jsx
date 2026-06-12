@@ -84,13 +84,17 @@ const StudentDriveDetails = () => {
 
         <div>
           {hasApplied ? (
-            <button disabled className="flex items-center gap-2 rounded-2xl bg-emerald-50 px-8 py-3.5 font-bold text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400">
+            <button disabled className="flex items-center gap-2 rounded-2xl bg-emerald-50 px-8 py-3.5 font-bold text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 cursor-not-allowed">
               <CheckCircle2 size={20} /> Applied
+            </button>
+          ) : drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? (
+            <button disabled className="flex items-center gap-2 rounded-2xl bg-red-50 px-8 py-3.5 font-bold text-red-600 dark:bg-red-900/20 dark:text-red-400 cursor-not-allowed">
+              Closed
             </button>
           ) : (
             <button 
               onClick={handleApply}
-              className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-slate-900 dark:text-white shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all flex items-center gap-2"
+              className="flex items-center gap-2 rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
             >
               Apply Now
             </button>

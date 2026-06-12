@@ -69,17 +69,17 @@ export const studentLoginRules = () => {
 
 export const studentProfileUpdateRules = () => {
   return [
-    body("fullName").optional().trim().notEmpty(),
-    body("phoneNumber").optional().trim(),
-    body("gender").optional().isIn(["Male", "Female", "Other", "Prefer not to say"]),
-    body("branch").optional().trim(),
-    body("cgpa").optional().isNumeric(),
-    body("passingYear").optional().isNumeric(),
-    body("semester").optional().isNumeric(),
-    body("backlogCount").optional().isNumeric(),
-    body("skills").optional().isArray(),
-    body("github").optional().isURL().withMessage("Must be a valid URL"),
-    body("linkedin").optional().isURL().withMessage("Must be a valid URL"),
-    body("portfolio").optional().isURL().withMessage("Must be a valid URL"),
+    body("fullName").optional({ checkFalsy: true }).trim().notEmpty(),
+    body("phoneNumber").optional({ checkFalsy: true }).trim(),
+    body("gender").optional({ checkFalsy: true }).isIn(["Male", "Female", "Other", "Prefer not to say"]),
+    body("branch").optional({ checkFalsy: true }).trim(),
+    body("cgpa").optional({ checkFalsy: true }).isNumeric(),
+    body("passingYear").optional({ checkFalsy: true }).isNumeric(),
+    body("semester").optional({ checkFalsy: true }).isNumeric(),
+    body("backlogCount").optional({ checkFalsy: true }).isNumeric(),
+    body("skills").optional({ checkFalsy: true }).isArray(),
+    body("github").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
+    body("linkedin").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
+    body("portfolio").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
   ];
 };

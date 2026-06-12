@@ -129,7 +129,8 @@ export const importStudents = asyncHandler(async (req, res) => {
     throw new ApiError(400, "No valid student data found in the file.");
   }
 
-  // Ensure branches exist
+  // Ensure branches exist and build a map of lowercased branch name to exact DB branch name
+  const exactBranchNames = {};
   const branchCreationPromises = Object.values(uniqueBranches).map(async (branchInfo) => {
     // Check if branch already exists for this college
     let branchDoc = await Branch.findOne({
@@ -143,6 +144,8 @@ export const importStudents = asyncHandler(async (req, res) => {
         college: collegeId,
       });
     }
+
+    exactBranchNames[branchInfo.name.toLowerCase()] = branchDoc.name;
 
     // Ensure placement record exists for this branch AND THIS SEASON
     const existingRecord = await BranchPlacementRecord.findOne({
@@ -165,14 +168,38 @@ export const importStudents = asyncHandler(async (req, res) => {
 
   await Promise.all(branchCreationPromises);
 
+  // Update students to use the exact branch name from DB and remove invalid emails
+  for (const student of studentsToInsert) {
+    const lowerBranch = student.branch.toLowerCase();
+    if (exactBranchNames[lowerBranch]) {
+      student.branch = exactBranchNames[lowerBranch];
+    }
+    
+    // Remove invalid email to prevent global duplicate key errors on sparse index
+    // Also handles placeholders like "N/A", "-", or spaces.
+    if (!student.email || typeof student.email !== 'string' || !student.email.includes('@')) {
+      delete student.email;
+    } else {
+      student.email = student.email.trim();
+    }
+  }
+
   // Bulk Insert students
   // Ignore duplicates gracefully if possible, or let it fail if roll numbers overlap
+  let successfullyImportedCount = 0;
   try {
-    await Student.insertMany(studentsToInsert, { ordered: false });
+    const result = await Student.insertMany(studentsToInsert, { ordered: false });
+    successfullyImportedCount = result.length;
   } catch (error) {
     // ordered: false throws if there are duplicates, but inserts the rest.
-    // We can just log it or pass it. If ALL failed, we throw.
-    if (error.code !== 11000) {
+    if (error.code === 11000) {
+      // Some inserted, some failed (duplicate rollNo or email)
+      successfullyImportedCount = error.insertedDocs ? error.insertedDocs.length : 0;
+      
+      if (successfullyImportedCount === 0) {
+        throw new ApiError(400, `All ${studentsToInsert.length} students failed to import. This is likely because the Roll Numbers already exist in the database, or they share an exact duplicate placeholder Email (e.g. 'N/A') with another student. Please ensure all Roll Numbers and Emails are unique.`);
+      }
+    } else {
       throw new ApiError(500, "Error occurred during bulk insert.");
     }
   }
@@ -181,10 +208,11 @@ export const importStudents = asyncHandler(async (req, res) => {
     new ApiResponse(
       200,
       {
-        studentsImported: studentsToInsert.length,
+        studentsImported: successfullyImportedCount,
+        totalAttempted: studentsToInsert.length,
         branchesDetected: Object.keys(uniqueBranches).length,
       },
-      `${studentsToInsert.length} students imported successfully. Default password is the first 3 letters of their first name (uppercase) followed by the last 4 digits of their roll number.`
+      `${successfullyImportedCount} out of ${studentsToInsert.length} students imported successfully. Default password is the first 3 letters of their first name (uppercase) followed by the last 4 digits of their roll number.`
     )
   );
 });

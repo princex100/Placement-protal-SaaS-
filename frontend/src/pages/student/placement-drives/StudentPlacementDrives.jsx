@@ -81,8 +81,19 @@ const StudentPlacementDrives = () => {
                   </div>
                 </div>
                 {/* Status Badge Mock */}
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-400">
-                  {drive.isApplied ? "Applied" : "Open"}
+                <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${
+                  drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() 
+                  ? "bg-red-100 text-red-600 dark:bg-red-500/10 dark:text-red-400" 
+                  : drive.isApplied 
+                  ? "bg-green-100 text-green-600 dark:bg-green-500/10 dark:text-green-400" 
+                  : "bg-blue-100 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400"
+                }`}>
+                  {drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() 
+                    ? "Closed" 
+                    : drive.isApplied 
+                    ? "Applied" 
+                    : "Open"
+                  }
                 </span>
               </div>
               

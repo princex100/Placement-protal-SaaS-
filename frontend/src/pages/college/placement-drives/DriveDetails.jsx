@@ -150,7 +150,9 @@ const DriveDetails = () => {
             </div>
             <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
               <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Status</p>
-              <p className={`mt-2 text-lg font-bold capitalize ${drive.status === 'open' ? 'text-emerald-400' : 'text-slate-600 dark:text-neutral-500'}`}>{drive.status}</p>
+              <p className={`mt-2 text-lg font-bold capitalize ${drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? 'text-red-400' : 'text-emerald-400'}`}>
+                {drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? 'Closed' : 'Open'}
+              </p>
             </div>
           </div>
 

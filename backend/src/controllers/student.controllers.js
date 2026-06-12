@@ -129,7 +129,12 @@ export const updateStudentProfile = asyncHandler(async (req, res) => {
   const updates = {};
   Object.keys(req.body).forEach(key => {
     if (allowedFields.includes(key)) {
-      updates[key] = req.body[key];
+      const value = req.body[key];
+      // Prevent passing empty string to gender which violates Mongoose enum
+      if (key === "gender" && (value === "" || value === null)) {
+        return; 
+      }
+      updates[key] = value;
     }
   });
 
