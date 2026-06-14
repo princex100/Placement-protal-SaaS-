@@ -18,24 +18,7 @@ const branchPlacementRecordSchema = new mongoose.Schema(
       type: Number,
       required: true,
       index: true
-    },
-    placedStudents: [
-      {
-        student: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Student",
-          required: true,
-        },
-        company: {
-          type: String,
-          required: true,
-        },
-        package: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
+    }
   },
   { timestamps: true }
 );

@@ -6,6 +6,8 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { generateMailContent, sendEmail } from "../utils/sendEmail.js";
 import fs from "fs";
+import Branch from "../models/branch.models.js";
+import PlacementRecord from "../models/PlacementRecord.models.js";
 
 export const uploadSelection = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
@@ -81,7 +83,7 @@ export const uploadSelection = asyncHandler(async (req, res) => {
     drive: driveId, 
     college: collegeId,
     applicationStatus: "interview_scheduled"
-  }).populate("student", "rollNo email fullName");
+  }).populate("student", "rollNo email fullName branch placementSeasonYear");
 
   const matchedAppIds = [];
   const rejectedAppIds = [];
@@ -94,11 +96,17 @@ export const uploadSelection = asyncHandler(async (req, res) => {
       if (selectedRollNumbers.has(studentRollNo)) {
         matchedAppIds.push(app._id);
         selectedStudentIds.push(app.student._id);
+        
+        // Add full student details needed for PlacementRecord
+        app.student.companyName = drive.companyName;
+        app.student.package = drive.package;
+        
         studentsToNotify.push({
           email: app.student.email,
           fullName: app.student.fullName,
           companyName: drive.companyName,
-          role: drive.role
+          role: drive.role,
+          studentData: app.student // Pass down student for PlacementRecord
         });
       } else {
         rejectedAppIds.push(app._id);
@@ -151,6 +159,34 @@ export const uploadSelection = asyncHandler(async (req, res) => {
       { _id: { $in: selectedStudentIds } },
       { $set: { placementStatus: "placed" } }
     );
+
+    // Create PlacementRecord documents
+    const placementRecordsToInsert = [];
+    for (const studentInfo of studentsToNotify) {
+      const s = studentInfo.studentData;
+      // Resolve the Branch ObjectId by matching name and college
+      const branchDoc = await Branch.findOne({ 
+        name: { $regex: new RegExp(`^${s.branch}$`, "i") }, 
+        college: collegeId 
+      });
+      
+      if (branchDoc) {
+        placementRecordsToInsert.push({
+          student: s._id,
+          college: collegeId,
+          branch: branchDoc._id,
+          company: s.companyName,
+          package: s.package,
+          placementSeasonYear: s.placementSeasonYear || drive.placementSeasonYear
+        });
+      }
+    }
+    
+    if (placementRecordsToInsert.length > 0) {
+      await PlacementRecord.insertMany(placementRecordsToInsert, { ordered: false }).catch(err => {
+         console.warn("Some placement records might already exist:", err.message);
+      });
+    }
   }
 
   // Advance drive workflow to "completed" and close it

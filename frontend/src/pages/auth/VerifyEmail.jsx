@@ -44,6 +44,7 @@ const VerifyEmail = () => {
       processedTokens.add(token);
       verifyEmailToken();
     }
+    
   }, [token, navigate, dispatch]);
 
   return (

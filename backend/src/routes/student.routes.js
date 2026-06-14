@@ -26,14 +26,14 @@ const router = Router();
 router.route("/register").post(
   upload.none(),
   ...studentRegistrationRules(),
-  validateRequest,
+  validateRequest,    
   registerStudent
 );
 
 router.route("/login").post(
   upload.none(),
   ...studentLoginRules(),
-  validateRequest,
+  validateRequest,                  
   loginStudent
 );
 

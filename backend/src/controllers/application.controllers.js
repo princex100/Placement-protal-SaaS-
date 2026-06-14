@@ -4,6 +4,8 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
+import Branch from "../models/branch.models.js";
+import PlacementRecord from "../models/PlacementRecord.models.js";
 
 // Student applies to a drive
 export const applyToDrive = asyncHandler(async (req, res) => {
@@ -250,7 +252,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
     drive: driveId, 
     college: collegeId,
     applicationStatus: sourceStatus
-  }).populate("student", "rollNo");
+  }).populate("student", "rollNo branch placementSeasonYear");
 
   const matchedAppIds = [];
   const unmatchedAppIds = [];
@@ -305,6 +307,37 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
       { _id: { $in: selectedStudentIds } },
       { $set: { placementStatus: "placed" } }
     );
+
+    // Create PlacementRecords
+    const placementRecordsToInsert = [];
+    for (const appId of matchedAppIds) {
+      if (targetStatus === "selected") {
+         const app = currentApplications.find(a => a._id.toString() === appId.toString());
+         if (app && app.student) {
+           const branchDoc = await Branch.findOne({ 
+             name: { $regex: new RegExp(`^${app.student.branch}$`, "i") }, 
+             college: collegeId 
+           });
+           
+           if (branchDoc) {
+             placementRecordsToInsert.push({
+               student: app.student._id,
+               college: collegeId,
+               branch: branchDoc._id,
+               company: drive.companyName,
+               package: drive.package,
+               placementSeasonYear: app.student.placementSeasonYear || drive.placementSeasonYear
+             });
+           }
+         }
+      }
+    }
+    
+    if (placementRecordsToInsert.length > 0) {
+       await PlacementRecord.insertMany(placementRecordsToInsert, { ordered: false }).catch(err => {
+         console.warn("Placement records insert warning:", err.message);
+       });
+    }
   }
 
   // Advance drive workflow
@@ -339,9 +372,35 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
   // Update student's placementStatus if selected
   if (applicationStatus === "selected") {
     const StudentModel = req.app.get("mongoose") ? req.app.get("mongoose").model("Student") : null;
+    let Student = StudentModel;
     if(!StudentModel) {
-       const Student = (await import("../models/Student.models.js")).default;
-       await Student.findByIdAndUpdate(application.student, { placementStatus: "placed" });
+       Student = (await import("../models/Student.models.js")).default;
+    }
+    const studentDoc = await Student.findByIdAndUpdate(application.student, { placementStatus: "placed" });
+    
+    if (studentDoc) {
+      const drive = await PlacementDrive.findById(application.drive);
+      if (drive) {
+        const branchDoc = await Branch.findOne({ 
+          name: { $regex: new RegExp(`^${studentDoc.branch}$`, "i") }, 
+          college: collegeId 
+        });
+        
+        if (branchDoc) {
+          try {
+            await PlacementRecord.create({
+              student: studentDoc._id,
+              college: collegeId,
+              branch: branchDoc._id,
+              company: drive.companyName,
+              package: drive.package,
+              placementSeasonYear: studentDoc.placementSeasonYear || drive.placementSeasonYear
+            });
+          } catch (err) {
+            console.warn("PlacementRecord creation warning:", err.message);
+          }
+        }
+      }
     }
   }
 

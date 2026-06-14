@@ -32,6 +32,8 @@ export const importStudents = asyncHandler(async (req, res) => {
   }
 
   const sheetName = workbook.SheetNames[0];
+  console.log(workbook);
+  
   const worksheet = workbook.Sheets[sheetName];
   const rawData = xlsx.utils.sheet_to_json(worksheet, { defval: "" });
 
@@ -159,7 +161,6 @@ export const importStudents = asyncHandler(async (req, res) => {
         college: collegeId,
         branch: branchDoc._id,
         placementSeasonYear,
-        placedStudents: [],
       });
     }
 

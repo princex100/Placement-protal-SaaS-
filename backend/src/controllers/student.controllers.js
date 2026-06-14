@@ -9,7 +9,9 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 import { calculateProfileCompletion } from "../utils/calculateProfileCompletion.js";
+
 const cookieOptions = {
+   
   httpOnly: true,
 };
 
@@ -167,6 +169,7 @@ export const updateStudentProfile = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, student, "Profile updated successfully"));
 });
 
+
 export const uploadResume = asyncHandler(async (req, res) => {
   if (!req.file) {
     throw new ApiError(400, "Resume file is required");
@@ -181,6 +184,8 @@ export const uploadResume = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, student, "Resume uploaded successfully"));
 });
+
+
 
 export const getStudentDashboardStats = asyncHandler(async (req, res) => {
   const student = req.student;

@@ -33,8 +33,7 @@ export const createBranch = asyncHandler(async (req, res) => {
   // Automatically create the Placement Record for this branch
   await BranchPlacementRecord.create({
     branch: branch._id,
-    college: collegeId,
-    placedStudents: []
+    college: collegeId
   });
 
   return res.status(201).json(new ApiResponse(201, branch, "Branch created successfully"));
