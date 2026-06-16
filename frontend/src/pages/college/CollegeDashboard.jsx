@@ -134,7 +134,7 @@ const CollegeDashboard = () => {
       const data = response.data?.data || response.data;
       setCollegeData(data || null);
       if (data) {
-        dispatch(setCredentials({ user: data, role: data.role || "college" }));
+        dispatch(setCredentials({ user: data, role: data.role || "college-admin" }));
       }
     } catch (error) {
       console.error("Error fetching current college:", error);

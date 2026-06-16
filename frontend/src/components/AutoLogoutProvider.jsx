@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { clearCredentials } from "../redux/features/authSlice";
 import { toast } from "react-hot-toast";
 
-// Set timeout duration (e.g., 15 minutes)
-const INACTIVITY_TIMEOUT = 15 * 60 * 1000; 
+// Set timeout duration (e.g., 12 hours)
+const INACTIVITY_TIMEOUT = 12 * 60 * 60 * 1000; 
 
 const AutoLogoutProvider = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);

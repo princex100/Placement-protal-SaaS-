@@ -52,6 +52,7 @@ const StudentBranches = () => {
         >
           <Upload size={18} /> Import Students
         </motion.button>
+        
       </div>
 
       {/* Main Content */}

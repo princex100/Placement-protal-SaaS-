@@ -93,7 +93,7 @@ const StudentDashboard = () => {
           value={dashboardData.stats.applied} 
           icon={<Briefcase size={22} />} 
           trend="Total applications" 
-          progress={100} 
+          progress={dashboardData.stats.applied} 
         />
         <StatCard 
           title="Shortlisted" 

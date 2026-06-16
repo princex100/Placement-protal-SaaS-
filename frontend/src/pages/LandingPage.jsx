@@ -118,6 +118,19 @@ const LandingPage = () => {
         <div className="absolute bottom-0 left-1/3 h-[400px] w-[400px] rounded-full bg-cyan-400/20 dark:bg-cyan-600/10 blur-[80px]" />
       </div>
 
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full border border-amber-500/30 bg-amber-500/10 px-6 py-3 text-base font-bold text-amber-700 dark:text-amber-400 shadow-xl shadow-amber-500/20 backdrop-blur-md"
+      >
+        <span className="relative flex h-3 w-3">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+        </span>
+        Beta Version
+      </motion.div>
+
       {/* Hero Section */}
       <section id="home" className="relative overflow-hidden pt-32 pb-20">
         <motion.div 
@@ -126,6 +139,11 @@ const LandingPage = () => {
           variants={staggerContainer}
           className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8"
         >
+          <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
+            <div className="inline-flex items-center gap-3 rounded-full border border-amber-500/30 bg-amber-500/10 px-6 py-2.5 text-base font-bold tracking-wide text-amber-700 dark:text-amber-400 backdrop-blur-sm shadow-lg shadow-amber-500/10">
+              🚧 Currently under active development
+            </div>
+          </motion.div>
           
           <motion.div variants={fadeInUp} className="mx-auto flex min-h-[140px] max-w-5xl items-center justify-center sm:min-h-[180px]">
             <h1 className="flex items-center justify-center text-center text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">

@@ -1,6 +1,5 @@
 import Branch from "../models/branch.models.js";
 import Student from "../models/Student.models.js";
-import { BranchPlacementRecord } from "../models/BranchPlacementRecord.models.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -30,12 +29,6 @@ export const createBranch = asyncHandler(async (req, res) => {
     college: collegeId,
   });
 
-  // Automatically create the Placement Record for this branch
-  await BranchPlacementRecord.create({
-    branch: branch._id,
-    college: collegeId
-  });
-
   return res.status(201).json(new ApiResponse(201, branch, "Branch created successfully"));
 });
 
@@ -50,13 +43,13 @@ export const getBranches = asyncHandler(async (req, res) => {
     {
       $lookup: {
         from: "students", // MongoDB collection name for Student model
-        let: { branchName: "$name", collegeId: "$college" },
+        let: { branchId: "$_id", collegeId: "$college" },
         pipeline: [
           {
             $match: {
               $expr: {
                 $and: [
-                  { $eq: ["$branch", "$$branchName"] },
+                  { $eq: ["$branch", "$$branchId"] },
                   { $eq: ["$college", "$$collegeId"] },
                   { $eq: ["$placementSeasonYear", req.college.activePlacementSeason] }
                 ]
@@ -116,7 +109,7 @@ export const createStudent = asyncHandler(async (req, res) => {
     cgpa,
     passingYear,
     semester,
-    branch: branch.name, // Save branch as string name as requested
+    branch: branch._id, // Save branch as ObjectId
     college: collegeId,
     placementSeasonYear: passingYear
   });
@@ -146,7 +139,7 @@ export const getBranchStudents = asyncHandler(async (req, res) => {
 
   const filter = { 
     college: collegeId, 
-    branch: branch.name,
+    branch: branch._id,
     placementSeasonYear: req.college.activePlacementSeason
   };
 

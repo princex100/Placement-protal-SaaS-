@@ -1,9 +1,9 @@
-import { BranchPlacementRecord } from "../models/BranchPlacementRecord.models.js";
+// import { BranchPlacementRecord } from "../models/BranchPlacementRecord.models.js";
+import PlacementRecord from "../models/PlacementRecord.models.js";
 import Student from "../models/Student.models.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
-import PlacementRecord from "../models/PlacementRecord.models.js";
 import Branch from "../models/branch.models.js";
 
 // GET /api/v1/placement-records
@@ -11,7 +11,7 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
   const collegeId = req.user._id;
 
   // Find all branch records for this college and populate branch name
-  const records = await BranchPlacementRecord.find({ 
+  const records = await PlacementRecord.find({ 
     college: collegeId,
     placementSeasonYear: req.user.activePlacementSeason
   })

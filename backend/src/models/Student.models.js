@@ -56,9 +56,9 @@ const studentSchema = new mongoose.Schema(
       type: String
     },
     // Academic Info
-    branch: {
-      type: String,
-      // Required by default for student categorization? Let's make it optional if desired, but typically provided by college.
+    branch: { 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
       required: true,
     },
     cgpa: {

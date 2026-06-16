@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { setCredentials } from '../../redux/features/authSlice';
 import api from '../../api/axios';
 import { toast } from 'react-hot-toast';
@@ -22,9 +23,14 @@ const CollegeLogin = () => {
     remember: false
   });
 
+  const { isAuthenticated, role } = useSelector((state) => state.auth);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
+    if (isAuthenticated && (role === 'college' || role === 'college-admin')) {
+      navigate('/college/dashboard');
+    }
+  }, [isAuthenticated, role, navigate]);
 
   const handleChange = (e) => {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
@@ -40,7 +46,7 @@ const CollegeLogin = () => {
       setIsSubmitting(true);
       const response = await api.post("/colleges/login", formData);
       const data = response.data?.data || response.data;
-      dispatch(setCredentials({ user: data.college || data, role: 'college' }));
+      dispatch(setCredentials({ user: data.college || data, role: 'college-admin' }));
       toast.success("Logged in successfully!");
       navigate("/college/dashboard");
     } catch (error) {

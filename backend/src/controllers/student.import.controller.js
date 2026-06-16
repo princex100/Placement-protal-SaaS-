@@ -3,7 +3,6 @@ import xlsx from "xlsx";
 import bcrypt from "bcrypt";
 import Student from "../models/Student.models.js";
 import Branch from "../models/branch.models.js";
-import { BranchPlacementRecord } from "../models/BranchPlacementRecord.models.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -147,22 +146,7 @@ export const importStudents = asyncHandler(async (req, res) => {
       });
     }
 
-    exactBranchNames[branchInfo.name.toLowerCase()] = branchDoc.name;
-
-    // Ensure placement record exists for this branch AND THIS SEASON
-    const existingRecord = await BranchPlacementRecord.findOne({
-      college: collegeId,
-      branch: branchDoc._id,
-      placementSeasonYear,
-    });
-
-    if (!existingRecord) {
-      await BranchPlacementRecord.create({
-        college: collegeId,
-        branch: branchDoc._id,
-        placementSeasonYear,
-      });
-    }
+    exactBranchNames[branchInfo.name.toLowerCase()] = branchDoc._id;
 
     return branchDoc;
   });
@@ -185,6 +169,9 @@ export const importStudents = asyncHandler(async (req, res) => {
     }
   }
 
+
+  ///////////////////////////
+  ///////////////////////////
   // Bulk Insert students
   // Ignore duplicates gracefully if possible, or let it fail if roll numbers overlap
   let successfullyImportedCount = 0;
@@ -205,6 +192,7 @@ export const importStudents = asyncHandler(async (req, res) => {
     }
   }
 
+  ////////////////////////RESPONSE FINAL 
   return res.status(200).json(
     new ApiResponse(
       200,
