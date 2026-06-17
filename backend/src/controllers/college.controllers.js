@@ -12,6 +12,8 @@ import { sendEmail, generateMailContent } from "../utils/sendEmail.js";
 
 const cookieOptions = {
   httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 const generateAccessAndRefreshTokens = async (collegeId) => {

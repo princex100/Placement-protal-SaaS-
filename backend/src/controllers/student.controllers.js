@@ -11,8 +11,9 @@ import uploadOnCloudinary from "../utils/cloudinary.js";
 import { calculateProfileCompletion } from "../utils/calculateProfileCompletion.js";
 
 const cookieOptions = {
-   
   httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 const generateAccessAndRefreshTokens = async (studentId) => {
