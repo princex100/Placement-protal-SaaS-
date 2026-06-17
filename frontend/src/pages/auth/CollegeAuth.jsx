@@ -46,7 +46,7 @@ const CollegeLogin = () => {
       setIsSubmitting(true);
       const response = await api.post("/colleges/login", formData);
       const data = response.data?.data || response.data;
-      dispatch(setCredentials({ user: data.college || data, role: 'college-admin' }));
+      dispatch(setCredentials({ user: data.college || data, role: 'college-admin', token: data.accessToken }));
       toast.success("Logged in successfully!");
       navigate("/college/dashboard");
     } catch (error) {

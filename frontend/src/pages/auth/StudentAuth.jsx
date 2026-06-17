@@ -43,7 +43,7 @@ const StudentLogin = () => {
       
       const data = response.data?.data;
       if (data?.student) {
-        dispatch(setCredentials({ user: data.student, role: data.student.role }));
+        dispatch(setCredentials({ user: data.student, role: data.student.role, token: data.accessToken }));
         toast.success(response.data?.message || "Logged in successfully!");
         navigate("/student/dashboard");
       }
