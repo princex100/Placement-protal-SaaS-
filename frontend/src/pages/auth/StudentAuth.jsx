@@ -215,7 +215,7 @@ const StudentLogin = () => {
                     type={showPassword ? "text" : "password"} placeholder="Enter your password"
                     className="w-full pl-10 pr-11 py-2.5 bg-white/80 dark:bg-slate-950 border border-blue-100/50 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
                     required
-                    autoComplete="new-password"
+                    autoComplete="off"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}

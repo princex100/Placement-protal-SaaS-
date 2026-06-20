@@ -7,7 +7,6 @@ import ApiError from "../utils/ApiError.js";
 
 export const verifyJWT = asyncHandler(
 async (req,res,next)=>{
-   console.log("VERIFY_JWT DEBUG: Request URL =", req.originalUrl, "Method =", req.method);
    try {
 
       const token =
@@ -52,6 +51,7 @@ async (req,res,next)=>{
 
    }
 
+   
    
 }
 );
