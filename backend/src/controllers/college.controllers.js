@@ -76,13 +76,13 @@ export const registerCollege = asyncHandler(async (req, res) => {
       outro: "Need help, or have questions? Just reply to this email, we'd love to help.",
     });
 
-    await sendEmail({
+    sendEmail({
        email: college.email,
       subject: "Verify your email - PlacementPortal",
      mailgenContent,
-    });
+    }).catch(err => console.error("Failed to send verification email asynchronously", err));
   } catch (error) {
-    console.error("Failed to send verification email", error);
+    console.error("Failed to generate email content", error);
   }
 
   const createdCollege = await College.findById(college._id).select("-password -refreshToken -emailVerificationToken");
