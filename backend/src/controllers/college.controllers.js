@@ -52,11 +52,14 @@ export const registerCollege = asyncHandler(async (req, res) => {
     address,
     phoneNumber,
     logo: req.file?.path,
+    isVerified: true, // Auto-verify since email is disabled
   });
 
   const unhashedToken = college.generateVerificationToken();
  await college.save();
 
+  // DISABLED EMAIL SENDING FOR NOW
+  /*
   try {
     const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
     const verificationLink = `${FRONTEND_URL}/verify-email/${unhashedToken}`;
@@ -84,10 +87,11 @@ export const registerCollege = asyncHandler(async (req, res) => {
   } catch (error) {
     console.error("Failed to send verification email", error);
   }
+  */
 
   const createdCollege = await College.findById(college._id).select("-password -refreshToken -emailVerificationToken");
 
-  return res.status(201).json(new ApiResponse(201, createdCollege, "Verification email sent. Please verify your email."));
+  return res.status(201).json(new ApiResponse(201, createdCollege, "Account created successfully. You can now log in."));
 });
 
 export const verifyEmail = asyncHandler(async (req, res) => {

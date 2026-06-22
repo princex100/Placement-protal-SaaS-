@@ -59,7 +59,11 @@ const CollegeRegister = () => {
       setIsSubmitting(true);
 
       const response = await api.post("/colleges/register", formData);
-      toast.success(response.data.message || "Verification email sent. Please check your inbox.");
+      toast.success(response.data.message || "Account created successfully. Redirecting to login...");
+
+      setTimeout(() => {
+        navigate("/college/auth");
+      }, 1500);
 
      setFormData({
         collegeId: "",
