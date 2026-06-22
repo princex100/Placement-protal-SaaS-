@@ -38,27 +38,37 @@ let transporter;
  */
 export const sendEmail = async ({ email, subject, mailgenContent }) => {
   try {
-    if (!transporter) {
-      transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-       },
-      });
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+    if (!RESEND_API_KEY) {
+      console.warn("No RESEND_API_KEY found. Email will not be sent.");
+      return null;
     }
 
-    const mailOptions = {
-      from: process.env.SMTP_FROM || '"PlacementPortal" <noreply@placementportal.com>',
-      to: email,
-      subject: subject,
-       html: mailgenContent.html,
-      text: mailgenContent.text,
-    };
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "onboarding@resend.dev", // Resend default testing address
+        to: email,
+        subject: subject,
+        html: mailgenContent.html,
+        text: mailgenContent.text,
+      }),
+    });
 
-    const info = await transporter.sendMail(mailOptions);
-   console.log("Message sent: %s", info.messageId);
-    return info;
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Resend API Error:", data);
+      throw new Error(data.message || "Could not send email via Resend.");
+    }
+
+    console.log("Message sent via Resend:", data.id);
+    return data;
   } catch (error) {
     console.error("Error sending email:", error);
     throw new Error("Could not send email.");
