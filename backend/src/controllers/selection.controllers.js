@@ -10,7 +10,7 @@ import Branch from "../models/branch.models.js";
 import PlacementRecord from "../models/PlacementRecord.models.js";
 
 export const uploadSelection = asyncHandler(async (req, res) => {
-  const collegeId = req.college._id;
+ const collegeId = req.college._id;
   const driveId = req.params.driveId;
 
   if (!req.file) {
@@ -20,14 +20,13 @@ export const uploadSelection = asyncHandler(async (req, res) => {
   const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
   if (!drive) {
     fs.unlinkSync(req.file.path);
-    throw new ApiError(404, "Drive not found or unauthorized");
+   throw new ApiError(404, "Drive not found or unauthorized");
   }
 
-  // Verify that the drive is in the selection stage
   if (drive.applicationWorkflowStage !== "selection") {
     fs.unlinkSync(req.file.path);
     throw new ApiError(400, "Selection upload is not available for this drive stage.");
-  }
+ }
 
   const xlsx = (await import("xlsx")).default;
   let workbook;
@@ -41,16 +40,14 @@ export const uploadSelection = asyncHandler(async (req, res) => {
   const sheetName = workbook.SheetNames[0];
   const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-  // Delete temp file after reading
   fs.unlinkSync(req.file.path);
 
   if (!sheetData || sheetData.length === 0) {
     throw new ApiError(400, "The uploaded file is empty");
-  }
+ }
 
-  // Find roll number column using header mapping
-  const { studentHeaderMap } = await import("../constants/studentHeaderMap.js");
-  const headers = Object.keys(sheetData[0]);
+ const { studentHeaderMap } = await import("../constants/studentHeaderMap.js");
+   const headers = Object.keys(sheetData[0]);
   let rollNoKey = null;
 
   for (const header of headers) {
@@ -80,13 +77,13 @@ export const uploadSelection = asyncHandler(async (req, res) => {
 
   // Fetch current applications for this drive that are interview_scheduled
   const currentApplications = await Application.find({ 
-    drive: driveId, 
+   drive: driveId, 
     college: collegeId,
     applicationStatus: "interview_scheduled"
   }).populate("student", "rollNo email fullName branch placementSeasonYear");
 
-  const matchedAppIds = [];
-  const rejectedAppIds = [];
+   const matchedAppIds = [];
+ const rejectedAppIds = [];
   const selectedStudentIds = [];
   const studentsToNotify = [];
 
@@ -94,10 +91,9 @@ export const uploadSelection = asyncHandler(async (req, res) => {
     if (app.student && app.student.rollNo) {
       const studentRollNo = String(app.student.rollNo).toUpperCase();
       if (selectedRollNumbers.has(studentRollNo)) {
-        matchedAppIds.push(app._id);
+       matchedAppIds.push(app._id);
         selectedStudentIds.push(app.student._id);
         
-        // Add full student details needed for PlacementRecord
         app.student.companyName = drive.companyName;
         app.student.package = drive.package;
         
@@ -112,28 +108,26 @@ export const uploadSelection = asyncHandler(async (req, res) => {
         rejectedAppIds.push(app._id);
       }
     }
-  });
+ });
 
   const bulkOps = [];
 
-  // Prepare bulk operations for selected applications
   if (matchedAppIds.length > 0) {
-    bulkOps.push({
+     bulkOps.push({
       updateMany: {
-        filter: { _id: { $in: matchedAppIds } },
+       filter: { _id: { $in: matchedAppIds } },
         update: { 
           $set: { 
-            applicationStatus: "selected",
+             applicationStatus: "selected",
             statusUpdatedAt: new Date(),
             statusUpdatedBy: collegeId
           } 
         }
       }
-    });
+   });
   }
 
-  // Prepare bulk operations for rejected applications
-  if (rejectedAppIds.length > 0) {
+   if (rejectedAppIds.length > 0) {
     bulkOps.push({
       updateMany: {
         filter: { _id: { $in: rejectedAppIds } },
@@ -141,30 +135,27 @@ export const uploadSelection = asyncHandler(async (req, res) => {
           $set: { 
             applicationStatus: "rejected",
             statusUpdatedAt: new Date(),
-            statusUpdatedBy: collegeId
+           statusUpdatedBy: collegeId
           } 
         }
       }
     });
-  }
+   }
 
-  // Execute bulk update if there are operations
   if (bulkOps.length > 0) {
     await Application.bulkWrite(bulkOps);
   }
 
-  // Update placementStatus of selected students to "placed"
   if (selectedStudentIds.length > 0) {
     await Student.updateMany(
       { _id: { $in: selectedStudentIds } },
-      { $set: { placementStatus: "placed" } }
+       { $set: { placementStatus: "placed" } }
     );
 
-    // Create PlacementRecord documents
+   // Create PlacementRecord documents
     const placementRecordsToInsert = [];
-    for (const studentInfo of studentsToNotify) {
-      const s = studentInfo.studentData;
-      // Resolve the Branch ObjectId by matching name and college
+     for (const studentInfo of studentsToNotify) {
+     const s = studentInfo.studentData;
       const branchDoc = await Branch.findOne({ 
         name: { $regex: new RegExp(`^${s.branch}$`, "i") }, 
         college: collegeId 
@@ -176,7 +167,7 @@ export const uploadSelection = asyncHandler(async (req, res) => {
           college: collegeId,
           branch: branchDoc._id,
           company: s.companyName,
-          package: s.package,
+         package: s.package,
           placementSeasonYear: s.placementSeasonYear || drive.placementSeasonYear
         });
       }
@@ -189,26 +180,24 @@ export const uploadSelection = asyncHandler(async (req, res) => {
     }
   }
 
-  // Advance drive workflow to "completed" and close it
-  drive.applicationWorkflowStage = "completed";
-  drive.status = "closed";
+   drive.applicationWorkflowStage = "completed";
+ drive.status = "closed";
   await drive.save();
 
-  // Send emails using Promise.all in the background
-  if (studentsToNotify.length > 0) {
+ if (studentsToNotify.length > 0) {
     (async () => {
       try {
         const emailPromises = studentsToNotify.map(student => {
           const emailBody = {
             name: student.fullName,
-            intro: `Congratulations! We are thrilled to inform you that you have been selected for the ${student.role} role at ${student.companyName}.`,
+           intro: `Congratulations! We are thrilled to inform you that you have been selected for the ${student.role} role at ${student.companyName}.`,
             outro: "Your placement status has been updated. Please contact the placement cell for further joining instructions.\\n\\nBest Regards,\\nPlacement Cell"
-          };
+           };
           const mailgenContent = generateMailContent(emailBody);
           return sendEmail({
             email: student.email,
             subject: `Selection Confirmed - ${student.companyName}`,
-            mailgenContent
+           mailgenContent
           });
         });
         await Promise.all(emailPromises);
@@ -219,10 +208,10 @@ export const uploadSelection = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json(new ApiResponse(200, {
-    success: true,
+   success: true,
     selectedCount: matchedAppIds.length,
     rejectedCount: rejectedAppIds.length,
-    emailsSent: studentsToNotify.length,
+     emailsSent: studentsToNotify.length,
     nextStage: "Completed"
   }, "Selection successfully processed. Drive moved to Completed Stage."));
 });

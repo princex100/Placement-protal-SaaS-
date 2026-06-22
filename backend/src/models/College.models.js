@@ -6,9 +6,9 @@ import crypto from "crypto";
 const collegeSchema = new mongoose.Schema(
   {
     collegeId: {
-      type: String,
+       type: String,
       unique: true,
-      required: true,
+     required: true,
       index: true,
     },
     name: {
@@ -27,7 +27,7 @@ const collegeSchema = new mongoose.Schema(
       required: true,
       select: false,
     },
-    logo: {
+     logo: {
       type: String,
     },
     address: {
@@ -42,20 +42,20 @@ const collegeSchema = new mongoose.Schema(
     },
     refreshTokenExpiry: {
       type: Date,
-    },
+   },
     accessTokenVersion: {
       type: Number,
       default: 0,
-    },
+   },
     role: {
       type: String,
       default: "college-admin",
     },
-    isVerified: {
+     isVerified: {
       type: Boolean,
       default: false,
     },
-    emailVerificationToken: {
+     emailVerificationToken: {
       type: String,
     },
     emailVerificationExpiry: {
@@ -85,7 +85,7 @@ collegeSchema.pre("save", async function () {
   if (!this.isModified("password")) {
     return;
   }
-  this.password = await bcrypt.hash(this.password, 10);
+   this.password = await bcrypt.hash(this.password, 10);
 });
 
 collegeSchema.methods.isPasswordCorrect = async function (password) {
@@ -108,33 +108,29 @@ collegeSchema.methods.generateAccessToken = function () {
 };
 
 collegeSchema.methods.generateRefreshToken = function () {
-  return jwt.sign(
+ return jwt.sign(
     {
       _id: this._id,
       role: "college-admin",
     },
-    process.env.REFRESH_TOKEN_SECRET,
-    {
+     process.env.REFRESH_TOKEN_SECRET,
+   {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
-  );
+ );
 };
 
 collegeSchema.methods.generateVerificationToken = function () {
-  // Generate an unhashed random token
   const unhashedToken = crypto.randomBytes(32).toString("hex");
 
-  // Hash it and store in DB
   this.emailVerificationToken = crypto
-    .createHash("sha256")
+   .createHash("sha256")
     .update(unhashedToken)
     .digest("hex");
 
-  // Set expiry to 15 minutes from now
   this.emailVerificationExpiry = Date.now() + 15 * 60 * 1000;
 
-  // Return the unhashed token to be sent in the email
-  return unhashedToken;
+   return unhashedToken;
 };
 
 const College = mongoose.model("College", collegeSchema);

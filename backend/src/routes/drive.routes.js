@@ -3,10 +3,10 @@ import {
   createDrive,
   updateDrive,
   deleteDrive,
-  getCollegeDrives,
+ getCollegeDrives,
   getEligibleDrives,
   getDriveById,
-  getDriveStudents,
+ getDriveStudents,
   removeStudentFromDrive
 } from "../controllers/drive.controllers.js";
 
@@ -25,16 +25,14 @@ import {
 
 const router = Router();
 
-// All drive routes require authentication
 router.use(verifyJWT);
 
-// COLLEGE ROUTES
 router.route("/")
   .post(
     allowRoles(["college-admin"]),
     ...createDriveRules(),
     validateRequest,
-    createDrive
+     createDrive
   );
 
 router.route("/college")
@@ -49,22 +47,22 @@ router.route("/:id")
     ...updateDriveRules(),
     validateRequest,
     updateDrive
-  )
-  .delete(
+ )
+ .delete(
     allowRoles(["college-admin"]),
     deleteDrive
   );
 
 router.route("/:id/students")
-  .get(
+   .get(
     allowRoles(["college-admin"]),
-    getDriveStudents
-  );
+     getDriveStudents
+   );
 
 router.route("/:id/students/:studentId")
   .delete(
     allowRoles(["college-admin"]),
-    removeStudentFromDrive
+   removeStudentFromDrive
   );
 
 router.route("/:driveId/shortlist/upload")
@@ -89,9 +87,8 @@ router.route("/:driveId/selection/upload")
   );
 
 
-// STUDENT ROUTES
 router.route("/student/eligible")
-  .get(
+   .get(
     allowRoles(["student"]),
     getEligibleDrives
   );

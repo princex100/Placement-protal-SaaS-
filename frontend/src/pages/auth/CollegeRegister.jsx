@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import {
-  Building2,
+   Building2,
   Network,
-  Mail,
+ Mail,
   Lock,
   Eye,
   EyeOff,
@@ -30,7 +30,7 @@ const CollegeRegister = () => {
   const [formData, setFormData] = useState({
     collegeId: "",
     name: "",
-    placementOfficerName: "",
+   placementOfficerName: "",
     email: "",
     phoneNumber: "",
     address: "",
@@ -38,20 +38,19 @@ const CollegeRegister = () => {
     confirmPassword: "",
   });
 
-  // Auto-scroll to top when navigated to this page
-  useEffect(() => {
+   useEffect(() => {
     window.scrollTo({
-      top: 0,
+       top: 0,
       behavior: "smooth",
-    });
+   });
   }, []);
 
-  const handleChange = (e) => {
+ const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-  };
+   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +61,7 @@ const CollegeRegister = () => {
       const response = await api.post("/colleges/register", formData);
       toast.success(response.data.message || "Verification email sent. Please check your inbox.");
 
-      setFormData({
+     setFormData({
         collegeId: "",
         name: "",
         placementOfficerName: "",
@@ -84,19 +83,19 @@ const CollegeRegister = () => {
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/10 dark:shadow-none backdrop-blur-xl">
         {icon}
       </div>
-      <div>
-        <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{title}</h4>
-        <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{subtitle}</p>
+       <div>
+         <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{title}</h4>
+         <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{subtitle}</p>
       </div>
     </div>
-  );
+ );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent dark:bg-slate-950 p-0 pb-32 lg:pb-48 transition-colors duration-300">
+     <div className="min-h-screen flex items-center justify-center bg-transparent dark:bg-slate-950 p-0 pb-32 lg:pb-48 transition-colors duration-300">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
+         transition={{ duration: 0.45 }}
         className="relative flex w-full max-w-[1200px] max-h-[95vh] overflow-hidden rounded-[24px] border border-blue-100/50 bg-white/90 shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:border-slate-800 dark:bg-slate-900"
       >
         {/* LEFT PANEL */}
@@ -119,7 +118,7 @@ const CollegeRegister = () => {
                 <h3 className="font-bold text-lg">CampusFlow</h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">College Placement Cell</p>
               </div>
-            </div>
+           </div>
 
             {/* Heading */}
             <h1 className="text-4xl font-bold leading-tight tracking-tight">
@@ -138,15 +137,15 @@ const CollegeRegister = () => {
             {/* Features */}
             <div className="mt-8 space-y-4">
               <FeatureRow
-                icon={<Users className="h-4 w-4" />}
+               icon={<Users className="h-4 w-4" />}
                 title="Manage Students"
                 subtitle="Track eligibility, placement records and applications."
               />
               <FeatureRow
                 icon={<Briefcase className="h-4 w-4" />}
                 title="Approve Drives"
-                subtitle="Collaborate with recruiters and manage company drives."
-              />
+                 subtitle="Collaborate with recruiters and manage company drives."
+               />
               <FeatureRow
                 icon={<BarChart3 className="h-4 w-4" />}
                 title="Placement Analytics"
@@ -158,7 +157,7 @@ const CollegeRegister = () => {
           {/* Floating Dashboard Preview */}
           <div className="relative z-10 mt-8">
             <div className="absolute left-0 bottom-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-white/5 p-4 backdrop-blur-2xl shadow-2xl w-[180px]">
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 mb-1.5">Placement Status</p>
+               <p className="text-[10px] text-slate-500 dark:text-slate-400 mb-1.5">Placement Status</p>
               <div className="flex items-center gap-2 mb-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
                 <span className="text-xs font-medium">Drive Approved</span>
@@ -171,18 +170,18 @@ const CollegeRegister = () => {
 
             <div className="ml-auto w-[220px] rounded-[24px] border border-slate-200 dark:border-white/10 bg-white shadow-sm dark:bg-white/10 dark:shadow-none p-4 backdrop-blur-2xl shadow-xl">
               <div className="mb-4 flex items-center justify-between">
-                <div>
+               <div>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400">Campus Recruitment</p>
                   <h4 className="font-semibold text-sm">TCS Campus Drive</h4>
-                </div>
+                 </div>
                 <div className="rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] text-green-400">
                   Active
                 </div>
-              </div>
-              <button className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 py-2 text-xs font-semibold text-slate-900 dark:text-white hover:opacity-90 transition">
+               </div>
+             <button className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 py-2 text-xs font-semibold text-slate-900 dark:text-white hover:opacity-90 transition">
                 Manage Drive
-              </button>
-              <div className="mt-3 rounded-xl bg-slate-50/80 dark:bg-white/5 p-3">
+             </button>
+             <div className="mt-3 rounded-xl bg-slate-50/80 dark:bg-white/5 p-3">
                 <p className="text-[10px] text-slate-500 dark:text-slate-400">Applications</p>
                 <h3 className="text-lg font-bold">286</h3>
               </div>
@@ -190,11 +189,11 @@ const CollegeRegister = () => {
           </div>
         </div>
 
-        {/* RIGHT PANEL */}
+       {/* RIGHT PANEL */}
         <div className="flex w-full flex-col justify-center bg-white/60 dark:bg-slate-900 lg:w-[55%]">
-          <div className="overflow-y-auto px-6 py-6 sm:px-8 xl:px-12">
+           <div className="overflow-y-auto px-6 py-6 sm:px-8 xl:px-12">
             <div className="mx-auto w-full max-w-[500px]">
-              {/* Mobile Logo */}
+               {/* Mobile Logo */}
               <div className="mb-6 flex items-center gap-3 lg:hidden">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 dark:bg-slate-800">
                   <Network className="h-5 w-5 text-blue-600" />
@@ -208,9 +207,9 @@ const CollegeRegister = () => {
               {/* Heading */}
               <div className="mb-6">
                 <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  College Registration
+                   College Registration
                 </h1>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                 <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                   Create your institutional placement management account.
                 </p>
               </div>
@@ -241,7 +240,7 @@ const CollegeRegister = () => {
                     <div className="group relative">
                       <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 transition group-focus-within:text-blue-600 dark:group-focus-within:text-blue-400" />
                       <input
-                        type={showPassword ? "text" : "password"}
+                       type={showPassword ? "text" : "password"}
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
@@ -268,24 +267,24 @@ const CollegeRegister = () => {
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         placeholder="Re-enter password"
-                        className="h-10 w-full rounded-xl border border-blue-100/50 bg-white/80 pl-10 pr-10 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-                      />
+                         className="h-10 w-full rounded-xl border border-blue-100/50 bg-white/80 pl-10 pr-10 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                     />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700 dark:hover:text-slate-200"
                       >
                         {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                      </button>
+                     </button>
                     </div>
                   </div>
-                </div>
+                 </div>
 
-                {/* CTA */}
+               {/* CTA */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 disabled:opacity-70"
+                 disabled={isSubmitting}
+                 className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <>
@@ -305,28 +304,28 @@ const CollegeRegister = () => {
                 <div className="pt-2 pb-4">
                   <p className="text-center text-xs text-slate-500 dark:text-slate-400">
                     Already have an account?{" "}
-                    <button
+                     <button
                       type="button"
                       onClick={() => navigate("/college/auth")}
                       className="font-semibold text-blue-600 transition hover:text-blue-700"
                     >
                       Login
-                    </button>
-                  </p>
-                </div>
+                     </button>
+                   </p>
+                 </div>
               </form>
-            </div>
+           </div>
           </div>
         </div>
       </motion.div>
     </div>
-  );
+   );
 };
 
-/* INPUT FIELD */
+ /* INPUT FIELD */
 const InputField = ({ label, icon, name, value, onChange, placeholder, type = "text" }) => (
-  <div className="space-y-1.5">
-    <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{label}</label>
+   <div className="space-y-1.5">
+     <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{label}</label>
     <div className="group relative">
       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 transition group-focus-within:text-blue-600 dark:group-focus-within:text-blue-400">
         {icon}

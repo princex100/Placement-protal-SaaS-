@@ -15,18 +15,18 @@ const CollegeLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+     password: '',
     remember: false
-  });
+ });
 
   const { isAuthenticated, role } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+   window.scrollTo({ top: 0, behavior: 'instant' });
     if (isAuthenticated && (role === 'college' || role === 'college-admin')) {
       navigate('/college/dashboard');
     }
@@ -44,27 +44,27 @@ const CollegeLogin = () => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const response = await api.post("/colleges/login", formData);
+       const response = await api.post("/colleges/login", formData);
       const data = response.data?.data || response.data;
-      dispatch(setCredentials({ user: data.college || data, role: 'college-admin', token: data.accessToken }));
-      toast.success("Logged in successfully!");
-      navigate("/college/dashboard");
+     dispatch(setCredentials({ user: data.college || data, role: 'college-admin', token: data.accessToken }));
+     toast.success("Logged in successfully!");
+       navigate("/college/dashboard");
     } catch (error) {
       console.error("College login failed:", error);
-      toast.error("Login failed. Please check your credentials.");
+     toast.error("Login failed. Please check your credentials.");
     } finally {
       setIsSubmitting(false);
-    }
+   }
   };
 
   return (
     <div className="h-screen bg-transparent flex items-center justify-center p-3 pb-24 lg:pb-32 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
       
       {/* Main Container */}
-      <motion.div
+     <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+         transition={{ duration: 0.5, ease: 'easeOut' }}
         className="w-full max-w-[1100px] h-full max-h-[620px] bg-white/90 rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(37,99,235,0.06)] dark:bg-slate-900 dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-blue-100/50 dark:border-slate-800 flex flex-col lg:flex-row">
         
         {/* LEFT SIDE */}
@@ -100,26 +100,26 @@ const CollegeLogin = () => {
               Discover drives, track applications, and land offers for your students from top companies — all from one beautifully simple portal.
             </motion.p>
 
-            <motion.div 
+             <motion.div 
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-5 space-y-3"
+               className="mt-5 space-y-3"
             >
               <FeatureItem icon={<Briefcase className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />} title="500+ Active Drives" desc="New opportunities added every day for your students." />
               <FeatureItem icon={<TrendingUp className="h-4 w-4 text-purple-600 dark:text-purple-400" />} title="High Placement Rate" desc="Proven track record across batches and departments." />
               <FeatureItem icon={<ShieldCheck className="h-4 w-4 text-blue-600 dark:text-blue-400" />} title="Verified Companies" desc="Every recruiter screened and approved for trust." />
-            </motion.div>
+           </motion.div>
           </div>
 
           {/* Floating Illustration */}
           <div className="relative mt-4 h-[180px] w-full hidden sm:block">
-            <motion.div 
+             <motion.div 
               animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
               className="absolute bottom-2 left-6 w-36 h-36 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-full border border-white/60 dark:border-slate-700 shadow-xl flex items-center justify-center"
             >
               <Network className="h-14 w-14 text-indigo-200 dark:text-slate-600" />
-            </motion.div>
+           </motion.div>
 
-            <motion.div 
+             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
               transition={{ opacity: { delay: 0.4 }, y: { repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 } }}
@@ -132,18 +132,18 @@ const CollegeLogin = () => {
                   <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">Student Placed</h4>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400">Google · ₹24 LPA</p>
                 </div>
-              </div>
+             </div>
               <div className="mt-2 w-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-semibold py-1.5 rounded-lg flex items-center justify-center transition-colors">Offer Accepted</div>
-            </motion.div>
+           </motion.div>
 
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0, y: [0, 6, 0] }}
+               animate={{ opacity: 1, x: 0, y: [0, 6, 0] }}
               transition={{ opacity: { delay: 0.6 }, y: { repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.5 } }}
-              className="absolute top-16 left-2 w-[190px] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white dark:border-slate-700"
+             className="absolute top-16 left-2 w-[190px] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white dark:border-slate-700"
             >
               <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium mb-1.5">Drive Status</p>
-              <div className="flex items-center gap-1.5 mb-2">
+               <div className="flex items-center gap-1.5 mb-2">
                 <div className="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
                   <CheckCircle2 className="h-3 w-3 text-blue-600 dark:text-blue-400" />
                 </div>
@@ -153,11 +153,11 @@ const CollegeLogin = () => {
                 <span>120 Applicants</span>
                 <ChevronRight className="h-2.5 w-2.5" />
               </div>
-            </motion.div>
+           </motion.div>
 
-            <motion.div 
+           <motion.div 
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: [0, -4, 0] }}
+               animate={{ opacity: 1, y: [0, -4, 0] }}
               transition={{ opacity: { delay: 0.8 }, y: { repeat: Infinity, duration: 5.5, ease: "easeInOut", delay: 2 } }}
               className="absolute bottom-2 right-10 w-[170px] bg-white dark:bg-slate-800 rounded-xl p-2.5 shadow-lg border border-slate-100 dark:border-slate-700"
             >
@@ -165,13 +165,13 @@ const CollegeLogin = () => {
               <div className="flex items-center gap-1.5 mb-1">
                 <Calendar className="h-3 w-3 text-indigo-600 dark:text-indigo-400" />
                 <span className="text-xs font-bold text-slate-900 dark:text-white">Microsoft</span>
-              </div>
+               </div>
               <p className="text-[10px] text-slate-500 dark:text-slate-400">Date: 12 June, 2026</p>
             </motion.div>
           </div>
         </div>
 
-        {/* RIGHT SIDE: LOGIN FORM */}
+       {/* RIGHT SIDE: LOGIN FORM */}
         <div className="w-full lg:w-[45%] px-8 py-6 lg:px-12 flex flex-col justify-between relative bg-white/60 dark:bg-slate-900">
           <div className="w-full max-w-md mx-auto flex flex-col h-full justify-center">
             
@@ -180,7 +180,7 @@ const CollegeLogin = () => {
               <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
                 <Network className="h-5 w-5 text-slate-900 dark:text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Campus<span className="text-violet-600 dark:text-violet-400">Flow</span></span>
+             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Campus<span className="text-violet-600 dark:text-violet-400">Flow</span></span>
             </div>
 
             {/* Form Header */}
@@ -201,8 +201,8 @@ const CollegeLogin = () => {
                     type="email" placeholder="prince@college.edu" 
                     className="w-full pl-10 pr-4 py-2.5 bg-white/80 dark:bg-slate-950 border border-blue-100/50 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
                     required
-                    autoComplete="off"
-                    name="email"
+                     autoComplete="off"
+                   name="email"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -219,9 +219,9 @@ const CollegeLogin = () => {
                     required
                     autoComplete="new-password"
                     name="password"
-                    value={formData.password}
+                     value={formData.password}
                     onChange={handleChange}
-                  />
+                 />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors focus:outline-none">
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -235,9 +235,9 @@ const CollegeLogin = () => {
                     name="remember"
                     checked={formData.remember}
                     onChange={handleChange}
-                    className="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-600/20 bg-white/80 dark:bg-slate-950"
+                   className="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-600/20 bg-white/80 dark:bg-slate-950"
                   />
-                  <span className="text-xs font-medium text-slate-600 dark:text-slate-400">Remember me</span>
+                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400">Remember me</span>
                 </label>
                 <a href="#" className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition-colors">Forgot password?</a>
               </div>
@@ -245,14 +245,14 @@ const CollegeLogin = () => {
               <button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="w-full mt-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-slate-900 dark:text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm disabled:opacity-70 flex justify-center items-center gap-2"
-              >
-                {isSubmitting ? (
+                 className="w-full mt-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-slate-900 dark:text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm disabled:opacity-70 flex justify-center items-center gap-2"
+               >
+                 {isSubmitting ? (
                   <>
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                     Signing In...
                   </>
-                ) : (
+                 ) : (
                   "Sign In"
                 )}
               </button>
@@ -262,11 +262,11 @@ const CollegeLogin = () => {
             <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
               New here?{' '}
               <a href="/college/register" className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Create an account.</a>
-            </p>
+             </p>
           </div>
 
           {/* Footer */}
-          <div className="absolute bottom-3 left-0 right-0 px-8 sm:px-12 flex items-center justify-between text-[10px] font-medium text-slate-400 dark:text-slate-500">
+         <div className="absolute bottom-3 left-0 right-0 px-8 sm:px-12 flex items-center justify-between text-[10px] font-medium text-slate-400 dark:text-slate-500">
             <span>© 2026 CampusFlow</span>
             <a href="#" className="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
           </div>

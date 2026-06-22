@@ -23,7 +23,7 @@ const PlacementRecordsOverview = () => {
       } catch (error) {
         console.warn("Backend not ready or failed:", error);
       } finally {
-        setLoading(false);
+         setLoading(false);
       }
     };
 
@@ -35,11 +35,11 @@ const PlacementRecordsOverview = () => {
       <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
         <div className="relative">
           <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
-        </div>
+         </div>
         <p className="text-sm font-medium text-slate-600 dark:text-neutral-500">Loading placement records...</p>
       </div>
     );
-  }
+   }
 
   return (
     <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
@@ -48,8 +48,8 @@ const PlacementRecordsOverview = () => {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Placement Records</h1>
           <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">
             Overview of branch-wise placement statistics and student placement details.
-          </p>
-        </div>
+         </p>
+         </div>
       </div>
 
       {records.length === 0 && !loading ? (
@@ -69,9 +69,9 @@ const PlacementRecordsOverview = () => {
               key={record._id}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.06 }}
+               transition={{ delay: index * 0.06 }}
               whileHover={{ scale: 1.02, y: -4 }}
-              className="group flex cursor-pointer flex-col justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 transition-all hover:border-indigo-500/20 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:shadow-lg hover:shadow-indigo-500/5"
+             className="group flex cursor-pointer flex-col justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 transition-all hover:border-indigo-500/20 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:shadow-lg hover:shadow-indigo-500/5"
               onClick={() => navigate(`/college/dashboard/placement-records/${record._id}`)}
             >
               <div className="mb-6 flex items-center justify-between">
@@ -81,7 +81,7 @@ const PlacementRecordsOverview = () => {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/[0.04] text-slate-700 dark:text-neutral-600 transition-all group-hover:bg-indigo-500 group-hover:text-slate-900 dark:group-hover:text-white">
                   <ArrowRight size={16} />
                 </div>
-              </div>
+             </div>
 
               <h3 className="mb-4 text-xl font-bold text-slate-900 dark:text-white">{record.branchName}</h3>
 

@@ -17,7 +17,7 @@ const PlacementDrives = () => {
     const fetchDrives = async () => {
       try {
         const response = await api.get("/drives/college");
-        const data = response.data?.data || response.data;
+         const data = response.data?.data || response.data;
         if (Array.isArray(data)) {
           setDrives(data);
         } else {
@@ -29,38 +29,38 @@ const PlacementDrives = () => {
       } finally {
         setLoading(false);
       }
-    };
+   };
     fetchDrives();
   }, [user?.activePlacementSeason]);
 
   if (loading) {
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
-        <div className="relative">
+       <div className="relative">
           <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
         </div>
         <p className="text-sm font-medium text-slate-600 dark:text-neutral-500">Loading placement drives...</p>
       </div>
-    );
+     );
   }
 
   return (
     <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Placement Drives</h1>
-          <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">
+       <div>
+         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Placement Drives</h1>
+         <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">
             Manage your college's active and past placement drives.
-          </p>
-        </div>
+         </p>
+         </div>
         <motion.button 
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
           className="flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
           onClick={() => navigate('/college/dashboard/placement-drives/create')}
         >
-          <Briefcase size={20} /> Create New Drive
-        </motion.button>
+           <Briefcase size={20} /> Create New Drive
+       </motion.button>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -71,7 +71,7 @@ const PlacementDrives = () => {
         ) : drives.map((drive, index) => (
           <motion.div
             key={drive._id}
-            initial={{ opacity: 0, y: 15 }}
+           initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.06 }}
             whileHover={{ scale: 1.02, y: -4 }}
@@ -106,7 +106,7 @@ const PlacementDrives = () => {
                 </span>
                 <span className="font-semibold text-slate-900 dark:text-white">{drive.location || "Not specified"}</span>
               </div>
-              <div className="flex items-center justify-between text-sm">
+             <div className="flex items-center justify-between text-sm">
                 <span className="flex items-center gap-2 text-slate-500 dark:text-neutral-400">
                   <Calendar size={16} /> Deadline
                 </span>
@@ -117,25 +117,25 @@ const PlacementDrives = () => {
             </div>
 
             <div className="flex items-center justify-between border-t border-slate-200 dark:border-white/[0.06] pt-5">
-              <div className="flex items-center gap-2 text-sm font-medium text-indigo-400">
-                <Users size={18} />
+               <div className="flex items-center gap-2 text-sm font-medium text-indigo-400">
+               <Users size={18} />
                 {drive.appliedStudentsCount || 0} Applied
               </div>
               <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${
                 drive.applicationWorkflowStage === 'completed'
                   ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                   : (drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date())
-                  ? 'bg-red-500/10 text-red-400 border border-red-500/20'
+                   ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                   : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-              }`}>
+               }`}>
                 {drive.applicationWorkflowStage === 'completed' ? 'Completed' : (drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? 'Closed' : 'Open')}
               </span>
             </div>
-          </motion.div>
+           </motion.div>
         ))}
       </div>
     </div>
-  );
+   );
 };
 
 export default PlacementDrives;

@@ -18,21 +18,19 @@ import api from "../../../api/axios";
 const Applications = () => {
   const navigate = useNavigate();
   
-  // Pagination State
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [totalApplications, setTotalApplications] = useState(0);
   
-  // Data State
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchApplications = async () => {
     setLoading(true);
-    try {
-      const response = await api.get(`/applications/college/all?page=${page}&limit=${limit}`);
-      const data = response.data?.data || response.data;
+     try {
+       const response = await api.get(`/applications/college/all?page=${page}&limit=${limit}`);
+     const data = response.data?.data || response.data;
       
       setApplications(data.applications || []);
       setTotalPages(data.totalPages || 1);
@@ -41,7 +39,6 @@ const Applications = () => {
       console.error("Error fetching applications:", error);
       toast.error(error.response?.data?.message || "Failed to fetch applications");
       
-      // Dummy Fallback for UX testing if backend not ready
       if (!applications.length) {
         setApplications([
           {
@@ -54,7 +51,7 @@ const Applications = () => {
           {
             _id: "app2",
             applicationStatus: "selected",
-            appliedAt: new Date(Date.now() - 86400000).toISOString(),
+           appliedAt: new Date(Date.now() - 86400000).toISOString(),
             student: { _id: "stu2", fullName: "Jane Smith", rollNo: "IT2104", branch: "IT", cgpa: 9.1 },
             drive: { _id: "drv2", companyName: "Microsoft", role: "Frontend Developer" }
           }
@@ -63,13 +60,12 @@ const Applications = () => {
         setTotalApplications(2);
       }
     } finally {
-      setLoading(false);
+     setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchApplications();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const handleNextPage = () => {
@@ -101,15 +97,14 @@ const Applications = () => {
       const response = await api.patch(`/applications/${applicationId}/status`, { applicationStatus: newStatus });
       toast.success("Application status updated!");
       
-      // Update local state instantly
       setApplications(prevApps => 
         prevApps.map(app => 
           app._id === applicationId 
-            ? { ...app, applicationStatus: newStatus } 
+           ? { ...app, applicationStatus: newStatus } 
             : app
         )
       );
-    } catch (error) {
+   } catch (error) {
       console.error("Error updating status:", error);
       toast.error(error.response?.data?.message || "Failed to update status");
     }
@@ -119,10 +114,10 @@ const Applications = () => {
     <div className="mx-auto max-w-7xl p-6 lg:p-8">
       {/* Header Section */}
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <div>
+       <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Applications Management</h1>
           <p className="mt-2 text-slate-500 dark:text-slate-400">
-            View and manage all student applications across placement drives. ({totalApplications} total)
+             View and manage all student applications across placement drives. ({totalApplications} total)
           </p>
         </div>
         
@@ -136,14 +131,14 @@ const Applications = () => {
               className="w-full rounded-xl border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-slate-800/60 dark:bg-slate-900 dark:text-white md:w-[250px]"
             />
           </div>
-          <button className="flex h-[42px] items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-800/60 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800">
+         <button className="flex h-[42px] items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-800/60 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800">
             <Filter size={16} /> Filter
           </button>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="rounded-[24px] border border-slate-200 bg-white shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
+       <div className="rounded-[24px] border border-slate-200 bg-white shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
         
         {loading ? (
           <div className="flex h-64 flex-col items-center justify-center gap-4">
@@ -156,35 +151,35 @@ const Applications = () => {
               <FileText size={32} />
             </div>
             <p className="text-lg font-semibold text-slate-900 dark:text-white">No applications found</p>
-            <p className="text-sm text-slate-500 dark:text-slate-400">There are currently no student applications to display.</p>
+           <p className="text-sm text-slate-500 dark:text-slate-400">There are currently no student applications to display.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+         <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="border-b border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-800/60 dark:bg-slate-800/50 dark:text-slate-300">
-                <tr>
+                 <tr>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Student</th>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Drive & Company</th>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Applied Date</th>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Status</th>
-                  <th className="whitespace-nowrap px-6 py-4 font-semibold text-right">Action</th>
+                 <th className="whitespace-nowrap px-6 py-4 font-semibold text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {applications.map((app) => (
                   <tr key={app._id} className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/20">
                     {/* Student Info */}
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
+                     <td className="px-6 py-4">
+                     <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                          <User size={18} />
+                         <User size={18} />
                         </div>
                         <div>
-                          <p className="font-semibold text-slate-900 dark:text-white">{app.student?.fullName || "N/A"}</p>
+                         <p className="font-semibold text-slate-900 dark:text-white">{app.student?.fullName || "N/A"}</p>
                           <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                             <span>{app.student?.rollNo || "N/A"}</span>
                             <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
-                            <span>{app.student?.branch || "N/A"}</span>
+                           <span>{app.student?.branch || "N/A"}</span>
                           </div>
                         </div>
                       </div>
@@ -194,21 +189,21 @@ const Applications = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-slate-500 dark:bg-slate-800/50 dark:text-slate-400">
-                          <Building2 size={18} />
+                           <Building2 size={18} />
                         </div>
                         <div>
                           <p className="font-semibold text-slate-900 dark:text-white">{app.drive?.companyName || "N/A"}</p>
                           <p className="text-xs text-slate-500 dark:text-slate-400">{app.drive?.role || "N/A"}</p>
                         </div>
-                      </div>
+                       </div>
                     </td>
 
                     {/* Date */}
-                    <td className="px-6 py-4">
+                   <td className="px-6 py-4">
                       <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                         <Calendar size={14} className="text-slate-400" />
-                        <span>{new Date(app.appliedAt).toLocaleDateString()}</span>
-                      </div>
+                       <span>{new Date(app.appliedAt).toLocaleDateString()}</span>
+                       </div>
                     </td>
 
                     {/* Status Badge */}
@@ -216,7 +211,7 @@ const Applications = () => {
                       <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${getStatusColor(app.applicationStatus)}`}>
                         {app.applicationStatus?.replace("_", " ")}
                       </span>
-                    </td>
+                   </td>
 
                     {/* Action */}
                     <td className="px-6 py-4 text-right">
@@ -228,33 +223,33 @@ const Applications = () => {
                           <button onClick={() => handleStatusUpdate(app._id, "rejected")} className="text-xs font-semibold px-2 py-1 bg-red-50 text-red-600 rounded hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400">Reject</button>
                         </div>
                         <button 
-                          onClick={() => navigate(`/college/dashboard/student-profile/${app.student?._id}`)}
+                         onClick={() => navigate(`/college/dashboard/student-profile/${app.student?._id}`)}
                           className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                         >
                           View Student <ChevronRight size={14} />
                         </button>
-                      </div>
+                     </div>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+               ))}
+               </tbody>
+             </table>
           </div>
         )}
 
-        {/* Pagination Controls */}
+         {/* Pagination Controls */}
         {!loading && applications.length > 0 && (
           <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 dark:border-slate-800/60">
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Showing page <span className="font-medium text-slate-900 dark:text-white">{page}</span> of <span className="font-medium text-slate-900 dark:text-white">{totalPages}</span>
-            </p>
+           </p>
             <div className="flex gap-2">
               <button
                 onClick={handlePrevPage}
                 disabled={page === 1}
                 className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 dark:border-slate-800/60 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                <ChevronLeft size={16} /> Previous
+                 <ChevronLeft size={16} /> Previous
               </button>
               <button
                 onClick={handleNextPage}
@@ -266,7 +261,7 @@ const Applications = () => {
             </div>
           </div>
         )}
-      </div>
+       </div>
     </div>
   );
 };

@@ -15,14 +15,13 @@ import { allowRoles } from "../middlewares/role.middleware.js";
 import { importStudents } from "../controllers/student.import.controller.js";
 import { validateRequest } from "../middlewares/validateRequest.middleware.js";
 import {
-  studentRegistrationRules,
+ studentRegistrationRules,
   studentLoginRules,
   studentProfileUpdateRules
 } from "../validators/student.validators.js";
 
 const router = Router();
 
-// PUBLIC ROUTES
 router.route("/register").post(
   upload.none(),
   ...studentRegistrationRules(),
@@ -37,14 +36,13 @@ router.route("/login").post(
   loginStudent
 );
 
-// PROTECTED ROUTES (College only)
 router.route("/register").post(
   verifyJWT,
   allowRoles(["college-admin"]),
   registerStudent
 );
 router.route("/import").post(
-  verifyJWT,
+   verifyJWT,
   allowRoles(["college-admin"]),
   upload.single("file"),
   importStudents
@@ -53,7 +51,7 @@ router.route("/import").post(
 // PROTECTED ROUTES (Student only)
 router.route("/logout").post(
   verifyJWT,
-  allowRoles(["student"]),
+ allowRoles(["student"]),
   logoutStudent
 );
 
@@ -66,19 +64,19 @@ router.route("/current").get(
 router.route("/dashboard-stats").get(
   verifyJWT,
   allowRoles(["student"]),
-  getStudentDashboardStats
+   getStudentDashboardStats
 );
 
 router.route("/profile").patch(
   verifyJWT,
   allowRoles(["student"]),
   upload.none(),
-  ...studentProfileUpdateRules(),
+   ...studentProfileUpdateRules(),
   validateRequest,
   updateStudentProfile
 );
 
-router.route("/resume").patch(
+ router.route("/resume").patch(
   verifyJWT,
   allowRoles(["student"]),
   upload.single("resume"),

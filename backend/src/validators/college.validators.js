@@ -1,19 +1,19 @@
 import { body } from "express-validator";
 
 /**
- * Validation rules for college registration
- */
+  * Validation rules for college registration
+*/
 export const collegeRegistrationRules = () => {
   return [
     body("collegeId")
       .trim()
-      .notEmpty()
+     .notEmpty()
       .withMessage("College ID is required")
       .toUpperCase()
-      .isString()
+       .isString()
       .withMessage("College ID must be a string")
       .isLength({ min: 6 })
-      .withMessage("College ID must be at least 6 characters long")
+       .withMessage("College ID must be at least 6 characters long")
       .matches(/^(?=.*[A-Z])(?=.*\d)[A-Z\d]+$/)
       .withMessage("College ID must contain both letters and numbers without special characters"),
 
@@ -29,7 +29,7 @@ export const collegeRegistrationRules = () => {
       .notEmpty()
       .withMessage("Email is required")
       .isEmail()
-      .withMessage("Must be a valid email address")
+     .withMessage("Must be a valid email address")
       .normalizeEmail(),
 
     body("password")
@@ -45,11 +45,11 @@ export const collegeRegistrationRules = () => {
 
     body("phoneNumber")
       .optional()
-      .isString()
+     .isString()
       .trim()
       .matches(/^\d{10}$/)
       .withMessage("Phone number must be exactly 10 digits"),
-  ];
+ ];
 };
 
 /**
@@ -57,9 +57,9 @@ export const collegeRegistrationRules = () => {
  */
 export const collegeLoginRules = () => {
   return [
-    body().custom((value, { req }) => {
-      if (!req.body.collegeId && !req.body.email) {
-        throw new Error("Either College ID or Email is required for login");
+   body().custom((value, { req }) => {
+     if (!req.body.collegeId && !req.body.email) {
+       throw new Error("Either College ID or Email is required for login");
       }
       return true;
     }),
@@ -69,7 +69,7 @@ export const collegeLoginRules = () => {
       .toUpperCase()
       .isString()
       .withMessage("College ID must be a string")
-      .isLength({ min: 6 })
+     .isLength({ min: 6 })
       .withMessage("College ID must be at least 6 characters long")
       .matches(/^(?=.*[A-Z])(?=.*\d)[A-Z\d]+$/)
       .withMessage("College ID must contain both letters and numbers without special characters"),
@@ -83,14 +83,14 @@ export const collegeLoginRules = () => {
     body("password")
       .notEmpty()
       .withMessage("Password is required"),
-  ];
+   ];
 };
 
 /**
  * Validation rules for adding a student
  */
 export const addStudentRules = () => {
-  return [
+ return [
     body("studentId")
       .trim()
       .notEmpty()
@@ -122,7 +122,7 @@ export const addStudentRules = () => {
     
     body("year")
       .notEmpty()
-      .withMessage("Year is required")
+       .withMessage("Year is required")
       .isNumeric()
       .withMessage("Year must be a number"),
 
@@ -131,6 +131,6 @@ export const addStudentRules = () => {
     body("phoneNumber").optional().isString(),
     body("github").optional().isString(),
     body("linkedin").optional().isString(),
-    body("portfolio").optional().isString(),
+     body("portfolio").optional().isString(),
   ];
 };

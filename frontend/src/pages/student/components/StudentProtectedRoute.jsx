@@ -3,14 +3,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const StudentProtectedRoute = () => {
-  const { user, isAuthenticated, role } = useSelector((state) => state.auth);
+   const { user, isAuthenticated, role } = useSelector((state) => state.auth);
 
   if (!isAuthenticated) {
     return <Navigate to="/student/auth" replace />;
   }
 
   if (role !== "student") {
-    // If authenticated but not a student, send them to their respective dashboard or login
     if (role === "college-admin") return <Navigate to="/college/dashboard" replace />;
     return <Navigate to="/" replace />;
   }

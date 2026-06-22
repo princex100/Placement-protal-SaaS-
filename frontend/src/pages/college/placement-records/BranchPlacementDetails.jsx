@@ -9,26 +9,26 @@ import api from "../../../api/axios";
 
 const BranchPlacementDetails = () => {
   const { branchId } = useParams();
-  const navigate = useNavigate();
+   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [record, setRecord] = useState(null);
-  const [loading, setLoading] = useState(true);
+ const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const fetchDetails = async () => {
+     const fetchDetails = async () => {
       try {
         const response = await api.get(`/placement-records/${branchId}`);
         const data = response.data?.data || response.data;
-        if (data && data.branch) {
+       if (data && data.branch) {
           setRecord(data);
         }
-      } catch (error) {
-        console.warn("Backend error fetching details:", error);
-      } finally {
+     } catch (error) {
+       console.warn("Backend error fetching details:", error);
+     } finally {
         setLoading(false);
       }
-    };
+   };
 
     fetchDetails();
   }, [branchId, user?.activePlacementSeason]);
@@ -39,7 +39,7 @@ const BranchPlacementDetails = () => {
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
       </div>
     );
-  }
+   }
 
   const filteredStudents = record.placedStudents?.filter((s) => 
     s.student?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -51,14 +51,14 @@ const BranchPlacementDetails = () => {
     <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="mb-8">
-        <button 
-          onClick={() => navigate("/college/dashboard/placement-records")}
+       <button 
+           onClick={() => navigate("/college/dashboard/placement-records")}
           className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back to Overview
         </button>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
+         <div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{record.branch?.name} Placements</h1>
             <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">Detailed list of placed students and offers</p>
           </div>
@@ -69,7 +69,7 @@ const BranchPlacementDetails = () => {
             </div>
             <div className="h-8 w-px bg-slate-200 dark:bg-white/[0.06]"></div>
             <div className="text-center">
-              <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Placed</p>
+             <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Placed</p>
               <p className="text-xl font-bold text-emerald-400">{record.placedStudentsCount}</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ const BranchPlacementDetails = () => {
             type="text"
             placeholder="Search by name, roll no, or company..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full rounded-xl border-none bg-slate-100 dark:bg-white/[0.04] py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/30"
           />
         </div>
@@ -99,10 +99,10 @@ const BranchPlacementDetails = () => {
                 <th className="px-6 py-4 font-semibold">Student Name</th>
                 <th className="px-6 py-4 font-semibold">Roll No</th>
                 <th className="px-6 py-4 font-semibold">Company</th>
-                <th className="px-6 py-4 font-semibold">Package</th>
+                 <th className="px-6 py-4 font-semibold">Package</th>
                 <th className="px-6 py-4 font-semibold text-right">Action</th>
-              </tr>
-            </thead>
+               </tr>
+             </thead>
             <tbody className="divide-y divide-white/[0.04]">
               {filteredStudents.length === 0 ? (
                 <tr>
@@ -110,13 +110,13 @@ const BranchPlacementDetails = () => {
                 </tr>
               ) : (
                 filteredStudents.map((item) => (
-                  <tr 
+                 <tr 
                     key={item._id} 
-                    className="group cursor-pointer transition-colors hover:bg-white/[0.03]"
-                    onClick={() => navigate(`/college/dashboard/student-profile/${item.student._id}`)}
+                   className="group cursor-pointer transition-colors hover:bg-white/[0.03]"
+                     onClick={() => navigate(`/college/dashboard/student-profile/${item.student._id}`)}
                   >
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
+                     <div className="flex items-center gap-3">
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500/10 text-xs font-bold text-indigo-400 border border-indigo-500/20">
                           {item.student.fullName?.charAt(0) || "?"}
                         </div>
@@ -126,10 +126,10 @@ const BranchPlacementDetails = () => {
                     <td className="px-6 py-4 text-slate-500 dark:text-neutral-400">{item.student.rollNo}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <Briefcase size={14} className="text-slate-600 dark:text-neutral-500" />
+                       <Briefcase size={14} className="text-slate-600 dark:text-neutral-500" />
                         <span className="font-medium text-neutral-300">{item.company}</span>
                       </div>
-                    </td>
+                   </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-1 font-semibold text-emerald-400">
                         <IndianRupee size={14} />
@@ -140,7 +140,7 @@ const BranchPlacementDetails = () => {
                       <button className="text-indigo-400 opacity-0 transition-opacity group-hover:opacity-100 font-medium text-sm">
                         View Profile
                       </button>
-                    </td>
+                   </td>
                   </tr>
                 ))
               )}

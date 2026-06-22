@@ -1,4 +1,3 @@
-// src/utils/ApiResponse.js
 
 class ApiResponse {
   constructor(

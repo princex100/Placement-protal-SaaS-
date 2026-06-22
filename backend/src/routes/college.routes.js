@@ -2,8 +2,8 @@ import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import {
    registerCollege,
-   loginCollege,
-   logoutCollege,
+    loginCollege,
+  logoutCollege,
    getCurrentCollege,
    refreshCollegeAccessToken,
    getCollegeDashboardStats,
@@ -21,7 +21,6 @@ import {
 
 const router = Router();
 
-// PUBLIC ROUTES
 
 router.route("/register")
   .post(
@@ -34,7 +33,7 @@ router.route("/register")
 router.route("/login")
   .post(
     upload.none(), 
-    ...collegeLoginRules(), 
+   ...collegeLoginRules(), 
     validateRequest, 
     loginCollege
   );
@@ -45,13 +44,13 @@ router.route("/refresh-token")
 router.route("/verify-email/:token")
   .get(verifyEmail);
 
-// PROTECTED ROUTES (College only)
+ // PROTECTED ROUTES (College only)
 
 router.route("/logout")
   .post(verifyJWT, allowRoles(["college-admin"]), logoutCollege);
 
 router.route("/current")
-  .get(verifyJWT, allowRoles(["college-admin"]), getCurrentCollege);
+   .get(verifyJWT, allowRoles(["college-admin"]), getCurrentCollege);
 
 router.route("/dashboard/stats")
   .get(verifyJWT, allowRoles(["college-admin"]), getCollegeDashboardStats);

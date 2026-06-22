@@ -4,7 +4,7 @@ const applicationSchema = new mongoose.Schema(
   {
     student: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
+       ref: "Student",
       required: true,
       index: true
     },
@@ -14,7 +14,7 @@ const applicationSchema = new mongoose.Schema(
       required: true,
       index: true
     },
-    college: {
+   college: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "College",
       required: true,
@@ -24,7 +24,7 @@ const applicationSchema = new mongoose.Schema(
       type: Number,
       required: true,
       index: true
-    },
+     },
     applicationStatus: {
       type: String,
       enum: [
@@ -47,7 +47,7 @@ const applicationSchema = new mongoose.Schema(
     appliedAt: {
       type: Date,
       default: Date.now,
-    },
+     },
     resumeSnapshot: {
       type: String,
       required: true // Must snapshot the resume URL at the time of applying
@@ -60,7 +60,7 @@ const applicationSchema = new mongoose.Schema(
       interviewTime: String,
       venue: String,
       meetingLink: String
-    }
+     }
   },
   {
     timestamps: true,
@@ -71,7 +71,7 @@ applicationSchema.index(
   {
     student: 1,
     drive: 1,
-  },
+ },
   {
     unique: true, // Prevent duplicate applications
   }

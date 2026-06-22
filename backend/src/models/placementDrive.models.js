@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const placementDriveSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
+   title: {
+       type: String,
       required: true,
       trim: true,
     },
@@ -11,16 +11,16 @@ const placementDriveSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-    },
+   },
     role: {
       type: String,
       required: true,
-      trim: true,
+     trim: true,
     },
     college: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "College",
-      required: true,
+     required: true,
       index: true
     },
     placementSeasonYear: {
@@ -39,7 +39,7 @@ const placementDriveSchema = new mongoose.Schema(
       default: "on-site"
     },
     package: {
-      type: Number,
+       type: Number,
       required: true,
     },
     location: {
@@ -61,23 +61,21 @@ const placementDriveSchema = new mongoose.Schema(
         type: Number
       }
     ],
-    backlogAllowed: {
+   backlogAllowed: {
       type: Number,
       default: 0
-    },
-    // Extra details
+     },
     skillsRequired: [
       {
         type: String,
       },
     ],
-    description: {
+     description: {
       type: String,
     },
     responsibilities: {
       type: String
-    },
-    // Timeline
+     },
     applicationDeadline: {
       type: Date,
       required: true,
@@ -91,13 +89,13 @@ const placementDriveSchema = new mongoose.Schema(
        enum: [
           "shortlisting",
           "interview",
-          "selection",
+           "selection",
           "completed"
        ],
        default: "shortlisting",
        index: true
     },
-    status: {
+   status: {
       type: String,
       enum: ["open", "closed"],
       default: "open",
@@ -106,26 +104,26 @@ const placementDriveSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    isActive: {
+   isActive: {
       type: Boolean,
       default: true,
-    },
-    students: [
+     },
+     students: [
       {
-        student: {
+         student: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Student",
-          required: true,
+         required: true,
         },
         appliedAt: {
           type: Date,
           default: Date.now,
-        },
+         },
       },
     ],
   },
   {
-    timestamps: true,
+     timestamps: true,
   }
 );
 

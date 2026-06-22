@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  createBranch,
+   createBranch,
   getBranches,
   createStudent,
   getBranchStudents
@@ -8,7 +8,7 @@ import {
 import { verifyJWT } from "../middlewares/verifyJWT.js";
 import { allowRoles } from "../middlewares/role.middleware.js";
 
-const router = express.Router();
+ const router = express.Router();
 
 router.use(verifyJWT);
 router.use(allowRoles(["college-admin", "college"])); // Both college roles to be safe
@@ -18,7 +18,7 @@ router.route("/")
   .get(getBranches);
 
 router.route("/:branchId/students")
-  .post(createStudent)
+   .post(createStudent)
   .get(getBranchStudents);
 
 export default router;

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import {
-  BrowserRouter,
+ BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
@@ -21,9 +21,7 @@ import CollegeLogin from "./pages/auth/CollegeAuth.jsx";
 import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
 import { store } from "./redux/store";
 import CollegeDashboard from "./pages/college/CollegeDashboard.jsx";
-// import CollegeAuth from "./pages/auth/CollegeAuth";
 
-// Student Dashboard Imports
 import StudentDashboardLayout from "./pages/student/StudentDashboardLayout.jsx";
 import StudentProtectedRoute from "./pages/student/components/StudentProtectedRoute.jsx";
 import StudentDashboard from "./pages/student/dashboard/StudentDashboard.jsx";
@@ -43,7 +41,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           {/* Shared Layout */}
           <Route path="/" element={<App />}>
 
-            {/* Landing Page */}
+           {/* Landing Page */}
             <Route index element={<LandingPage />} />
 
             {/* Auth Pages */}
@@ -53,11 +51,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               element={<StudentAuth />}
             />
 
-            {/* Student Dashboard Routes */}
+           {/* Student Dashboard Routes */}
             <Route element={<StudentProtectedRoute />}>
               <Route path="student/dashboard" element={<StudentDashboardLayout />}>
-                <Route index element={<StudentDashboard />} />
-                <Route path="profile" element={<StudentProfile />} />
+                 <Route index element={<StudentDashboard />} />
+               <Route path="profile" element={<StudentProfile />} />
                 <Route path="drives" element={<StudentPlacementDrives />} />
                 <Route path="drives/:driveId" element={<StudentDriveDetails />} />
                 <Route path="drives/:driveId/apply" element={<StudentApplyDrive />} />
@@ -67,29 +65,29 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             </Route>
             <Route
               path="college/auth"
-              element={<CollegeLogin />}
+             element={<CollegeLogin />}
             />
              <Route
               path="college/register"
               element={<CollegeRegister />}
-            />
+             />
             <Route
               path="verify-email/:token"
               element={<VerifyEmail />}
             />
             <Route
-              path="college/current"
+               path="college/current"
               element={<CollegeDashboard />}
             />
-            <Route
+             <Route
               path="college/dashboard/*"
-              element={<CollegeDashboard />}
-            />
+             element={<CollegeDashboard />}
+           />
 
           </Route>
         </Routes>
       </BrowserRouter>
-    </Provider>
+   </Provider>
   </React.StrictMode>
 );
 

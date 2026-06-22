@@ -1,4 +1,3 @@
-// import { BranchPlacementRecord } from "../models/BranchPlacementRecord.models.js";
 import PlacementRecord from "../models/PlacementRecord.models.js";
 import Student from "../models/Student.models.js";
 import asyncHandler from "../utils/asyncHandler.js";
@@ -6,22 +5,18 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import Branch from "../models/branch.models.js";
 
-// GET /api/v1/placement-records
 export const getPlacementOverview = asyncHandler(async (req, res) => {
   const collegeId = req.user._id;
 
-  // Find all branch records for this college and populate branch name
   const records = await PlacementRecord.find({ 
-    college: collegeId,
+     college: collegeId,
     placementSeasonYear: req.user.activePlacementSeason
   })
     .populate("branch", "name")
     .lean();
 
-  // Dynamically calculate counts using Promise.all for speed
   const enrichedRecords = await Promise.all(
     records.map(async (record) => {
-      // The branch.name is the string inside the branch doc
       const branchName = record.branch?.name || "";
 
       const [totalStudents, eligibleStudents, placedStudentsCount] = await Promise.all([
@@ -30,18 +25,18 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
           branch: branchName,
           placementSeasonYear: req.user.activePlacementSeason
         }),
-        Student.countDocuments({
+         Student.countDocuments({
           college: collegeId,
           branch: branchName,
           placementSeasonYear: req.user.activePlacementSeason,
           placementBlocked: false,
         }),
-        Student.countDocuments({
+       Student.countDocuments({
           college: collegeId,
-          branch: branchName,
+           branch: branchName,
           placementSeasonYear: req.user.activePlacementSeason,
           placementStatus: { $in: ["placed", "internship"] }
-        }),
+       }),
       ]);
 
       return {
@@ -52,7 +47,7 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
         placedStudents: placedStudentsCount,
       };
     })
-  );
+   );
 
   return res
     .status(200)
@@ -61,11 +56,11 @@ export const getPlacementOverview = asyncHandler(async (req, res) => {
 
 // GET /api/v1/placement-records/:branchId
 export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
-  const { branchId } = req.params;
+   const { branchId } = req.params;
   const collegeId = req.user._id;
 
   const record = await BranchPlacementRecord.findOne({
-    _id: branchId,
+     _id: branchId,
     college: collegeId,
     placementSeasonYear: req.user.activePlacementSeason
   })
@@ -87,7 +82,7 @@ export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
 
   // Compute dynamic counts
   const [totalStudents, eligibleStudents, dynamicallyPlacedStudents] = await Promise.all([
-    Student.countDocuments({ 
+   Student.countDocuments({ 
       college: collegeId, 
       branch: branchName,
       placementSeasonYear: req.user.activePlacementSeason
@@ -103,17 +98,16 @@ export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
       branch: branchName,
       placementSeasonYear: req.user.activePlacementSeason,
       placementStatus: { $in: ["placed", "internship"] }
-    }).select("fullName rollNo email profileImage branch cgpa placementBlocked").lean()
-  ]);
+     }).select("fullName rollNo email profileImage branch cgpa placementBlocked").lean()
+ ]);
 
   const formattedPlacedStudents = dynamicallyPlacedStudents.map(student => {
-    // Look up existing placement details from PlacementRecord
     const existingDetail = placementRecords.find(
       pr => pr.student && pr.student._id.toString() === student._id.toString()
     );
     
     return {
-      _id: existingDetail ? existingDetail._id : student._id,
+     _id: existingDetail ? existingDetail._id : student._id,
       student: student,
       company: existingDetail?.company || "Manual / Off-Campus",
       package: existingDetail?.package || "N/A",
@@ -121,7 +115,7 @@ export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
     };
   });
 
-  const enrichedRecord = {
+ const enrichedRecord = {
     ...record,
     totalStudents,
     eligibleStudents,
@@ -134,7 +128,6 @@ export const getBranchPlacementDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, enrichedRecord, "Branch details retrieved successfully"));
 });
 
-// GET /api/v1/placement-records/student/:studentId
 export const getStudentProfileDetails = asyncHandler(async (req, res) => {
   const { studentId } = req.params;
   const collegeId = req.user._id;
@@ -148,22 +141,21 @@ export const getStudentProfileDetails = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Student not found");
   }
 
-  return res
+   return res
     .status(200)
     .json(new ApiResponse(200, student, "Student profile retrieved successfully"));
 });
 
-// PATCH /api/v1/placement-records/student/:studentId/toggle-block
 export const togglePlacementBlock = asyncHandler(async (req, res) => {
   const { studentId } = req.params;
-  const collegeId = req.user._id;
+   const collegeId = req.user._id;
 
   const student = await Student.findOne({
     _id: studentId,
     college: collegeId,
   });
 
-  if (!student) {
+ if (!student) {
     throw new ApiError(404, "Student not found");
   }
 
@@ -181,30 +173,27 @@ export const togglePlacementBlock = asyncHandler(async (req, res) => {
     );
 });
 
-// PATCH /api/v1/placement-records/student/:studentId/update
 export const updateStudentDetails = asyncHandler(async (req, res) => {
   const { studentId } = req.params;
-  const collegeId = req.user._id;
+ const collegeId = req.user._id;
 
-  // Destructure to isolate editable fields
   const {
     fullName,
     phoneNumber,
     gender,
     rollNo,
     branch,
-    cgpa,
+   cgpa,
     semester,
     passingYear,
     backlogCount,
     linkedin,
-    github,
+   github,
     portfolio,
     skills,
     projects
   } = req.body;
 
-  // Build safe update object
   const updateData = {};
   if (fullName !== undefined) updateData.fullName = fullName;
   if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
@@ -217,15 +206,15 @@ export const updateStudentDetails = asyncHandler(async (req, res) => {
   if (backlogCount !== undefined) updateData.backlogCount = backlogCount;
   if (linkedin !== undefined) updateData.linkedin = linkedin;
   if (github !== undefined) updateData.github = github;
-  if (portfolio !== undefined) updateData.portfolio = portfolio;
+ if (portfolio !== undefined) updateData.portfolio = portfolio;
   if (skills !== undefined) updateData.skills = skills;
   if (projects !== undefined) updateData.projects = projects;
 
   const updatedStudent = await Student.findOneAndUpdate(
-    { _id: studentId, college: collegeId },
+     { _id: studentId, college: collegeId },
     { $set: updateData },
-    { new: true, runValidators: true }
-  ).select("-password -refreshToken");
+   { new: true, runValidators: true }
+ ).select("-password -refreshToken");
 
   if (!updatedStudent) {
     throw new ApiError(404, "Student not found or you are not authorized to update this student");
@@ -236,7 +225,6 @@ export const updateStudentDetails = asyncHandler(async (req, res) => {
   );
 });
 
-// PATCH /api/v1/placement-records/student/:studentId/placement-status
 export const updatePlacementStatus = asyncHandler(async (req, res) => {
   const { studentId } = req.params;
   const collegeId = req.user._id;
@@ -244,22 +232,22 @@ export const updatePlacementStatus = asyncHandler(async (req, res) => {
 
   if (!placementStatus || !["unplaced", "placed", "internship"].includes(placementStatus)) {
     throw new ApiError(400, "Invalid placement status provided");
-  }
+   }
 
   const updatedStudent = await Student.findOneAndUpdate(
-    { _id: studentId, college: collegeId },
+   { _id: studentId, college: collegeId },
     { $set: { placementStatus } },
     { new: true, runValidators: true }
   ).select("-password -refreshToken");
 
   if (!updatedStudent) {
-    throw new ApiError(404, "Student not found or you are not authorized to update this student");
+     throw new ApiError(404, "Student not found or you are not authorized to update this student");
   }
 
   if (placementStatus === "placed" || placementStatus === "internship") {
     const branchDoc = await Branch.findOne({ 
       name: { $regex: new RegExp(`^${updatedStudent.branch}$`, "i") }, 
-      college: collegeId 
+       college: collegeId 
     });
     
     if (branchDoc) {
@@ -269,7 +257,7 @@ export const updatePlacementStatus = asyncHandler(async (req, res) => {
           college: collegeId,
           branch: branchDoc._id,
           company: req.body.company || "Manual / Off-Campus",
-          package: req.body.package || 0,
+         package: req.body.package || 0,
           placementSeasonYear: updatedStudent.placementSeasonYear
         });
       } catch (err) {

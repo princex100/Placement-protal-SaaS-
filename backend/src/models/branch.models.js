@@ -23,7 +23,6 @@ const branchSchema = new mongoose.Schema(
   }
 );
 
-// Compound index to ensure a college doesn't have duplicate branches
 branchSchema.index({ name: 1, college: 1 }, { unique: true });
 
 export const Branch = mongoose.model("Branch", branchSchema);

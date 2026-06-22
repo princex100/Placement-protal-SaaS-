@@ -12,12 +12,12 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
 
   if (!req.file) {
     throw new ApiError(400, "Please upload an Excel or CSV file");
-  }
+   }
 
-  const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
+   const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
   if (!drive) {
     fs.unlinkSync(req.file.path);
-    throw new ApiError(404, "Drive not found or unauthorized");
+     throw new ApiError(404, "Drive not found or unauthorized");
   }
 
   // Verify that the drive is in the shortlist stage
@@ -28,7 +28,7 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
 
   const xlsx = (await import("xlsx")).default;
   let workbook;
-  try {
+ try {
     workbook = xlsx.readFile(req.file.path);
   } catch (error) {
     fs.unlinkSync(req.file.path);
@@ -38,14 +38,12 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
   const sheetName = workbook.SheetNames[0];
   const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-  // Delete temp file after reading
   fs.unlinkSync(req.file.path);
 
   if (!sheetData || sheetData.length === 0) {
     throw new ApiError(400, "The uploaded file is empty");
   }
 
-  // Find roll number column using header mapping
   const { studentHeaderMap } = await import("../constants/studentHeaderMap.js");
   const headers = Object.keys(sheetData[0]);
   let rollNoKey = null;
@@ -62,11 +60,10 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Could not detect roll number column in the uploaded file");
   }
 
-  // Extract roll numbers and put them in a Set
   const shortlistedRollNumbers = new Set();
   sheetData.forEach((row) => {
     const rawValue = row[rollNoKey];
-    if (rawValue) {
+     if (rawValue) {
       shortlistedRollNumbers.add(String(rawValue).trim().toUpperCase());
     }
   });
@@ -75,19 +72,18 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
     throw new ApiError(400, "No valid roll numbers found in the file.");
   }
 
-  // Fetch current applications for this drive
   const currentApplications = await Application.find({ 
     drive: driveId, 
     college: collegeId,
-    applicationStatus: "applied"
+     applicationStatus: "applied"
   }).populate("student", "rollNo email fullName");
 
   const matchedAppIds = [];
   const rejectedAppIds = [];
-  const matchedRollNumbers = new Set();
+ const matchedRollNumbers = new Set();
   const studentsToNotify = [];
 
-  currentApplications.forEach(app => {
+ currentApplications.forEach(app => {
     if (app.student && app.student.rollNo) {
       const studentRollNo = String(app.student.rollNo).toUpperCase();
       if (shortlistedRollNumbers.has(studentRollNo)) {
@@ -97,22 +93,20 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
           email: app.student.email,
           fullName: app.student.fullName,
           companyName: drive.companyName,
-          role: drive.role
-        });
+         role: drive.role
+         });
       } else {
-        rejectedAppIds.push(app._id);
+         rejectedAppIds.push(app._id);
       }
     }
   });
 
-  // Identify unmatched roll numbers from the uploaded file
   const unmatchedRollNumbers = Array.from(shortlistedRollNumbers).filter(
     (rollNo) => !matchedRollNumbers.has(rollNo)
   );
 
   const bulkOps = [];
 
-  // Prepare bulk operations for shortlisted applications
   if (matchedAppIds.length > 0) {
     bulkOps.push({
       updateMany: {
@@ -124,14 +118,14 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
             statusUpdatedBy: collegeId
           } 
         }
-      }
+       }
     });
   }
 
   // Prepare bulk operations for rejected applications
   if (rejectedAppIds.length > 0) {
     bulkOps.push({
-      updateMany: {
+       updateMany: {
         filter: { _id: { $in: rejectedAppIds } },
         update: { 
           $set: { 
@@ -144,16 +138,14 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
     });
   }
 
-  // Execute bulk update if there are operations
   if (bulkOps.length > 0) {
     await Application.bulkWrite(bulkOps);
-  }
+   }
 
-  // Advance drive workflow to "interview"
+ // Advance drive workflow to "interview"
   drive.applicationWorkflowStage = "interview";
   await drive.save();
 
-  // Send emails using Promise.all in the background
   if (studentsToNotify.length > 0) {
     (async () => {
       try {
@@ -163,7 +155,7 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
             intro: `Congratulations! You have been shortlisted for the ${student.role} role at ${student.companyName}.`,
             outro: "Please check your dashboard for further updates regarding the interview schedule.\\n\\nBest Regards,\\nPlacement Cell"
           };
-          const mailgenContent = generateMailContent(emailBody);
+           const mailgenContent = generateMailContent(emailBody);
           return sendEmail({
             email: student.email,
             subject: `Shortlisted - ${student.companyName}`,
@@ -181,7 +173,7 @@ export const uploadShortlist = asyncHandler(async (req, res) => {
     success: true,
     shortlistedCount: matchedAppIds.length,
     rejectedCount: rejectedAppIds.length,
-    unmatchedRollNumbers,
+   unmatchedRollNumbers,
     nextStage: "Interview Schedule"
   }, "Shortlist successfully processed. Drive moved to Interview Schedule."));
 });

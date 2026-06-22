@@ -13,12 +13,12 @@ const BranchStudents = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
-  // Pagination & Data State
+   // Pagination & Data State
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [limit] = useState(25);
-  const [totalPages, setTotalPages] = useState(1);
+   const [totalPages, setTotalPages] = useState(1);
   const [totalStudents, setTotalStudents] = useState(0);
 
   // Add Student Modal State
@@ -33,28 +33,27 @@ const BranchStudents = () => {
     cgpa: "",
     passingYear: new Date().getFullYear(),
     semester: 1
-  });
+ });
 
   const fetchStudents = async () => {
     setLoading(true);
     try {
       const response = await api.get(`/branches/${branchId}/students?page=${page}&limit=${limit}`);
-      const data = response.data?.data || response.data;
+       const data = response.data?.data || response.data;
       
       setStudents(data.students || []);
       setTotalPages(data.totalPages || 1);
       setTotalStudents(data.totalStudents || 0);
     } catch (error) {
       console.error("Error fetching students:", error);
-      toast.error(error.response?.data?.message || "Failed to fetch students");
+     toast.error(error.response?.data?.message || "Failed to fetch students");
     } finally {
-      setLoading(false);
+       setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchStudents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, branchId, user?.activePlacementSeason]);
 
   const handleNextPage = () => {
@@ -67,7 +66,7 @@ const BranchStudents = () => {
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+   };
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
@@ -76,7 +75,7 @@ const BranchStudents = () => {
       await api.post(`/branches/${branchId}/students`, formData);
       toast.success("Student added successfully!");
       setIsModalOpen(false);
-      setFormData({
+       setFormData({
         fullName: "",
         rollNo: "",
         email: "",
@@ -86,7 +85,7 @@ const BranchStudents = () => {
         passingYear: new Date().getFullYear(),
         semester: 1
       });
-      fetchStudents(); // Refresh list
+     fetchStudents(); // Refresh list
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to add student");
     } finally {
@@ -139,7 +138,7 @@ const BranchStudents = () => {
             className="flex h-[42px] items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition hover:shadow-xl hover:shadow-indigo-500/30"
           >
             <Plus size={18} /> Add Student
-          </button>
+           </button>
         </div>
       </div>
 
@@ -150,13 +149,13 @@ const BranchStudents = () => {
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
             <p className="text-sm font-medium text-slate-600 dark:text-neutral-500">Loading students...</p>
           </div>
-        ) : students.length === 0 ? (
+         ) : students.length === 0 ? (
           <div className="flex h-64 flex-col items-center justify-center gap-4 p-8 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400">
-              <Users size={32} />
+             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400">
+               <Users size={32} />
             </div>
             <p className="text-lg font-semibold text-slate-900 dark:text-white">No students found</p>
-            <p className="text-sm text-slate-600 dark:text-neutral-500">Add the first student to this branch.</p>
+           <p className="text-sm text-slate-600 dark:text-neutral-500">Add the first student to this branch.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -164,7 +163,7 @@ const BranchStudents = () => {
               <thead className="border-b border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400">
                 <tr>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Student Name</th>
-                  <th className="whitespace-nowrap px-6 py-4 font-semibold">Roll No</th>
+                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Roll No</th>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">CGPA</th>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold">Status</th>
                   <th className="whitespace-nowrap px-6 py-4 font-semibold text-right">Action</th>
@@ -185,51 +184,51 @@ const BranchStudents = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-neutral-300 font-medium">
-                      {student.rollNo}
+                     {student.rollNo}
                     </td>
                     <td className="px-6 py-4">
                       <span className="font-semibold text-slate-900 dark:text-white">{student.cgpa || "N/A"}</span>
-                    </td>
+                   </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${getStatusColor(student.placementStatus)}`}>
+                       <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${getStatusColor(student.placementStatus)}`}>
                         {student.placementStatus || "unplaced"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right">
+                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={() => navigate(`/college/dashboard/student-profile/${student._id}`)}
                         className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-semibold text-indigo-400 transition hover:bg-indigo-500/10"
                       >
-                        View Details <ChevronRight size={16} />
+                         View Details <ChevronRight size={16} />
                       </button>
                     </td>
                   </tr>
-                ))}
+                 ))}
               </tbody>
             </table>
           </div>
         )}
 
-        {/* Pagination Controls */}
+       {/* Pagination Controls */}
         {!loading && students.length > 0 && (
           <div className="flex items-center justify-between border-t border-slate-200 dark:border-white/[0.06] px-6 py-4">
             <p className="text-sm text-slate-600 dark:text-neutral-500">
               Showing page <span className="font-medium text-slate-900 dark:text-white">{page}</span> of <span className="font-medium text-slate-900 dark:text-white">{totalPages}</span>
             </p>
             <div className="flex gap-2">
-              <button
+               <button
                 onClick={handlePrevPage}
-                disabled={page === 1}
+               disabled={page === 1}
                 className="flex items-center gap-1 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-1.5 text-sm font-semibold text-neutral-300 transition hover:bg-slate-200 dark:hover:bg-white/[0.06] disabled:pointer-events-none disabled:opacity-50"
               >
                 <ChevronLeft size={16} /> Prev
               </button>
-              <button
+             <button
                 onClick={handleNextPage}
                 disabled={page === totalPages}
                 className="flex items-center gap-1 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-1.5 text-sm font-semibold text-neutral-300 transition hover:bg-slate-200 dark:hover:bg-white/[0.06] disabled:pointer-events-none disabled:opacity-50"
               >
-                Next <ChevronRight size={16} />
+               Next <ChevronRight size={16} />
               </button>
             </div>
           </div>
@@ -237,7 +236,7 @@ const BranchStudents = () => {
       </div>
 
       {/* Add Student Modal */}
-      {isModalOpen && (
+       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-8 backdrop-blur-sm overflow-y-auto">
           <div className="w-full max-w-xl rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 shadow-2xl shadow-black/40 my-auto">
             <div className="flex items-center justify-between mb-6">
@@ -251,7 +250,7 @@ const BranchStudents = () => {
             </div>
             
             <form onSubmit={handleAddStudent} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-500 dark:text-neutral-400">Full Name *</label>
                 <input type="text" name="fullName" required value={formData.fullName} onChange={handleInputChange} className="w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none" />
               </div>
@@ -265,13 +264,13 @@ const BranchStudents = () => {
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-500 dark:text-neutral-400">Email Address</label>
-                <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none" />
+                 <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none" />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-500 dark:text-neutral-400">CGPA</label>
                 <input type="number" step="0.01" name="cgpa" value={formData.cgpa} onChange={handleInputChange} className="w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none" />
               </div>
-              <div>
+               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-500 dark:text-neutral-400">Passing Year</label>
                 <input type="number" name="passingYear" required value={formData.passingYear} onChange={handleInputChange} className="w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none" />
               </div>
@@ -280,7 +279,7 @@ const BranchStudents = () => {
                   Cancel
                 </button>
                 <button type="submit" disabled={isSubmitting} className="inline-flex min-w-[120px] items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition disabled:opacity-50">
-                  {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : "Save Student"}
+                   {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : "Save Student"}
                 </button>
               </div>
             </form>

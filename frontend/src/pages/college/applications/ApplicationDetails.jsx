@@ -16,7 +16,7 @@ const ApplicationDetails = () => {
     const fetchApplication = async () => {
       setLoading(true);
       try {
-        const response = await api.get(`/applications/${applicationId}`);
+       const response = await api.get(`/applications/${applicationId}`);
         const data = response.data?.data || response.data;
         setApplication(data);
       } catch (error) {
@@ -24,18 +24,17 @@ const ApplicationDetails = () => {
         toast.error("Failed to load application details.");
       } finally {
         setLoading(false);
-      }
-    };
+       }
+     };
 
     fetchApplication();
   }, [applicationId]);
 
   const handleUpdateStatus = async (status) => {
     setUpdating(true);
-    try {
+   try {
       const response = await api.patch(`/applications/${applicationId}/status`, { status });
       toast.success(`Application marked as ${status}`);
-      // Update local state to reflect new status
       setApplication(prev => ({ ...prev, status }));
     } catch (error) {
       console.error("Failed to update status:", error);
@@ -45,7 +44,7 @@ const ApplicationDetails = () => {
     }
   };
 
-  if (loading || !application) {
+   if (loading || !application) {
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
@@ -56,23 +55,23 @@ const ApplicationDetails = () => {
   const { student, drive } = application;
 
   const getStatusBadge = (status) => {
-    switch (status) {
+     switch (status) {
       case 'Applied': return <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-200 dark:bg-white/[0.06] px-3 py-1 text-sm font-semibold text-neutral-300"><Clock size={16} /> Applied</span>;
       case 'Shortlisted': return <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-sm font-semibold text-indigo-400"><CheckCircle size={16} /> Shortlisted</span>;
       case 'Interview Scheduled': return <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 px-3 py-1 text-sm font-semibold text-amber-400"><Calendar size={16} /> Interview Scheduled</span>;
       case 'Selected': return <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 text-sm font-semibold text-emerald-400"><CheckCircle size={16} /> Selected</span>;
       case 'Rejected': return <span className="inline-flex items-center gap-1.5 rounded-full bg-red-500/10 border border-red-500/20 px-3 py-1 text-sm font-semibold text-red-400"><XCircle size={16} /> Rejected</span>;
       default: return <span className="inline-flex rounded-full bg-slate-200 dark:bg-white/[0.06] px-3 py-1 text-sm font-semibold text-neutral-300">{status}</span>;
-    }
+     }
   };
 
   return (
     <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
-      {/* Header */}
+       {/* Header */}
       <div className="mb-8">
-        <button 
+         <button 
           onClick={() => navigate(-1)}
-          className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
+           className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft size={16} /> Back
         </button>
@@ -80,15 +79,15 @@ const ApplicationDetails = () => {
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Application Profile
               </h1>
-              {getStatusBadge(application.status)}
+             {getStatusBadge(application.status)}
             </div>
             <p className="mt-1 text-sm text-slate-500 dark:text-neutral-400">
               Applied on {new Date(application.appliedAt).toLocaleDateString()}
             </p>
-          </div>
+         </div>
 
         </div>
       </div>
@@ -96,11 +95,11 @@ const ApplicationDetails = () => {
       <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
         {/* Student Details */}
         <div className="flex flex-col gap-6">
-          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
+         <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white">Student Info</h2>
               <button 
-                onClick={() => navigate(`/college/dashboard/student-profile/${student._id}`)}
+                 onClick={() => navigate(`/college/dashboard/student-profile/${student._id}`)}
                 className="text-sm font-medium text-indigo-400 hover:underline"
               >
                 View Full Profile
@@ -110,38 +109,38 @@ const ApplicationDetails = () => {
             <div className="space-y-6">
               <div>
                 <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Name</p>
-                <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">{student.fullName}</p>
-              </div>
+                 <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">{student.fullName}</p>
+             </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Roll Number</p>
                   <p className="mt-1 font-medium text-slate-900 dark:text-white">{student.rollNo}</p>
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">CGPA</p>
+                 <div>
+                   <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">CGPA</p>
                   <p className="mt-1 font-bold text-emerald-400">{student.cgpa}</p>
                 </div>
-                <div>
+               <div>
                   <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Branch</p>
                   <p className="mt-1 flex items-center gap-2 font-medium text-slate-900 dark:text-white"><BookOpen size={16} className="text-slate-600 dark:text-neutral-500" /> {student.branch}</p>
-                </div>
+               </div>
                 <div>
                   <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Batch</p>
                   <p className="mt-1 flex items-center gap-2 font-medium text-slate-900 dark:text-white"><GraduationCap size={16} className="text-slate-600 dark:text-neutral-500" /> {student.passingYear}</p>
                 </div>
               </div>
 
-              <div>
+               <div>
                 <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Contact</p>
                 <p className="mt-2 flex items-center gap-2 text-neutral-300">
                   <Mail size={16} className="text-slate-600 dark:text-neutral-500" /> {student.email}
-                </p>
-              </div>
+               </p>
+             </div>
 
               {student.skills && student.skills.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Skills</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
+                 <div className="mt-2 flex flex-wrap gap-2">
                     {student.skills.map((skill, idx) => (
                       <span key={idx} className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-xs font-medium text-indigo-300">
                         {skill}
@@ -151,12 +150,12 @@ const ApplicationDetails = () => {
                 </div>
               )}
             </div>
-          </div>
+           </div>
         </div>
 
-        {/* Drive Details & Resume */}
+       {/* Drive Details & Resume */}
         <div className="flex flex-col gap-6">
-          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
+           <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6 sm:p-8">
             <h2 className="mb-6 text-xl font-bold text-slate-900 dark:text-white">Applied To</h2>
             
             <div className="space-y-6">
@@ -165,7 +164,7 @@ const ApplicationDetails = () => {
                   <Building2 size={24} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{drive?.companyName}</h3>
+                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">{drive?.companyName}</h3>
                   <p className="flex items-center gap-1 text-sm text-slate-500 dark:text-neutral-400">
                     <Briefcase size={14} /> {drive?.role}
                   </p>
@@ -193,8 +192,8 @@ const ApplicationDetails = () => {
                 This is the resume the student submitted at the time of application.
               </p>
               <a 
-                href={application.resumeSnapshot} 
-                target="_blank" 
+               href={application.resumeSnapshot} 
+                 target="_blank" 
                 rel="noreferrer"
                 className="mt-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition hover:shadow-xl hover:shadow-indigo-500/30"
               >

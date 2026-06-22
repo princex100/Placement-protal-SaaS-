@@ -9,7 +9,7 @@ const DUMMY_DRIVE = {
   companyName: "Google",
   role: "Software Engineer",
   package: 24,
-  location: "Bangalore",
+ location: "Bangalore",
   mode: "hybrid",
   jobType: "fulltime",
   minimumCgpa: 8.0,
@@ -26,14 +26,14 @@ const DUMMY_DRIVE = {
 const DriveDetails = () => {
   const { driveId } = useParams();
   const navigate = useNavigate();
-  const [drive, setDrive] = useState(null);
+ const [drive, setDrive] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+ const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const fetchDrive = async () => {
       try {
-        const response = await api.get(`/drives/${driveId}`);
+       const response = await api.get(`/drives/${driveId}`);
         const data = response.data?.data || response.data;
         if (data && data.companyName) {
           setDrive(data);
@@ -44,7 +44,7 @@ const DriveDetails = () => {
         console.warn("Backend error fetching drive details, using dummy data:", error);
         setDrive(DUMMY_DRIVE);
       } finally {
-        setLoading(false);
+         setLoading(false);
       }
     };
     fetchDrive();
@@ -55,30 +55,29 @@ const DriveDetails = () => {
       return;
     }
     
-    setDeleteLoading(true);
+     setDeleteLoading(true);
     try {
       await api.delete(`/drives/${driveId}`);
-      toast.success("Drive deleted successfully");
-      navigate("/college/dashboard/placement-drives");
+     toast.success("Drive deleted successfully");
+     navigate("/college/dashboard/placement-drives");
     } catch (error) {
       console.error("Failed to delete drive:", error);
-      // Even if API fails, if it's a dummy drive, just navigate back
       if (driveId.startsWith("dummy")) {
         toast.success("Dummy drive deleted");
         navigate("/college/dashboard/placement-drives");
       }
     } finally {
-      setDeleteLoading(false);
-    }
+       setDeleteLoading(false);
+     }
   };
 
-  if (loading || !drive) {
+   if (loading || !drive) {
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
       </div>
     );
-  }
+ }
 
   return (
     <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
@@ -97,17 +96,17 @@ const DriveDetails = () => {
               <Building2 size={32} className="hidden sm:block" />
               <Building2 size={24} className="sm:hidden" />
             </div>
-            <div>
+           <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{drive.companyName}</h1>
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium">
+             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium">
                 <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <Briefcase size={16} /> {drive.role}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-neutral-600"></span>
                 <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <MapPin size={16} /> {drive.location || "Location TBD"}
-                </span>
-              </div>
+               </span>
+               </div>
             </div>
           </div>
 
@@ -122,8 +121,8 @@ const DriveDetails = () => {
               onClick={handleDelete}
               disabled={deleteLoading}
               className="flex items-center justify-center gap-2 rounded-xl bg-red-500/10 border border-red-500/20 px-5 py-2.5 text-sm font-semibold text-red-400 transition-all hover:bg-red-500/20"
-            >
-              {deleteLoading ? <Loader2 size={18} className="animate-spin" /> : <><Trash2 size={18} /> Remove Drive</>}
+           >
+               {deleteLoading ? <Loader2 size={18} className="animate-spin" /> : <><Trash2 size={18} /> Remove Drive</>}
             </button>
           </div>
         </div>
@@ -134,9 +133,9 @@ const DriveDetails = () => {
         <div className="col-span-1 flex flex-col gap-6 md:col-span-2">
           {/* Overview Stats */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
-            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
+             <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-4">
               <p className="text-xs font-semibold text-slate-600 dark:text-neutral-500 uppercase">Package</p>
-              <p className="mt-2 flex items-center gap-1 text-xl font-bold text-emerald-400">
+               <p className="mt-2 flex items-center gap-1 text-xl font-bold text-emerald-400">
                 <IndianRupee size={18} /> {drive.package} LPA
               </p>
             </div>
@@ -156,11 +155,11 @@ const DriveDetails = () => {
             </div>
           </div>
 
-          {/* Description & Responsibilities */}
+           {/* Description & Responsibilities */}
           <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
             <h2 className="mb-4 text-xl font-bold text-slate-900 dark:text-white">Job Description</h2>
             <p className="whitespace-pre-wrap text-neutral-300 leading-relaxed">
-              {drive.description || "No description provided."}
+               {drive.description || "No description provided."}
             </p>
 
             {drive.responsibilities && (
@@ -177,10 +176,10 @@ const DriveDetails = () => {
         {/* Sidebar (Right) */}
         <div className="flex flex-col gap-6">
           {/* Timeline */}
-          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+           <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
             <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Timeline</h3>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
+           <div className="space-y-4">
+               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                   <Calendar size={16} />
                 </div>
@@ -189,13 +188,13 @@ const DriveDetails = () => {
                   <p className="text-sm text-slate-500 dark:text-neutral-400">
                     {new Date(drive.applicationDeadline).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
-                </div>
-              </div>
+               </div>
+             </div>
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                   <Calendar size={16} />
                 </div>
-                <div>
+               <div>
                   <p className="text-sm font-semibold text-slate-900 dark:text-white">Interview Date</p>
                   <p className="text-sm text-slate-500 dark:text-neutral-400">
                     {drive.driveDate ? new Date(drive.driveDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : "To be decided"}
@@ -205,13 +204,13 @@ const DriveDetails = () => {
             </div>
           </div>
 
-          {/* Eligibility Criteria */}
+         {/* Eligibility Criteria */}
           <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
             <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Eligibility Criteria</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-sm text-neutral-300">
                 <CheckCircle2 size={18} className="mt-0.5 text-indigo-400 shrink-0" />
-                <span><span className="font-semibold text-slate-900 dark:text-white">Min CGPA:</span> {drive.minimumCgpa}</span>
+               <span><span className="font-semibold text-slate-900 dark:text-white">Min CGPA:</span> {drive.minimumCgpa}</span>
               </li>
               <li className="flex items-start gap-2 text-sm text-neutral-300">
                 <CheckCircle2 size={18} className="mt-0.5 text-indigo-400 shrink-0" />
@@ -230,17 +229,17 @@ const DriveDetails = () => {
           {drive.skillsRequired?.length > 0 && (
             <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
               <h3 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Required Skills</h3>
-              <div className="flex flex-wrap gap-2">
+               <div className="flex flex-wrap gap-2">
                 {drive.skillsRequired.map((skill, idx) => (
                   <span key={idx} className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-sm font-medium text-indigo-300">
-                    {skill}
+                   {skill}
                   </span>
                 ))}
               </div>
             </div>
           )}
         </div>
-      </div>
+       </div>
 
       {/* Eligible Students List */}
       <div className="mt-8 rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
@@ -248,14 +247,14 @@ const DriveDetails = () => {
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">
             Eligible Students <span className="ml-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-sm text-indigo-400">{drive.students?.length || 0}</span>
           </h2>
-        </div>
+         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400">
               <tr>
                 <th className="px-6 py-4 font-semibold">Student Name</th>
-                <th className="px-6 py-4 font-semibold">Roll No</th>
+                 <th className="px-6 py-4 font-semibold">Roll No</th>
                 <th className="px-6 py-4 font-semibold">Branch</th>
                 <th className="px-6 py-4 font-semibold">CGPA</th>
                 <th className="px-6 py-4 font-semibold text-right">Action</th>
@@ -274,7 +273,7 @@ const DriveDetails = () => {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500/10 text-xs font-bold text-indigo-400 border border-indigo-500/20">
-                            {item.student.fullName?.charAt(0) || "?"}
+                             {item.student.fullName?.charAt(0) || "?"}
                           </div>
                           <span className="font-semibold text-slate-900 dark:text-white">{item.student.fullName}</span>
                         </div>
@@ -287,16 +286,16 @@ const DriveDetails = () => {
                           View Profile
                         </button>
                       </td>
-                    </tr>
+                   </tr>
                   );
                 })
               ) : (
-                <tr>
+               <tr>
                   <td colSpan="5" className="py-8 text-center text-slate-600 dark:text-neutral-500">
                     No eligible students have applied to this drive yet.
                   </td>
                 </tr>
-              )}
+             )}
             </tbody>
           </table>
         </div>

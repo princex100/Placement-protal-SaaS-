@@ -8,7 +8,7 @@ const PREDEFINED_BRANCHES = ["CSE", "IT", "ECE", "EEE", "ME", "CIVIL", "AIML", "
 const PREDEFINED_YEARS = [new Date().getFullYear(), new Date().getFullYear() + 1, new Date().getFullYear() + 2, new Date().getFullYear() + 3];
 
 const CreatePlacementDrive = () => {
-  const navigate = useNavigate();
+   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [skillInput, setSkillInput] = useState("");
 
@@ -19,11 +19,11 @@ const CreatePlacementDrive = () => {
     package: "",
     location: "",
     jobType: "fulltime",
-    mode: "on-site",
+   mode: "on-site",
     minimumCgpa: "",
     backlogAllowed: 0,
     eligibleBranches: [],
-    passingYearsAllowed: [],
+   passingYearsAllowed: [],
     skillsRequired: [],
     description: "",
     responsibilities: "",
@@ -31,14 +31,14 @@ const CreatePlacementDrive = () => {
     driveDate: "",
   });
 
-  const handleChange = (e) => {
+   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCheckboxChange = (name, value) => {
-    setFormData((prev) => {
-      const array = prev[name];
+     setFormData((prev) => {
+     const array = prev[name];
       if (array.includes(value)) {
         return { ...prev, [name]: array.filter((item) => item !== value) };
       } else {
@@ -48,8 +48,8 @@ const CreatePlacementDrive = () => {
   };
 
   const addSkill = (e) => {
-    e.preventDefault();
-    const trimmedSkill = skillInput.trim();
+   e.preventDefault();
+   const trimmedSkill = skillInput.trim();
     if (trimmedSkill && !formData.skillsRequired.includes(trimmedSkill)) {
       setFormData((prev) => ({
         ...prev,
@@ -66,7 +66,7 @@ const CreatePlacementDrive = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.title || !formData.companyName || !formData.role || !formData.package || !formData.applicationDeadline) {
@@ -78,7 +78,7 @@ const CreatePlacementDrive = () => {
     try {
       // Ensure numeric fields are numbers
       const payload = {
-        ...formData,
+         ...formData,
         package: Number(formData.package),
         minimumCgpa: formData.minimumCgpa ? Number(formData.minimumCgpa) : 0,
         backlogAllowed: formData.backlogAllowed ? Number(formData.backlogAllowed) : 0,
@@ -88,17 +88,17 @@ const CreatePlacementDrive = () => {
       toast.success("Placement drive created successfully");
       navigate("/college/dashboard/placement-drives");
     } catch (error) {
-      console.error("Error creating drive:", error);
+     console.error("Error creating drive:", error);
       toast.error(error.response?.data?.message || "Failed to create placement drive");
     } finally {
-      setLoading(false);
+       setLoading(false);
     }
   };
 
   const inputClasses = "w-full rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-700 dark:text-neutral-600 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/30";
 
   return (
-    <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
+   <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <button 
           onClick={() => navigate(-1)}
@@ -110,7 +110,7 @@ const CreatePlacementDrive = () => {
         <p className="mt-2 text-sm text-slate-500 dark:text-neutral-400">Publish a new job opportunity for your students.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+     <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
         {/* SECTION: Basic Info */}
         <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
           <h2 className="mb-6 flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
@@ -120,10 +120,10 @@ const CreatePlacementDrive = () => {
             Basic Information
           </h2>
           <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
-            <div className="col-span-1 md:col-span-2">
+           <div className="col-span-1 md:col-span-2">
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Drive Title *</label>
               <input
-                type="text"
+                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
@@ -131,11 +131,11 @@ const CreatePlacementDrive = () => {
                 className={inputClasses}
                 required
               />
-            </div>
+           </div>
             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Company Name *</label>
               <input
-                type="text"
+               type="text"
                 name="companyName"
                 value={formData.companyName}
                 onChange={handleChange}
@@ -147,7 +147,7 @@ const CreatePlacementDrive = () => {
             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Role / Designation *</label>
               <input
-                type="text"
+               type="text"
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
@@ -157,40 +157,40 @@ const CreatePlacementDrive = () => {
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-neutral-300">Job Type</label>
+             <label className="mb-2 block text-sm font-semibold text-neutral-300">Job Type</label>
               <select
                 name="jobType"
-                value={formData.jobType}
+                 value={formData.jobType}
                 onChange={handleChange}
                 className={inputClasses}
-              >
+               >
                 <option value="fulltime">Full-Time (FTE)</option>
                 <option value="internship">Internship</option>
                 <option value="internship+fte">Internship + FTE</option>
               </select>
-            </div>
+           </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-neutral-300">Work Mode</label>
+               <label className="mb-2 block text-sm font-semibold text-neutral-300">Work Mode</label>
               <select
                 name="mode"
-                value={formData.mode}
+                 value={formData.mode}
                 onChange={handleChange}
                 className={inputClasses}
-              >
+               >
                 <option value="on-site">On-site</option>
                 <option value="hybrid">Hybrid</option>
                 <option value="remote">Remote</option>
               </select>
             </div>
-            <div>
+           <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Package (LPA) *</label>
               <div className="relative">
                 <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-neutral-500" size={16} />
-                <input
+                 <input
                   type="number"
                   step="0.1"
                   name="package"
-                  value={formData.package}
+                   value={formData.package}
                   onChange={handleChange}
                   placeholder="e.g. 12.5"
                   className={`${inputClasses} pl-10`}
@@ -205,9 +205,9 @@ const CreatePlacementDrive = () => {
                 <input
                   type="text"
                   name="location"
-                  value={formData.location}
+                   value={formData.location}
                   onChange={handleChange}
-                  placeholder="e.g. Bangalore"
+                   placeholder="e.g. Bangalore"
                   className={`${inputClasses} pl-10`}
                 />
               </div>
@@ -221,7 +221,7 @@ const CreatePlacementDrive = () => {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
               <GraduationCap size={16} className="text-emerald-400" />
             </div>
-            Eligibility Criteria
+             Eligibility Criteria
           </h2>
           <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
             <div>
@@ -229,26 +229,26 @@ const CreatePlacementDrive = () => {
               <input
                 type="number"
                 step="0.01"
-                min="0"
+                 min="0"
                 max="10"
-                name="minimumCgpa"
+                 name="minimumCgpa"
                 value={formData.minimumCgpa}
                 onChange={handleChange}
-                placeholder="e.g. 7.5"
+                 placeholder="e.g. 7.5"
                 className={inputClasses}
               />
             </div>
             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Max Active Backlogs Allowed</label>
-              <input
-                type="number"
+             <input
+               type="number"
                 min="0"
                 name="backlogAllowed"
-                value={formData.backlogAllowed}
+               value={formData.backlogAllowed}
                 onChange={handleChange}
                 placeholder="e.g. 0"
                 className={inputClasses}
-              />
+             />
             </div>
             <div className="col-span-1 md:col-span-2">
               <label className="mb-3 block text-sm font-semibold text-neutral-300">Eligible Branches</label>
@@ -260,17 +260,17 @@ const CreatePlacementDrive = () => {
                       : 'border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06]'
                   }`}>
                     <input
-                      type="checkbox"
+                       type="checkbox"
                       className="h-4 w-4 rounded border-neutral-600 bg-slate-100 dark:bg-white/[0.04] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0"
                       checked={formData.eligibleBranches.includes(branch)}
-                      onChange={() => handleCheckboxChange("eligibleBranches", branch)}
+                       onChange={() => handleCheckboxChange("eligibleBranches", branch)}
                     />
                     <span className="text-sm font-medium">{branch}</span>
                   </label>
                 ))}
               </div>
             </div>
-            <div className="col-span-1 md:col-span-2">
+           <div className="col-span-1 md:col-span-2">
               <label className="mb-3 block text-sm font-semibold text-neutral-300">Passing Years Allowed</label>
               <div className="flex flex-wrap gap-3">
                 {PREDEFINED_YEARS.map((year) => (
@@ -302,15 +302,15 @@ const CreatePlacementDrive = () => {
             Timeline
           </h2>
           <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
-            <div>
+             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Application Deadline *</label>
               <input
                 type="date"
-                name="applicationDeadline"
-                value={formData.applicationDeadline}
-                onChange={handleChange}
+                 name="applicationDeadline"
+                 value={formData.applicationDeadline}
+                 onChange={handleChange}
                 className={inputClasses}
-                required
+                 required
               />
             </div>
             <div>
@@ -320,11 +320,11 @@ const CreatePlacementDrive = () => {
                 name="driveDate"
                 value={formData.driveDate}
                 onChange={handleChange}
-                className={inputClasses}
+               className={inputClasses}
               />
             </div>
-          </div>
-        </div>
+           </div>
+       </div>
 
         {/* SECTION: Details */}
         <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-5 sm:p-6 md:p-8">
@@ -332,7 +332,7 @@ const CreatePlacementDrive = () => {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-500/10 border border-violet-500/20">
               <Briefcase size={16} className="text-violet-400" />
             </div>
-            Additional Details
+             Additional Details
           </h2>
           <div className="space-y-6">
             <div>
@@ -345,7 +345,7 @@ const CreatePlacementDrive = () => {
                   onKeyDown={(e) => e.key === 'Enter' && addSkill(e)}
                   placeholder="e.g. React, Node.js"
                   className={`${inputClasses} flex-1`}
-                />
+               />
                 <button
                   onClick={addSkill}
                   type="button"
@@ -353,11 +353,11 @@ const CreatePlacementDrive = () => {
                 >
                   <Plus size={18} /> Add
                 </button>
-              </div>
+             </div>
               {formData.skillsRequired.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {formData.skillsRequired.map((skill, idx) => (
-                    <span key={idx} className="flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 py-1 pl-3 pr-1 text-sm font-medium text-indigo-300">
+                     <span key={idx} className="flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 py-1 pl-3 pr-1 text-sm font-medium text-indigo-300">
                       {skill}
                       <button
                         type="button"
@@ -369,19 +369,19 @@ const CreatePlacementDrive = () => {
                     </span>
                   ))}
                 </div>
-              )}
-            </div>
+             )}
+             </div>
 
             <div>
               <label className="mb-2 block text-sm font-semibold text-neutral-300">Job Description</label>
               <textarea
                 name="description"
-                value={formData.description}
+               value={formData.description}
                 onChange={handleChange}
-                rows="4"
-                placeholder="Describe the company and the role..."
+               rows="4"
+               placeholder="Describe the company and the role..."
                 className={`${inputClasses} resize-none`}
-              ></textarea>
+               ></textarea>
             </div>
             
             <div>
@@ -396,19 +396,19 @@ const CreatePlacementDrive = () => {
               ></textarea>
             </div>
           </div>
-        </div>
+         </div>
 
         {/* Action Buttons */}
         <div className="flex items-center justify-end gap-4 pt-4">
           <button
             type="button"
-            onClick={() => navigate(-1)}
+           onClick={() => navigate(-1)}
             className="rounded-xl px-6 py-3 text-sm font-semibold text-slate-500 dark:text-neutral-400 transition-colors hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-neutral-200"
           >
             Cancel
-          </button>
+           </button>
           <button
-            type="submit"
+             type="submit"
             disabled={loading}
             className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-8 py-3 text-sm font-bold text-slate-900 dark:text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/30 disabled:pointer-events-none disabled:opacity-70"
           >

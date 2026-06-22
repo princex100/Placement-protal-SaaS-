@@ -3,7 +3,7 @@ export const calculateProfileCompletion = (student) => {
     fullName: "Add Full Name",
     email: "Add Email",
     phoneNumber: "Add Phone Number",
-    gender: "Add Gender",
+   gender: "Add Gender",
     profileImage: "Upload Profile Photo",
     branch: "Add Branch",
     cgpa: "Add CGPA",
@@ -19,7 +19,7 @@ export const calculateProfileCompletion = (student) => {
 
   let completedFields = 0;
   const missingFields = [];
-  const totalFields = Object.keys(fieldsToCheck).length;
+   const totalFields = Object.keys(fieldsToCheck).length;
 
   for (const [key, label] of Object.entries(fieldsToCheck)) {
     const value = student[key];
@@ -44,5 +44,5 @@ export const calculateProfileCompletion = (student) => {
   return {
     percentage,
     missingFields
-  };
+ };
 };

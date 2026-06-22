@@ -10,14 +10,14 @@ const StudentProfile = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+   const [isEditing, setIsEditing] = useState(false);
+ const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     phoneNumber: "",
     gender: "",
     linkedin: "",
-    github: "",
+   github: "",
     portfolio: "",
     resume: "",
     skills: [],
@@ -27,14 +27,14 @@ const StudentProfile = () => {
   const [newSkill, setNewSkill] = useState("");
   const [resumeFile, setResumeFile] = useState(null);
 
-  useEffect(() => {
+   useEffect(() => {
     if (user && !isEditing) {
       setFormData({
         email: user.email || "",
-        phoneNumber: user.phoneNumber || "",
-        gender: user.gender || "",
+         phoneNumber: user.phoneNumber || "",
+       gender: user.gender || "",
         linkedin: user.linkedin || "",
-        github: user.github || "",
+         github: user.github || "",
         portfolio: user.portfolio || "",
         resume: user.resume || "",
         skills: user.skills || [],
@@ -45,12 +45,12 @@ const StudentProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // --- Skills Handlers ---
   const handleAddSkill = () => {
-    if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
+     if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
       setFormData((prev) => ({ ...prev, skills: [...prev.skills, newSkill.trim()] }));
       setNewSkill("");
     }
@@ -59,14 +59,13 @@ const StudentProfile = () => {
   const handleRemoveSkill = (skillToRemove) => {
     setFormData((prev) => ({
       ...prev,
-      skills: prev.skills.filter((skill) => skill !== skillToRemove),
+       skills: prev.skills.filter((skill) => skill !== skillToRemove),
     }));
   };
 
-  // --- Projects Handlers ---
   const handleAddProject = () => {
     setFormData((prev) => ({
-      ...prev,
+       ...prev,
       projects: [...prev.projects, { title: "", description: "", link: "" }],
     }));
   };
@@ -92,18 +91,16 @@ const StudentProfile = () => {
     try {
       setIsSubmitting(true);
       
-      // Update basic profile fields
       const response = await api.patch("/students/profile", formData);
       let updatedUser = response.data?.data;
       
-      // If there's a new resume file, upload it separately
       if (resumeFile) {
         const resumeFormData = new FormData();
         resumeFormData.append("resume", resumeFile);
         
         const resumeResponse = await api.patch("/students/resume", resumeFormData, {
           headers: { "Content-Type": "multipart/form-data" },
-        });
+       });
         updatedUser = resumeResponse.data?.data;
       }
       
@@ -121,20 +118,19 @@ const StudentProfile = () => {
     }
   };
 
-  // Get first letter of name
   const getAvatarLetter = () => {
-    if (user?.fullName) return user.fullName.charAt(0).toUpperCase();
+   if (user?.fullName) return user.fullName.charAt(0).toUpperCase();
     if (user?.name) return user.name.charAt(0).toUpperCase();
     return "S";
   };
 
-  return (
+ return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header Profile Section */}
       <div className="flex flex-col justify-between gap-6 rounded-[32px] border border-blue-100/50 bg-white/90 backdrop-blur-md p-8 shadow-[0_8px_30px_rgb(37,99,235,0.04)] dark:border-slate-800/60 dark:bg-slate-900 md:flex-row md:items-start">
         <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
           <div className="relative group">
-            <div className="flex h-28 w-28 items-center justify-center rounded-[28px] bg-gradient-to-br from-blue-100 to-indigo-100 text-4xl font-bold text-blue-600 shadow-inner dark:from-blue-900/40 dark:to-indigo-900/40 dark:text-blue-400 overflow-hidden">
+             <div className="flex h-28 w-28 items-center justify-center rounded-[28px] bg-gradient-to-br from-blue-100 to-indigo-100 text-4xl font-bold text-blue-600 shadow-inner dark:from-blue-900/40 dark:to-indigo-900/40 dark:text-blue-400 overflow-hidden">
               {user?.profileImage ? (
                 <img src={user.profileImage} alt="Profile" className="h-full w-full object-cover" />
               ) : (
@@ -145,15 +141,15 @@ const StudentProfile = () => {
               <div className="absolute inset-0 bg-black/40 rounded-[28px] opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
                 <Camera className="text-slate-900 dark:text-white h-8 w-8" />
               </div>
-            )}
+           )}
           </div>
           
           <div className="text-center md:text-left mt-2">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center justify-center md:justify-start gap-3">
+             <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center justify-center md:justify-start gap-3">
               {user?.fullName || user?.name || "Student Name"}
               {user?.placementStatus === "placed" && (
                 <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold uppercase tracking-wider dark:bg-emerald-900/30 dark:text-emerald-400">
-                  Placed
+                   Placed
                 </span>
               )}
               {user?.placementStatus === "unplaced" && (
@@ -164,9 +160,9 @@ const StudentProfile = () => {
               {user?.placementStatus === "internship" && (
                 <span className="text-xs px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 font-bold uppercase tracking-wider dark:bg-blue-900/30 dark:text-blue-400">
                   Internship
-                </span>
+               </span>
               )}
-            </h1>
+             </h1>
             
             <div className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm font-medium text-slate-500 dark:text-slate-400">
               <span className="flex items-center gap-1.5"><BookOpen size={16} className="text-blue-500" /> {user?.rollNo || "Roll No N/A"}</span>
@@ -174,7 +170,7 @@ const StudentProfile = () => {
               <span className="flex items-center gap-1.5"><Building size={16} className="text-blue-500" /> {user?.branch?.name || user?.branch || "Branch N/A"}</span>
               <span className="hidden md:inline text-slate-300 dark:text-slate-700">•</span>
               <span className="flex items-center gap-1.5"><Calendar size={16} className="text-blue-500" /> Batch {user?.placementSeasonYear || "N/A"}</span>
-            </div>
+           </div>
             
             {!isEditing && (
                <div className="mt-4">
@@ -200,18 +196,18 @@ const StudentProfile = () => {
                 disabled={isSubmitting}
                 className="flex-1 rounded-2xl bg-blue-600 px-6 py-3 font-semibold text-slate-900 dark:text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 disabled:opacity-70 whitespace-nowrap flex justify-center items-center"
               >
-                {isSubmitting ? <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : "Save Changes"}
+               {isSubmitting ? <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : "Save Changes"}
               </button>
             </div>
           ) : (
             <button 
               onClick={() => setIsEditing(true)}
-              className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 w-full md:w-auto whitespace-nowrap"
+               className="rounded-2xl bg-blue-600 px-8 py-3.5 font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 w-full md:w-auto whitespace-nowrap"
             >
               {user?.isProfileCompleted ? "Edit Profile" : "Complete Profile"}
             </button>
           )}
-        </div>
+         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -224,11 +220,11 @@ const StudentProfile = () => {
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/50">
-                <p className="text-xs font-semibold text-slate-500">CGPA</p>
+               <p className="text-xs font-semibold text-slate-500">CGPA</p>
                 <p className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{user?.cgpa || "N/A"}</p>
               </div>
               <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/50">
-                <p className="text-xs font-semibold text-slate-500">Backlogs</p>
+                 <p className="text-xs font-semibold text-slate-500">Backlogs</p>
                 <p className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{user?.backlogCount || "0"}</p>
               </div>
               <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/50">
@@ -246,11 +242,11 @@ const StudentProfile = () => {
           <div className="rounded-[32px] border border-slate-100 bg-white p-6 shadow-[0_4px_20px_rgb(37,99,235,0.03)] dark:border-slate-800/60 dark:bg-slate-900">
             <h3 className="mb-5 text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <User className="text-blue-500" /> Personal Details
-            </h3>
+           </h3>
             
             <div className="space-y-4">
               {isEditing ? (
-                <>
+               <>
                   <EditableField label="Email" name="email" value={formData.email} onChange={handleChange} type="email" />
                   <EditableField label="Phone" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
                   <div className="space-y-1.5">
@@ -272,13 +268,13 @@ const StudentProfile = () => {
                   <InfoRow icon={<Phone size={18} />} label="Phone" value={user?.phoneNumber} placeholder="Add your phone number 📱" />
                   <InfoRow icon={<User size={18} />} label="Gender" value={user?.gender} placeholder="Tell us about yourself 👀" />
                 </>
-              )}
+             )}
             </div>
 
             <h3 className="mt-8 mb-5 text-lg font-bold text-slate-900 dark:text-white">Socials & Links</h3>
             
             <div className="space-y-4">
-              {isEditing ? (
+               {isEditing ? (
                 <>
                   <EditableField label="LinkedIn URL" name="linkedin" value={formData.linkedin} onChange={handleChange} />
                   <EditableField label="GitHub URL" name="github" value={formData.github} onChange={handleChange} />
@@ -300,13 +296,13 @@ const StudentProfile = () => {
                 <>
                   <InfoRow icon={<FiLinkedin size={18} />} label="LinkedIn" isLink value={user?.linkedin} placeholder="Let recruiters find you 🚀" />
                   <InfoRow icon={<FiGithub size={18} />} label="GitHub" isLink value={user?.github} placeholder="Show your code magic 💻" />
-                  <InfoRow icon={<ExternalLink size={18} />} label="Portfolio" isLink value={user?.portfolio} placeholder="Add your portfolio to stand out ✨" />
+                   <InfoRow icon={<ExternalLink size={18} />} label="Portfolio" isLink value={user?.portfolio} placeholder="Add your portfolio to stand out ✨" />
                   <InfoRow icon={<BookOpen size={18} />} label="Resume" isLink value={user?.resume} placeholder="Upload your resume and shine 📄" />
                 </>
               )}
             </div>
           </div>
-        </div>
+         </div>
 
         {/* RIGHT COLUMN - Skills & Projects */}
         <div className="flex flex-col gap-6 lg:col-span-2">
@@ -323,7 +319,7 @@ const StudentProfile = () => {
                     type="text" 
                     value={newSkill} 
                     onChange={(e) => setNewSkill(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
+                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
                     placeholder="E.g. React, Node.js, Python..."
                     className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white" 
                   />
@@ -340,9 +336,9 @@ const StudentProfile = () => {
                   {formData.skills.map((skill, index) => (
                     <span key={index} className="flex items-center gap-2 rounded-xl bg-slate-100 pl-4 pr-2 py-1.5 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                       {skill}
-                      <button type="button" onClick={() => handleRemoveSkill(skill)} className="rounded-lg p-1 text-slate-400 hover:bg-slate-200 hover:text-red-500 dark:hover:bg-slate-700 transition-colors">
-                        <X size={14} />
-                      </button>
+                     <button type="button" onClick={() => handleRemoveSkill(skill)} className="rounded-lg p-1 text-slate-400 hover:bg-slate-200 hover:text-red-500 dark:hover:bg-slate-700 transition-colors">
+                         <X size={14} />
+                     </button>
                     </span>
                   ))}
                 </div>
@@ -362,8 +358,8 @@ const StudentProfile = () => {
             )}
           </div>
 
-          {/* Projects Section */}
-          <div className="rounded-[32px] border border-slate-100 bg-white p-8 shadow-[0_4px_20px_rgb(37,99,235,0.03)] dark:border-slate-800/60 dark:bg-slate-900 flex-1">
+         {/* Projects Section */}
+         <div className="rounded-[32px] border border-slate-100 bg-white p-8 shadow-[0_4px_20px_rgb(37,99,235,0.03)] dark:border-slate-800/60 dark:bg-slate-900 flex-1">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Briefcase className="text-blue-500" /> Projects
@@ -373,11 +369,11 @@ const StudentProfile = () => {
                   type="button" 
                   onClick={handleAddProject}
                   className="flex items-center gap-1.5 rounded-xl bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-600 hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/40 transition-colors"
-                >
+                 >
                   <Plus size={16} /> New Project
                 </button>
               )}
-            </div>
+             </div>
 
             {isEditing ? (
               <div className="space-y-6">
@@ -387,25 +383,25 @@ const StudentProfile = () => {
                   formData.projects.map((proj, index) => (
                     <div key={index} className="relative rounded-2xl border border-slate-200 bg-slate-50/50 p-5 dark:border-slate-700/50 dark:bg-slate-800/20 group">
                       <button 
-                        type="button" 
+                       type="button" 
                         onClick={() => handleRemoveProject(index)}
                         className="absolute right-4 top-4 text-slate-400 hover:text-red-500 transition-colors"
                       >
-                        <Trash2 size={18} />
+                         <Trash2 size={18} />
                       </button>
                       
                       <div className="space-y-4 w-full pr-8">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold text-slate-600 dark:text-slate-400">Project Title</label>
-                          <input 
+                           <label className="text-xs font-semibold text-slate-600 dark:text-slate-400">Project Title</label>
+                         <input 
                             type="text" value={proj.title} onChange={(e) => handleProjectChange(index, 'title', e.target.value)}
                             className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" 
                           />
-                        </div>
+                       </div>
                         <div className="space-y-1.5">
                           <label className="text-xs font-semibold text-slate-600 dark:text-slate-400">Live Link / Repository</label>
                           <input 
-                            type="text" value={proj.link} onChange={(e) => handleProjectChange(index, 'link', e.target.value)}
+                             type="text" value={proj.link} onChange={(e) => handleProjectChange(index, 'link', e.target.value)}
                             className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" 
                           />
                         </div>
@@ -437,7 +433,7 @@ const StudentProfile = () => {
                       )}
                     </div>
                   ))
-                ) : (
+                 ) : (
                   <div className="col-span-full py-8 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">
                     <p className="text-sm font-medium text-slate-400 italic">No projects yet — time to build something cool 🚀</p>
                   </div>
@@ -448,10 +444,9 @@ const StudentProfile = () => {
         </div>
       </div>
     </div>
-  );
+   );
 };
 
-// Sub-components
 const InfoRow = ({ icon, label, value, placeholder, isLink = false }) => (
   <div className="flex items-center gap-4">
     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
@@ -460,7 +455,7 @@ const InfoRow = ({ icon, label, value, placeholder, isLink = false }) => (
     <div className="min-w-0 flex-1">
       <p className="text-xs font-semibold text-slate-500">{label}</p>
       {value ? (
-        isLink ? (
+         isLink ? (
           <a href={value} target="_blank" rel="noreferrer" className="truncate text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400 block">
             {value.replace(/^https?:\/\//, '')}
           </a>
@@ -478,7 +473,7 @@ const EditableField = ({ label, name, value, onChange, type = "text" }) => (
   <div className="space-y-1.5">
     <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{label}</label>
     <input 
-      type={type} name={name} value={value} onChange={onChange}
+       type={type} name={name} value={value} onChange={onChange}
       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white" 
     />
   </div>

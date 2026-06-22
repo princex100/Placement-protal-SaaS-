@@ -1,25 +1,25 @@
 import { body } from "express-validator";
 
 export const studentRegistrationRules = () => {
-  return [
+   return [
     body("studentId")
       .trim()
       .notEmpty()
       .withMessage("Student ID is required"),
     
     body("collegeId")
-      .trim()
-      .notEmpty()
+       .trim()
+     .notEmpty()
       .withMessage("College ID is required")
       .isMongoId()
-      .withMessage("Invalid College ID format"),
+       .withMessage("Invalid College ID format"),
       
     body("fullName")
       .trim()
-      .notEmpty()
+     .notEmpty()
       .withMessage("Full name is required"),
     
-    body("email")
+   body("email")
       .trim()
       .notEmpty()
       .withMessage("Email is required")
@@ -39,13 +39,13 @@ export const studentRegistrationRules = () => {
       .withMessage("Branch is required"),
     
     body("passingYear")
-      .notEmpty()
-      .withMessage("Passing year is required")
+     .notEmpty()
+     .withMessage("Passing year is required")
       .isNumeric()
       .withMessage("Passing year must be a number"),
 
     body("semester")
-      .notEmpty()
+     .notEmpty()
       .withMessage("Semester is required")
       .isNumeric()
       .withMessage("Semester must be a number"),
@@ -79,7 +79,7 @@ export const studentProfileUpdateRules = () => {
     body("backlogCount").optional({ checkFalsy: true }).isNumeric(),
     body("skills").optional({ checkFalsy: true }).isArray(),
     body("github").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
-    body("linkedin").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
+     body("linkedin").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
     body("portfolio").optional({ checkFalsy: true }).isURL().withMessage("Must be a valid URL"),
   ];
 };

@@ -10,8 +10,8 @@ const DUMMY_STUDENT = {
   fullName: "Rahul Sharma",
   rollNo: "CSE001",
   email: "rahul.cse@college.edu",
-  phoneNumber: "+91 9876543210",
-  branch: "Computer Science",
+ phoneNumber: "+91 9876543210",
+ branch: "Computer Science",
   cgpa: 8.9,
   passingYear: 2024,
   skills: ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
@@ -27,7 +27,7 @@ const StudentProfileDetails = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  // UI Action States
+   // UI Action States
   const [actionLoading, setActionLoading] = useState(false);
   const [statusLoading, setStatusLoading] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -35,28 +35,27 @@ const StudentProfileDetails = () => {
   // Edit Mode States
   const [isEditing, setIsEditing] = useState(false);
   const [skillInput, setSkillInput] = useState("");
-  const [formData, setFormData] = useState({
+ const [formData, setFormData] = useState({
     fullName: "",
     rollNo: "",
     email: "",
     phoneNumber: "",
     branch: "",
-    cgpa: "",
-    passingYear: "",
-    linkedin: "",
-    github: "",
+   cgpa: "",
+   passingYear: "",
+   linkedin: "",
+     github: "",
     portfolio: "",
     resume: "",
     skills: [],
   });
 
-  const fetchStudent = async () => {
+ const fetchStudent = async () => {
     try {
       const response = await api.get(`/placement-records/student/${studentId}`);
       const data = response.data?.data || response.data;
       if (data && data.fullName) {
-        setStudent(data);
-        // Pre-fill form data
+         setStudent(data);
         setFormData({
           fullName: data.fullName || "",
           rollNo: data.rollNo || "",
@@ -66,10 +65,10 @@ const StudentProfileDetails = () => {
           cgpa: data.cgpa || "",
           passingYear: data.passingYear || "",
           linkedin: data.linkedin || "",
-          github: data.github || "",
+         github: data.github || "",
           portfolio: data.portfolio || "",
           resume: data.resume || "",
-          skills: data.skills || [],
+         skills: data.skills || [],
         });
       } else {
         setStudent(DUMMY_STUDENT);
@@ -86,32 +85,30 @@ const StudentProfileDetails = () => {
     fetchStudent();
   }, [studentId]);
 
-  // Form Handlers
   const handleEditToggle = () => {
     if (isEditing) {
-      // Re-populate from current DB state if cancelling
       setFormData({
-        fullName: student.fullName || "",
+       fullName: student.fullName || "",
         rollNo: student.rollNo || "",
         email: student.email || "",
         phoneNumber: student.phoneNumber || "",
         branch: student.branch || "",
         cgpa: student.cgpa || "",
         passingYear: student.passingYear || "",
-        linkedin: student.linkedin || "",
-        github: student.github || "",
+       linkedin: student.linkedin || "",
+         github: student.github || "",
         portfolio: student.portfolio || "",
         resume: student.resume || "",
         skills: student.skills || [],
-      });
+       });
       setSkillInput("");
     }
     setIsEditing(!isEditing);
-  };
+   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+   setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const addSkill = (e) => {
@@ -122,7 +119,7 @@ const StudentProfileDetails = () => {
         ...prev,
         skills: [...prev.skills, trimmedSkill],
       }));
-      setSkillInput("");
+     setSkillInput("");
     }
   };
 
@@ -133,11 +130,10 @@ const StudentProfileDetails = () => {
     }));
   };
 
-  // Submission Handlers
   const handleUpdateSubmit = async () => {
     setUpdateLoading(true);
-    try {
-      const payload = {
+     try {
+     const payload = {
         ...formData,
         cgpa: Number(formData.cgpa),
         passingYear: Number(formData.passingYear),
@@ -148,9 +144,9 @@ const StudentProfileDetails = () => {
       setIsEditing(false);
       await fetchStudent(); // Refetch to ensure sync
     } catch (error) {
-      console.error("Failed to update student", error);
+       console.error("Failed to update student", error);
       toast.error(error.response?.data?.message || "Failed to update student details");
-    } finally {
+   } finally {
       setUpdateLoading(false);
     }
   };
@@ -173,10 +169,9 @@ const StudentProfileDetails = () => {
   };
 
   const handleToggleBlock = async () => {
-    // Optimistic UI update
     const previousStatus = student.placementBlocked;
     setStudent({ ...student, placementBlocked: !previousStatus });
-    setActionLoading(true);
+     setActionLoading(true);
 
     try {
       const response = await api.patch(`/placement-records/student/${studentId}/toggle-block`);
@@ -185,25 +180,25 @@ const StudentProfileDetails = () => {
     } catch (error) {
       setStudent({ ...student, placementBlocked: previousStatus });
       console.error("Failed to toggle block status", error);
-      toast.error("Failed to change block status");
+       toast.error("Failed to change block status");
     } finally {
       setActionLoading(false);
     }
-  };
+ };
 
   if (loading || !student) {
     return (
-      <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
+     <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
       </div>
     );
   }
 
-  return (
-    <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
-      {/* Header */}
+ return (
+   <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
+     {/* Header */}
       <div className="mb-8">
-        <button 
+       <button 
           onClick={() => navigate(-1)}
           className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white transition"
         >
@@ -216,14 +211,14 @@ const StudentProfileDetails = () => {
               {student.fullName?.charAt(0) || "?"}
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                 {isEditing ? (
                   <input
                     type="text"
-                    name="fullName"
+                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-b-2 border-indigo-500 bg-transparent px-1 py-1 text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white outline-none"
+                   className="w-full rounded-lg border-b-2 border-indigo-500 bg-transparent px-1 py-1 text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white outline-none"
                   />
                 ) : (
                   student.fullName
@@ -232,14 +227,14 @@ const StudentProfileDetails = () => {
               <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium">
                 <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
                   <User size={16} /> 
-                  {isEditing ? (
+                   {isEditing ? (
                     <input type="text" name="rollNo" value={formData.rollNo} onChange={handleChange} className="w-24 rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-1 text-slate-900 dark:text-white" />
                   ) : student.rollNo}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-neutral-600"></span>
                 <span className="flex items-center gap-1 text-slate-500 dark:text-neutral-400">
-                  <GraduationCap size={16} /> 
-                  {isEditing ? (
+                   <GraduationCap size={16} /> 
+                   {isEditing ? (
                     <input type="text" name="branch" value={formData.branch} onChange={handleChange} className="w-32 rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-1 text-slate-900 dark:text-white" />
                   ) : student.branch}
                 </span>
@@ -250,10 +245,10 @@ const StudentProfileDetails = () => {
           <div className="flex flex-col gap-3 sm:flex-row">
             {isEditing ? (
               <div className="flex items-center gap-3">
-                <button
+                 <button
                   onClick={handleEditToggle}
                   className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-neutral-300 hover:bg-slate-200 dark:hover:bg-white/[0.06] transition"
-                >
+               >
                   <X size={18} /> Cancel
                 </button>
                 <button
@@ -279,24 +274,24 @@ const StudentProfileDetails = () => {
               className={`flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
                 student.placementBlocked
                   ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20"
-                  : "bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20"
+                 : "bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20"
               }`}
             >
               {actionLoading ? (
                 <Loader2 size={18} className="animate-spin" />
-              ) : student.placementBlocked ? (
+             ) : student.placementBlocked ? (
                 <><CheckCircle size={18} /> Unblock Placement</>
               ) : (
-                <><Ban size={18} /> Block Placement</>
+               <><Ban size={18} /> Block Placement</>
               )}
-            </button>
+           </button>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
         {/* Left Column - Details */}
-        <div className="col-span-1 flex flex-col gap-6 md:col-span-2">
+         <div className="col-span-1 flex flex-col gap-6 md:col-span-2">
           {/* Contact Details */}
           <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
             <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Contact Information</h2>
@@ -312,7 +307,7 @@ const StudentProfileDetails = () => {
               <div className="flex items-center gap-3 rounded-xl bg-slate-100 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.04] p-3">
                 <LinkIcon size={18} className="text-slate-600 dark:text-neutral-500" />
                 {isEditing ? (
-                  <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="LinkedIn URL" className="w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-sm text-slate-900 dark:text-white" />
+                   <input type="text" name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="LinkedIn URL" className="w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-sm text-slate-900 dark:text-white" />
                 ) : (
                   <a href={student.linkedin} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-400 hover:underline">LinkedIn Profile</a>
                 )}
@@ -322,14 +317,14 @@ const StudentProfileDetails = () => {
                 {isEditing ? (
                   <input type="text" name="resume" value={formData.resume} onChange={handleChange} placeholder="Resume URL" className="w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-sm text-slate-900 dark:text-white" />
                 ) : (
-                  <a href={student.resume} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-400 hover:underline">View Resume</a>
+                 <a href={student.resume} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-400 hover:underline">View Resume</a>
                 )}
               </div>
-            </div>
+           </div>
           </div>
 
           {/* Skills */}
-          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
+         <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl p-6">
             <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">Technical Skills</h2>
             
             {isEditing && (
@@ -355,16 +350,16 @@ const StudentProfileDetails = () => {
             <div className="flex flex-wrap gap-2">
               {(isEditing ? formData.skills : student.skills)?.length > 0 ? (
                 (isEditing ? formData.skills : student.skills).map((skill, idx) => (
-                  <span key={idx} className="flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-sm font-medium text-indigo-300">
+                   <span key={idx} className="flex items-center gap-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 text-sm font-medium text-indigo-300">
                     {skill}
-                    {isEditing && (
+                     {isEditing && (
                       <button onClick={() => removeSkill(skill)} className="ml-1 text-indigo-400 hover:text-red-400 transition">
                         <X size={14} />
                       </button>
                     )}
                   </span>
                 ))
-              ) : (
+             ) : (
                 <p className="text-sm text-slate-600 dark:text-neutral-500">No skills listed</p>
               )}
             </div>
@@ -382,7 +377,7 @@ const StudentProfileDetails = () => {
                   <input type="number" step="0.01" name="cgpa" value={formData.cgpa} onChange={handleChange} className="mt-1 w-full rounded border border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] px-2 py-1 text-xl font-bold text-slate-900 dark:text-white" />
                 ) : (
                   <p className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{student.cgpa || "N/A"}</p>
-                )}
+               )}
               </div>
               <div className="h-px w-full bg-slate-200 dark:bg-white/[0.06]"></div>
               <div>
@@ -407,14 +402,14 @@ const StudentProfileDetails = () => {
                         : 'bg-slate-200 dark:bg-white/[0.06] text-slate-500 dark:text-neutral-400 hover:bg-white/[0.1]'
                     }`}
                   >
-                    Unplaced
+                   Unplaced
                   </button>
-                  <button 
-                    disabled={statusLoading || student.placementBlocked}
+                   <button 
+                   disabled={statusLoading || student.placementBlocked}
                     onClick={() => handleStatusUpdate('placed')}
                     className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-all ${
                       student.placementStatus === 'placed' 
-                        ? 'bg-emerald-500 text-slate-900 dark:text-white ring-2 ring-emerald-400 ring-offset-2 ring-offset-[#0a0a12]' 
+                         ? 'bg-emerald-500 text-slate-900 dark:text-white ring-2 ring-emerald-400 ring-offset-2 ring-offset-[#0a0a12]' 
                         : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
                     }`}
                   >
@@ -422,13 +417,13 @@ const StudentProfileDetails = () => {
                   </button>
                   <button 
                     disabled={statusLoading || student.placementBlocked}
-                    onClick={() => handleStatusUpdate('internship')}
+                     onClick={() => handleStatusUpdate('internship')}
                     className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-all ${
-                      student.placementStatus === 'internship' 
+                       student.placementStatus === 'internship' 
                         ? 'bg-blue-500 text-slate-900 dark:text-white ring-2 ring-blue-400 ring-offset-2 ring-offset-[#0a0a12]' 
                         : 'bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20'
                     }`}
-                  >
+                 >
                     Internship
                   </button>
                 </div>
@@ -436,16 +431,16 @@ const StudentProfileDetails = () => {
               {student.placementBlocked && (
                 <div className="mt-4 rounded-xl border border-red-500/20 bg-red-500/5 p-3">
                   <p className="flex items-center gap-2 text-sm font-semibold text-red-400">
-                    <Ban size={16} /> Placement is currently Blocked
+                     <Ban size={16} /> Placement is currently Blocked
                   </p>
                   <p className="mt-1 text-xs text-red-400/70">Status updates disabled.</p>
                 </div>
               )}
-            </div>
+             </div>
           </div>
         </div>
-      </div>
-    </div>
+       </div>
+     </div>
   );
 };
 

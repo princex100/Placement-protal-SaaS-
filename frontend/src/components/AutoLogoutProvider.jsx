@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { clearCredentials } from "../redux/features/authSlice";
 import { toast } from "react-hot-toast";
 
-// Set timeout duration (e.g., 12 hours)
 const INACTIVITY_TIMEOUT = 12 * 60 * 60 * 1000; 
 
 const AutoLogoutProvider = ({ children }) => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+ const { isAuthenticated } = useSelector((state) => state.auth);
+   const dispatch = useDispatch();
   const navigate = useNavigate();
   const timerRef = useRef(null);
 
@@ -21,19 +20,18 @@ const AutoLogoutProvider = ({ children }) => {
       navigate("/college/auth");
     } else {
       navigate("/student/auth");
-    }
+   }
   };
 
   const resetTimer = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (isAuthenticated) {
-      timerRef.current = setTimeout(logoutUser, INACTIVITY_TIMEOUT);
-    }
+       timerRef.current = setTimeout(logoutUser, INACTIVITY_TIMEOUT);
+     }
   };
 
   useEffect(() => {
-    // Only set up listeners if the user is authenticated
-    if (!isAuthenticated) {
+     if (!isAuthenticated) {
       if (timerRef.current) clearTimeout(timerRef.current);
       return;
     }

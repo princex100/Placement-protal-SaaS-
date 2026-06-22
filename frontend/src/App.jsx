@@ -17,8 +17,8 @@ function App() {
         <Outlet />
       </main>
 
-      {/* Footer */}
-        <Footer />
+     {/* Footer */}
+         <Footer />
       </div>
     </AutoLogoutProvider>
   );

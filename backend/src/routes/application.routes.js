@@ -5,7 +5,7 @@ import {
   getMyApplications,
   getDriveApplicants,
   updateApplicationStatus,
-  getAllCollegeApplications,
+ getAllCollegeApplications,
   getApplicationById,
   advanceDriveWorkflow
 } from "../controllers/application.controllers.js";
@@ -20,14 +20,12 @@ import {
 
 const router = Router();
 
-// All application routes require authentication
 router.use(verifyJWT);
 
-// STUDENT ROUTES
 router.route("/student/me")
   .get(
     allowRoles(["student"]),
-    getMyApplications
+   getMyApplications
   );
 
 router.route("/:driveId/apply")
@@ -35,12 +33,11 @@ router.route("/:driveId/apply")
     allowRoles(["student"]),
     upload.single("resume"),
     ...applyToDriveRules(),
-    validateRequest,
+   validateRequest,
     applyToDrive
   );
 
 
-// COLLEGE ROUTES
 router.route("/college/all")
   .get(
     allowRoles(["college-admin"]),
@@ -50,14 +47,13 @@ router.route("/college/all")
 router.route("/drive/:driveId")
   .get(
     allowRoles(["college-admin"]),
-    // Add validation rules for driveId if needed (can just use applyToDriveRules logic)
     getDriveApplicants
   );
 
 router.route("/drive/:driveId/workflow")
   .post(
     allowRoles(["college-admin"]),
-    upload.single("file"),
+   upload.single("file"),
     advanceDriveWorkflow
   );
 
@@ -66,7 +62,7 @@ router.route("/:applicationId/status")
     allowRoles(["college-admin"]),
     ...updateApplicationStatusRules(),
     validateRequest,
-    updateApplicationStatus
+     updateApplicationStatus
   );
 
 router.route("/:applicationId")

@@ -11,25 +11,24 @@ const StudentDashboardLayout = () => {
   const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
 
-  // Fetch current student profile on mount to ensure freshness
   useEffect(() => {
-    const fetchStudent = async () => {
+   const fetchStudent = async () => {
       try {
         const response = await api.get("/students/current");
         const data = response.data?.data || response.data;
         if (data) {
           dispatch(setCredentials({ user: data, role: data.role || "student" }));
-        }
+       }
       } catch (error) {
         console.error("Error fetching current student:", error);
         if (error.response?.status === 401) {
           dispatch(clearCredentials());
-          navigate("/student/auth");
+         navigate("/student/auth");
         }
       } finally {
         setLoading(false);
-      }
-    };
+       }
+   };
 
     fetchStudent();
   }, [dispatch, navigate]);
@@ -38,7 +37,7 @@ const StudentDashboardLayout = () => {
     <div className="min-h-screen bg-transparent text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto flex max-w-[1600px] gap-8 px-6 py-5 lg:px-8 lg:py-6">
         
-        {/* SIDEBAR */}
+         {/* SIDEBAR */}
         <StudentSidebar />
 
         {/* MAIN CONTENT AREA */}
@@ -53,8 +52,8 @@ const StudentDashboardLayout = () => {
           )}
         </main>
       </div>
-    </div>
-  );
+   </div>
+   );
 };
 
 export default StudentDashboardLayout;

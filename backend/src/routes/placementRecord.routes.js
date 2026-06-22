@@ -7,7 +7,7 @@ import {
   getStudentProfileDetails,
   togglePlacementBlock,
   updateStudentDetails,
-  updatePlacementStatus
+   updatePlacementStatus
 } from "../controllers/placementRecord.controllers.js";
 
 const router = Router();

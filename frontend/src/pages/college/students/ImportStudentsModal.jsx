@@ -33,10 +33,10 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   const handleDrop = (e) => {
-    e.preventDefault();
+   e.preventDefault();
     e.stopPropagation();
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile) {
+   if (droppedFile) {
       const validTypes = [
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "application/vnd.ms-excel",
@@ -52,13 +52,13 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
 
   const handleUpload = async () => {
     if (!file) {
-      toast.error("Please select a file first.");
+     toast.error("Please select a file first.");
       return;
     }
 
     setIsUploading(true);
     const formData = new FormData();
-    formData.append("file", file);
+   formData.append("file", file);
 
     try {
       const response = await api.post("/students/import", formData, {
@@ -67,32 +67,32 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
       
       const { studentsImported, branchesDetected } = response.data?.data || {};
       
-      toast.success(
+       toast.success(
         response.data?.message ||
         `${studentsImported} students and ${branchesDetected} branches imported successfully!`,
         { duration: 5000 }
       );
       
       setFile(null);
-      if (onSuccess) onSuccess();
+       if (onSuccess) onSuccess();
       onClose();
     } catch (error) {
       console.error("Import error:", error);
       toast.error(error.response?.data?.message || "Failed to import students.");
-    } finally {
+   } finally {
       setIsUploading(false);
-    }
-  };
+   }
+   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 shadow-2xl shadow-black/40">
+     <div className="w-full max-w-lg rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 shadow-2xl shadow-black/40">
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] pb-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">Import Students</h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-2 text-slate-600 dark:text-neutral-500 transition hover:bg-slate-200 dark:hover:bg-white/[0.06] hover:text-neutral-300"
-          >
+           className="rounded-lg p-2 text-slate-600 dark:text-neutral-500 transition hover:bg-slate-200 dark:hover:bg-white/[0.06] hover:text-neutral-300"
+         >
             <X size={20} />
           </button>
         </div>
@@ -118,7 +118,7 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
             
             {file ? (
               <div className="text-center">
-                <p className="font-semibold text-slate-900 dark:text-white">{file.name}</p>
+               <p className="font-semibold text-slate-900 dark:text-white">{file.name}</p>
                 <p className="mt-1 text-sm text-slate-600 dark:text-neutral-500">
                   {(file.size / 1024).toFixed(2)} KB
                 </p>
@@ -126,7 +126,7 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
             ) : (
               <div className="text-center">
                 <p className="font-semibold text-slate-900 dark:text-white">
-                  Click to upload or drag and drop
+                 Click to upload or drag and drop
                 </p>
                 <p className="mt-1 text-sm text-slate-600 dark:text-neutral-500">
                   Excel (.xlsx) or CSV files only
@@ -145,7 +145,7 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
                 </p>
                 <p className="mt-2 font-medium text-indigo-300">
                   Note: Default passwords will be automatically generated and provided to students.
-                </p>
+               </p>
               </div>
             </div>
           </div>
@@ -169,14 +169,14 @@ const ImportStudentsModal = ({ isOpen, onClose, onSuccess }) => {
               </>
             ) : (
               <>
-                <FileSpreadsheet size={18} /> Import Data
+                 <FileSpreadsheet size={18} /> Import Data
               </>
-            )}
+           )}
           </button>
         </div>
       </div>
-    </div>
+     </div>
   );
-};
+ };
 
 export default ImportStudentsModal;

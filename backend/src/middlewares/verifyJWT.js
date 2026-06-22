@@ -9,11 +9,11 @@ export const verifyJWT = asyncHandler(
 async (req,res,next)=>{
    try {
 
-      const token =
+     const token =
       req.cookies?.accessToken ||
       req.header("Authorization")?.replace("Bearer ","");
 
-      if(!token){
+     if(!token){
          throw new ApiError(
             401,
             "Unauthorized request"
@@ -22,21 +22,21 @@ async (req,res,next)=>{
 
       const decodedToken =
       jwt.verify(
-         token,
+        token,
          process.env.ACCESS_TOKEN_SECRET
       );
 
       if(decodedToken?.role === "college-admin"){
-         const college = await College.findById(decodedToken?._id).select("-password -refreshToken");
+        const college = await College.findById(decodedToken?._id).select("-password -refreshToken");
          if(!college) throw new ApiError(401, "Invalid access token");
          req.college = college;
          req.user = college;
          req.role = "college-admin";
          return next();
-      }
+       }
 
-      const student = await Student.findById(decodedToken?._id).select("-password -refreshToken");
-      if(!student) throw new ApiError(401, "Invalid access token");
+     const student = await Student.findById(decodedToken?._id).select("-password -refreshToken");
+       if(!student) throw new ApiError(401, "Invalid access token");
       req.student = student;
       req.user = student;
       req.role = "student";

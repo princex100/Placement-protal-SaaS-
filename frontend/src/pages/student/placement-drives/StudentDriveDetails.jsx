@@ -11,20 +11,20 @@ const StudentDriveDetails = () => {
   const { user } = useSelector((state) => state.auth);
   
   const [drive, setDrive] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [applying, setApplying] = useState(false);
+   const [loading, setLoading] = useState(true);
+   const [applying, setApplying] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
 
   useEffect(() => {
-    const fetchDriveDetails = async () => {
+   const fetchDriveDetails = async () => {
       try {
         setLoading(true);
-        const [driveRes, appRes] = await Promise.all([
-          api.get(`/drives/${driveId}`),
+       const [driveRes, appRes] = await Promise.all([
+         api.get(`/drives/${driveId}`),
           api.get(`/applications/student/me`)
         ]);
         
-        setDrive(driveRes.data?.data);
+       setDrive(driveRes.data?.data);
         const myApps = appRes.data?.data || [];
         const hasAppliedToThis = myApps.some(app => app.drive._id === driveId || app.drive === driveId);
         setHasApplied(hasAppliedToThis);
@@ -32,10 +32,10 @@ const StudentDriveDetails = () => {
         console.error("Failed to fetch drive details", error);
         toast.error("Failed to load drive details");
       } finally {
-        setLoading(false);
+       setLoading(false);
       }
     };
-    fetchDriveDetails();
+     fetchDriveDetails();
   }, [driveId]);
 
   const handleApply = () => {
@@ -44,7 +44,7 @@ const StudentDriveDetails = () => {
 
   if (loading) {
     return (
-      <div className="flex h-[60vh] items-center justify-center">
+       <div className="flex h-[60vh] items-center justify-center">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600 dark:border-slate-800 dark:border-t-blue-500"></div>
       </div>
     );
@@ -65,9 +65,9 @@ const StudentDriveDetails = () => {
     <div className="space-y-6">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:hover:text-white transition-colors"
-      >
-        <ArrowLeft size={16} /> Back to Drives
+       className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:hover:text-white transition-colors"
+     >
+         <ArrowLeft size={16} /> Back to Drives
       </button>
 
       {/* Header Section */}
@@ -77,7 +77,7 @@ const StudentDriveDetails = () => {
             <Building2 size={32} />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{drive.companyName}</h1>
+             <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{drive.companyName}</h1>
             <p className="mt-1 text-lg font-medium text-slate-500 dark:text-slate-400">{drive.role}</p>
           </div>
         </div>
@@ -89,7 +89,7 @@ const StudentDriveDetails = () => {
             </button>
           ) : drive.status === 'closed' || new Date(drive.applicationDeadline) < new Date() ? (
             <button disabled className="flex items-center gap-2 rounded-2xl bg-red-50 px-8 py-3.5 font-bold text-red-600 dark:bg-red-900/20 dark:text-red-400 cursor-not-allowed">
-              Closed
+               Closed
             </button>
           ) : (
             <button 
@@ -108,7 +108,7 @@ const StudentDriveDetails = () => {
           <div className="rounded-[32px] border border-slate-100 bg-white p-8 shadow-sm dark:border-slate-800/60 dark:bg-slate-900">
             <h3 className="mb-4 text-xl font-bold text-slate-900 dark:text-white">About the Role</h3>
             <p className="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
-              {drive.description || "No description provided."}
+             {drive.description || "No description provided."}
             </p>
           </div>
 
@@ -139,17 +139,17 @@ const StudentDriveDetails = () => {
           <div className="mt-4 rounded-3xl border border-blue-50 bg-blue-50/50 p-6 dark:border-blue-900/20 dark:bg-blue-900/10">
             <h4 className="font-bold text-slate-900 dark:text-white mb-3">Allowed Branches</h4>
             <div className="flex flex-wrap gap-2">
-              {drive.eligibleBranches && drive.eligibleBranches.length > 0 ? (
+               {drive.eligibleBranches && drive.eligibleBranches.length > 0 ? (
                 drive.eligibleBranches.map((branch, index) => (
-                  <span key={index} className="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm dark:bg-slate-800 dark:text-slate-300">
-                    {branch.name || branch}
+                 <span key={index} className="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm dark:bg-slate-800 dark:text-slate-300">
+                     {branch.name || branch}
                   </span>
                 ))
               ) : (
-                <span className="text-sm text-slate-500">Open to all branches</span>
+               <span className="text-sm text-slate-500">Open to all branches</span>
               )}
             </div>
-          </div>
+           </div>
         </div>
       </div>
     </div>
@@ -164,8 +164,8 @@ const DetailCard = ({ icon, label, value }) => (
     <div>
       <p className="text-xs font-medium text-slate-500">{label}</p>
       <p className="font-bold text-slate-900 dark:text-white">{value}</p>
-    </div>
-  </div>
+     </div>
+   </div>
 );
 
 export default StudentDriveDetails;

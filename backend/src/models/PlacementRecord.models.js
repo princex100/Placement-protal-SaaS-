@@ -4,12 +4,12 @@ const placementRecordSchema = new mongoose.Schema(
   {
     student: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
+       ref: "Student",
       required: true,
-      index: true
+     index: true
     },
     college: {
-      type: mongoose.Schema.Types.ObjectId,
+       type: mongoose.Schema.Types.ObjectId,
       ref: "College",
       required: true,
       index: true
@@ -34,14 +34,13 @@ const placementRecordSchema = new mongoose.Schema(
       index: true
     }
   },
-  { timestamps: true }
+ { timestamps: true }
 );
 
-// Compound index to prevent duplicate placement entries for the same student in the same season
 placementRecordSchema.index({ student: 1, placementSeasonYear: 1 }, { unique: true });
 
 export const PlacementRecord = mongoose.model(
-  "PlacementRecord",
+   "PlacementRecord",
   placementRecordSchema
 );
 

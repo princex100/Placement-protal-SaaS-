@@ -10,15 +10,15 @@ const DriveApplications = () => {
   
   const [applications, setApplications] = useState([]);
   const [drive, setDrive] = useState(null);
-  const [page, setPage] = useState(1);
+ const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalApplications, setTotalApplications] = useState(0);
+   const [totalApplications, setTotalApplications] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [showRejected, setShowRejected] = useState(false);
+ const [showRejected, setShowRejected] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [uploadType, setUploadType] = useState("generic");
   const [shortlistResult, setShortlistResult] = useState(null);
-  const [interviewResult, setInterviewResult] = useState(null);
+   const [interviewResult, setInterviewResult] = useState(null);
   const [selectionResult, setSelectionResult] = useState(null);
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -28,7 +28,7 @@ const DriveApplications = () => {
     setLoading(true);
     try {
       const response = await api.get(`/applications/drive/${driveId}?page=${page}&limit=${limit}&showRejected=${showRejected}`);
-      const data = response.data?.data || response.data;
+       const data = response.data?.data || response.data;
       
       setApplications(data.applications || []);
       setTotalPages(data.totalPages || 1);
@@ -39,7 +39,7 @@ const DriveApplications = () => {
       } else if (data.applications?.length > 0 && data.applications[0].drive) {
         setDrive(data.applications[0].drive);
       }
-    } catch (error) {
+   } catch (error) {
       console.error("Failed to fetch applications:", error);
       toast.error("Failed to load applications for this drive.");
     } finally {
@@ -49,7 +49,7 @@ const DriveApplications = () => {
 
   useEffect(() => {
     fetchApplications();
-  }, [driveId, page, showRejected]);
+   }, [driveId, page, showRejected]);
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -59,34 +59,34 @@ const DriveApplications = () => {
     }
 
     const formData = new FormData();
-    formData.append("file", file);
+   formData.append("file", file);
 
-    setUploading(true);
-    try {
+     setUploading(true);
+     try {
       let response;
       if (uploadType === "shortlist") {
         response = await api.post(`/drives/${driveId}/shortlist/upload`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
         toast.success(response.data.message || "Shortlist processed successfully");
-        setShortlistResult(response.data.data);
+         setShortlistResult(response.data.data);
       } else if (uploadType === "interview") {
         response = await api.post(`/drives/${driveId}/interview-schedule/upload`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        toast.success(response.data.message || "Interview Schedule processed successfully");
+       toast.success(response.data.message || "Interview Schedule processed successfully");
         setInterviewResult(response.data.data);
-      } else if (uploadType === "selection") {
-        response = await api.post(`/drives/${driveId}/selection/upload`, formData, {
+     } else if (uploadType === "selection") {
+         response = await api.post(`/drives/${driveId}/selection/upload`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
         toast.success(response.data.message || "Selection processed successfully");
         setSelectionResult(response.data.data);
-      } else {
+       } else {
         response = await api.post(`/applications/drive/${driveId}/workflow`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        toast.success(response.data.message || "Workflow advanced successfully");
+         toast.success(response.data.message || "Workflow advanced successfully");
       }
       
       setShowModal(false);
@@ -99,7 +99,7 @@ const DriveApplications = () => {
     } finally {
       setUploading(false);
     }
-  };
+   };
 
   const workflowStages = ["shortlisting", "interview", "selection", "completed"];
   
@@ -108,7 +108,7 @@ const DriveApplications = () => {
     return idx === -1 ? 0 : idx;
   };
   
-  const currentStageIndex = getStageIndex(drive?.applicationWorkflowStage || "shortlisting");
+ const currentStageIndex = getStageIndex(drive?.applicationWorkflowStage || "shortlisting");
 
   return (
     <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
@@ -122,7 +122,7 @@ const DriveApplications = () => {
         </button>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+         <div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
               Drive Applications
             </h1>
@@ -133,7 +133,7 @@ const DriveApplications = () => {
           <div className="flex items-center gap-3 sm:gap-4">
             <button
               onClick={() => setShowRejected(!showRejected)}
-              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition-colors ${showRejected ? 'border-red-500/20 bg-red-500/10 text-red-400' : 'border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06]'}`}
+             className={`rounded-xl border px-4 py-2 text-sm font-semibold transition-colors ${showRejected ? 'border-red-500/20 bg-red-500/10 text-red-400' : 'border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06]'}`}
             >
               {showRejected ? "Hide Rejected" : "Show Rejected"}
             </button>
@@ -142,8 +142,8 @@ const DriveApplications = () => {
               <span className="font-semibold">{totalApplications} Applications</span>
             </div>
           </div>
-        </div>
-      </div>
+       </div>
+       </div>
 
       {/* Workflow Section */}
       {drive && (
@@ -160,12 +160,12 @@ const DriveApplications = () => {
               const isCompleted = stage === "completed" && isActive;
               
               let btnClass = "";
-              let statusIcon = null;
+             let statusIcon = null;
 
               if (isPast || isCompleted) {
                 btnClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 cursor-default opacity-80";
                 statusIcon = <CheckCircle2 size={16} />;
-              } else if (isActive) {
+               } else if (isActive) {
                 btnClass = "bg-gradient-to-r from-indigo-500 to-violet-600 text-slate-900 dark:text-white border-transparent shadow-lg shadow-indigo-500/25 cursor-pointer";
               } else {
                 btnClass = "bg-white dark:bg-white/[0.02] text-slate-600 dark:text-neutral-500 border-slate-200 dark:border-white/[0.06] cursor-not-allowed";
@@ -179,7 +179,7 @@ const DriveApplications = () => {
                   onClick={() => {
                     if (isActive && stage !== "completed") {
                       if (stage === "shortlisting") {
-                        setUploadType("shortlist");
+                       setUploadType("shortlist");
                       } else if (stage === "interview") {
                         setUploadType("interview");
                       } else if (stage === "selection") {
@@ -200,15 +200,15 @@ const DriveApplications = () => {
                   {statusIcon}
                 </button>
               );
-            })}
+           })}
           </div>
         </div>
       )}
 
       {/* Applications Table */}
-      <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl overflow-hidden">
+       <div className="rounded-2xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] backdrop-blur-xl overflow-hidden">
         <div className="overflow-x-auto p-4">
-          {loading ? (
+         {loading ? (
             <div className="flex h-[40vh] items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-800 border-t-indigo-500" />
             </div>
@@ -234,7 +234,7 @@ const DriveApplications = () => {
                 {applications.map((app) => (
                   <tr key={app._id} className="transition-colors hover:bg-white/[0.03]">
                     <td className="px-6 py-4">
-                      <button 
+                     <button 
                         onClick={() => navigate(`/college/dashboard/student-profile/${app.student._id}`)}
                         className="font-medium text-slate-900 dark:text-white hover:text-indigo-400 hover:underline"
                       >
@@ -243,7 +243,7 @@ const DriveApplications = () => {
                     </td>
                     <td className="px-6 py-4">{app.student.rollNo}</td>
                     <td className="px-6 py-4">{app.student.branch}</td>
-                    <td className="px-6 py-4 font-medium text-neutral-300">{app.student.cgpa}</td>
+                   <td className="px-6 py-4 font-medium text-neutral-300">{app.student.cgpa}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
                         app.status === 'Applied' ? 'bg-slate-200 dark:bg-white/[0.06] text-neutral-300' :
@@ -252,8 +252,8 @@ const DriveApplications = () => {
                         'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
                       }`}>
                         {app.status}
-                      </span>
-                    </td>
+                     </span>
+                   </td>
                     <td className="px-6 py-4 text-slate-500 dark:text-neutral-400">
                       {new Date(app.appliedAt).toLocaleDateString()}
                     </td>
@@ -263,7 +263,7 @@ const DriveApplications = () => {
                         className="font-medium text-indigo-400 hover:text-indigo-300 hover:underline text-sm"
                       >
                         View Application →
-                      </button>
+                     </button>
                     </td>
                   </tr>
                 ))}
@@ -276,49 +276,48 @@ const DriveApplications = () => {
         {!loading && applications.length > 0 && (
           <div className="flex items-center justify-between border-t border-slate-200 dark:border-white/[0.06] px-6 py-4">
             <span className="text-sm text-slate-600 dark:text-neutral-500">
-              Showing <span className="font-semibold text-slate-900 dark:text-white">{(page - 1) * limit + 1}</span> to <span className="font-semibold text-slate-900 dark:text-white">{Math.min(page * limit, totalApplications)}</span> of <span className="font-semibold text-slate-900 dark:text-white">{totalApplications}</span> Entries
+             Showing <span className="font-semibold text-slate-900 dark:text-white">{(page - 1) * limit + 1}</span> to <span className="font-semibold text-slate-900 dark:text-white">{Math.min(page * limit, totalApplications)}</span> of <span className="font-semibold text-slate-900 dark:text-white">{totalApplications}</span> Entries
             </span>
             <div className="flex gap-2">
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 transition-colors hover:bg-slate-200 dark:hover:bg-white/[0.06] disabled:opacity-50"
+                 className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-slate-500 dark:text-neutral-400 transition-colors hover:bg-slate-200 dark:hover:bg-white/[0.06] disabled:opacity-50"
               >
                 <ChevronLeft size={16} />
               </button>
               
               {/* Simple page numbers */}
               {Array.from({ length: totalPages }, (_, i) => i + 1)
-                // Show at most 5 pages around current
                 .filter(p => Math.abs(p - page) <= 2 || p === 1 || p === totalPages)
-                .map((p, idx, arr) => {
+                 .map((p, idx, arr) => {
                   if (idx > 0 && arr[idx - 1] !== p - 1) {
                     return (
                       <React.Fragment key={`ellipsis-${p}`}>
                         <span className="flex h-9 w-9 items-center justify-center text-slate-600 dark:text-neutral-500">...</span>
                         <button
                           onClick={() => setPage(p)}
-                          className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
+                         className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
                             page === p
                               ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-slate-900 dark:text-white"
                               : "border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-neutral-300 hover:bg-slate-200 dark:hover:bg-white/[0.06]"
-                          }`}
+                         }`}
                         >
                           {p}
                         </button>
-                      </React.Fragment>
+                     </React.Fragment>
                     );
                   }
-                  return (
+                 return (
                     <button
                       key={p}
                       onClick={() => setPage(p)}
                       className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
-                        page === p
+                         page === p
                           ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-slate-900 dark:text-white border border-transparent"
                           : "border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] text-neutral-300 hover:bg-slate-200 dark:hover:bg-white/[0.06]"
                       }`}
-                    >
+                   >
                       {p}
                     </button>
                   );
@@ -340,11 +339,11 @@ const DriveApplications = () => {
       {/* Upload Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 sm:p-8 shadow-2xl shadow-black/40">
+           <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 sm:p-8 shadow-2xl shadow-black/40">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                 {uploadType === "shortlist" ? "Upload Company Shortlist" : 
-                 uploadType === "interview" ? "Upload Interview Schedule" : 
+                  uploadType === "interview" ? "Upload Interview Schedule" : 
                  uploadType === "selection" ? "Upload Selected Candidates" : 
                  "Upload Candidates"}
               </h2>
@@ -353,15 +352,15 @@ const DriveApplications = () => {
                 className="rounded-lg p-2 text-slate-600 dark:text-neutral-500 hover:bg-slate-200 dark:hover:bg-white/[0.06] hover:text-neutral-300 transition"
               >
                 <X size={20} />
-              </button>
+             </button>
             </div>
             
             <div className="mb-6 rounded-xl bg-indigo-500/5 border border-indigo-500/10 p-4 text-sm text-indigo-300/80">
-              {uploadType === "shortlist" 
+               {uploadType === "shortlist" 
                 ? <p>Upload an Excel or CSV file containing a column for <strong className="text-indigo-300">Roll Number</strong>. Matching students will be Shortlisted, others will be Rejected.</p>
                 : uploadType === "interview"
                 ? <p>Upload an Excel or CSV file containing <strong className="text-indigo-300">Roll Number</strong>, <strong className="text-indigo-300">Interview Date</strong>, and <strong className="text-indigo-300">Interview Time</strong>. Matching students will be scheduled and notified via email.</p>
-                : uploadType === "selection"
+                 : uploadType === "selection"
                 ? <p>Upload an Excel or CSV file containing a column for <strong className="text-indigo-300">Roll Number</strong>. Matching students will be officially Selected and placed, others will be Rejected.</p>
                 : <p>Upload an Excel or CSV file containing a column for <strong className="text-indigo-300">Roll Number</strong>. All matching students will be moved to the next stage.</p>
               }
@@ -385,9 +384,9 @@ const DriveApplications = () => {
               
               <div className="flex gap-4">
                 <button
-                  type="button"
+                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] py-3 font-semibold text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06] transition"
+                 className="flex-1 rounded-xl border border-slate-200 dark:border-white/[0.06] bg-slate-100 dark:bg-white/[0.04] py-3 font-semibold text-slate-500 dark:text-neutral-400 hover:bg-slate-200 dark:hover:bg-white/[0.06] transition"
                 >
                   Cancel
                 </button>
@@ -399,17 +398,17 @@ const DriveApplications = () => {
                   {uploading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
                   {uploading ? "Uploading..." : "Upload File"}
                 </button>
-              </div>
-            </form>
-          </div>
+             </div>
+             </form>
+         </div>
         </div>
       )}
       {/* Shortlist Result Modal */}
-      {shortlistResult && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+     {shortlistResult && (
+       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#12121e] p-6 sm:p-8 shadow-2xl shadow-black/40">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Shortlist Processed</h2>
+           <div className="mb-6 flex items-center justify-between">
+               <h2 className="text-xl font-bold text-slate-900 dark:text-white">Shortlist Processed</h2>
               <button 
                 onClick={() => setShortlistResult(null)}
                 className="rounded-lg p-2 text-slate-600 dark:text-neutral-500 hover:bg-slate-200 dark:hover:bg-white/[0.06] hover:text-neutral-300 transition"
@@ -418,9 +417,9 @@ const DriveApplications = () => {
               </button>
             </div>
             
-            <div className="space-y-4">
-              <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
-                <span className="text-slate-500 dark:text-neutral-400">Applications Matched</span>
+           <div className="space-y-4">
+               <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
+               <span className="text-slate-500 dark:text-neutral-400">Applications Matched</span>
                 <span className="text-lg font-bold text-emerald-400">{shortlistResult.shortlistedCount}</span>
               </div>
               <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
@@ -432,14 +431,14 @@ const DriveApplications = () => {
                 <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-4">
                   <h3 className="text-sm font-semibold text-amber-400 mb-2">Unmatched Roll Numbers ({shortlistResult.unmatchedRollNumbers.length})</h3>
                   <p className="text-xs text-amber-300/80 mb-2">These roll numbers were in the file but didn't match any active applications:</p>
-                  <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
+                 <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
                     {shortlistResult.unmatchedRollNumbers.map(roll => (
                       <span key={roll} className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-md">{roll}</span>
                     ))}
                   </div>
                 </div>
               )}
-            </div>
+           </div>
 
             <div className="mt-6">
               <button
@@ -462,7 +461,7 @@ const DriveApplications = () => {
               <button 
                 onClick={() => setInterviewResult(null)}
                 className="rounded-lg p-2 text-slate-600 dark:text-neutral-500 hover:bg-slate-200 dark:hover:bg-white/[0.06] hover:text-neutral-300 transition"
-              >
+             >
                 <X size={20} />
               </button>
             </div>
@@ -472,11 +471,11 @@ const DriveApplications = () => {
                 <span className="text-slate-500 dark:text-neutral-400">Interview Scheduled</span>
                 <span className="text-lg font-bold text-emerald-400">{interviewResult.interviewScheduledCount}</span>
               </div>
-              <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
+               <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
                 <span className="text-slate-500 dark:text-neutral-400">Rejected</span>
                 <span className="text-lg font-bold text-red-400">{interviewResult.rejectedCount}</span>
               </div>
-              <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
+             <div className="flex justify-between items-center rounded-xl bg-white dark:bg-white/[0.02] p-4 border border-slate-200 dark:border-white/[0.06]">
                 <span className="text-slate-500 dark:text-neutral-400">Emails Sent</span>
                 <span className="text-lg font-bold text-indigo-400">{interviewResult.emailsSent}</span>
               </div>
@@ -484,7 +483,7 @@ const DriveApplications = () => {
 
             <div className="mt-6 p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-center">
               <p className="text-sm font-semibold text-emerald-400">Drive moved to Selection Stage</p>
-            </div>
+           </div>
 
             <div className="mt-6">
               <button
@@ -494,9 +493,9 @@ const DriveApplications = () => {
                 Close
               </button>
             </div>
-          </div>
-        </div>
-      )}
+         </div>
+       </div>
+     )}
       
       {/* Selection Result Modal */}
       {selectionResult && (
@@ -535,9 +534,9 @@ const DriveApplications = () => {
               <button
                 onClick={() => setSelectionResult(null)}
                 className="w-full rounded-xl bg-slate-100 dark:bg-white/[0.04] py-3 font-semibold text-slate-900 dark:text-white border border-slate-200 dark:border-white/[0.06] hover:bg-slate-200 dark:hover:bg-white/[0.08] transition"
-              >
+             >
                 Close
-              </button>
+             </button>
             </div>
           </div>
         </div>

@@ -8,10 +8,10 @@ export const validateRequest = (req, res, next) => {
     console.log("ERRORS ARE:", errors.array());
     
     if (!errors.isEmpty()) {
-        const formattedErrors = errors.array().map((err) => ({
+         const formattedErrors = errors.array().map((err) => ({
             field: err.path || err.param,
             message: err.msg
-        }));
+       }));
 
         return next(
             new ApiError(
@@ -21,7 +21,7 @@ export const validateRequest = (req, res, next) => {
                 formattedErrors
             )
         );
-    }
+   }
     
     next();
 };

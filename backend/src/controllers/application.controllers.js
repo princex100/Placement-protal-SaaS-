@@ -7,47 +7,36 @@ import uploadOnCloudinary from "../utils/cloudinary.js";
 import Branch from "../models/branch.models.js";
 import PlacementRecord from "../models/PlacementRecord.models.js";
 
-// Student applies to a drive
 export const applyToDrive = asyncHandler(async (req, res) => {
   const student = req.student;
   const driveId = req.params.driveId;
 
-  // 1. Check if drive exists and is active/open
   const drive = await PlacementDrive.findById(driveId);
   if (!drive || drive.status !== "open" || !drive.isActive) {
     throw new ApiError(404, "Drive is not available for applications");
   }
 
-  // 2. Ensure student belongs to the same college
   if (drive.college.toString() !== student.college.toString()) {
     throw new ApiError(403, "You can only apply to drives from your own college");
-  }
+ }
 
-  // 3. (Deferred) We will check resume after eligibility
 
-  // 4. Check deadline
   if (new Date(drive.applicationDeadline) < new Date()) {
     throw new ApiError(400, "Application deadline has passed");
   }
 
-  // 5. Check Eligibility
-  // a) Placement Season
   if (drive.placementSeasonYear !== student.placementSeasonYear) {
     throw new ApiError(400, "You are not eligible for this drive (Placement Season mismatch)");
   }
-  // b) Placement Status
   if (student.placementStatus === "placed") {
     throw new ApiError(400, "You are already placed and cannot apply for this drive");
   }
-  // c) CGPA
-  if (drive.minimumCgpa && student.cgpa < drive.minimumCgpa) {
-    throw new ApiError(400, `You do not meet the minimum CGPA requirement (${drive.minimumCgpa})`);
+   if (drive.minimumCgpa && student.cgpa < drive.minimumCgpa) {
+     throw new ApiError(400, `You do not meet the minimum CGPA requirement (${drive.minimumCgpa})`);
   }
-  // d) Backlogs
-  if (drive.backlogAllowed !== undefined && student.backlogCount > drive.backlogAllowed) {
+ if (drive.backlogAllowed !== undefined && student.backlogCount > drive.backlogAllowed) {
     throw new ApiError(400, `You exceed the maximum allowed active backlogs (${drive.backlogAllowed})`);
   }
-  // e) Allowed Branches
   if (drive.eligibleBranches && drive.eligibleBranches.length > 0) {
     if (!drive.eligibleBranches.includes(student.branch)) {
       throw new ApiError(400, "Your branch is not eligible for this drive");
@@ -59,7 +48,6 @@ export const applyToDrive = asyncHandler(async (req, res) => {
       throw new ApiError(400, "Your passing year is not eligible for this drive");
     }
   }
-  // g) Skills
   if (drive.skillsRequired && drive.skillsRequired.length > 0) {
     const studentSkills = student.skills || [];
     const hasRequiredSkill = drive.skillsRequired.some(skill => studentSkills.includes(skill));
@@ -74,9 +62,8 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     throw new ApiError(400, "You have already applied to this drive");
   }
   
-  // Prevent duplicate insertion in drive.students
   const isAlreadyInDrive = drive.students?.some(s => s.student.toString() === student._id.toString());
-  if (isAlreadyInDrive) {
+   if (isAlreadyInDrive) {
     throw new ApiError(400, "You are already registered as an eligible student in this drive");
   }
 
@@ -88,7 +75,6 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
     finalResumeUrl = cloudinaryResponse.secure_url || cloudinaryResponse.url;
     
-    // Update student's default resume
     await Student.findByIdAndUpdate(student._id, { $set: { resume: finalResumeUrl } });
   }
 
@@ -96,52 +82,45 @@ export const applyToDrive = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Please upload a resume before applying");
   }
 
-  // 8. Create application
   const application = await Application.create({
     student: student._id,
     drive: driveId,
-    college: student.college,
+     college: student.college,
     placementSeasonYear: drive.placementSeasonYear,
     resumeSnapshot: finalResumeUrl // Snapshot resume at time of applying
-  });
+   });
 
-  // Increment totalApplicants count and add to students array
-  await PlacementDrive.findByIdAndUpdate(driveId, { 
+   await PlacementDrive.findByIdAndUpdate(driveId, { 
     $inc: { totalApplicants: 1 },
     $push: { students: { student: student._id } }
   });
 
-  // Update student appliedDrives
   await Student.findByIdAndUpdate(student._id, {
-    $addToSet: { appliedDrives: driveId }
+     $addToSet: { appliedDrives: driveId }
   });
 
   return res.status(201).json(new ApiResponse(201, application, "Successfully applied to drive"));
 });
 
-// Student fetches their own applications
 export const getMyApplications = asyncHandler(async (req, res) => {
   const studentId = req.student._id;
 
   const applications = await Application.find({ student: studentId })
-    .populate("drive", "title companyName role status")
+     .populate("drive", "title companyName role status")
     .sort({ appliedAt: -1 });
 
   return res.status(200).json(new ApiResponse(200, applications, "Applications fetched successfully"));
 });
 
-// College fetches applicants for a specific drive (Paginated)
 export const getDriveApplicants = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
   const driveId = req.params.driveId;
 
-  // Verify drive belongs to college
   const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
   if (!drive) {
-    throw new ApiError(404, "Drive not found or unauthorized");
+     throw new ApiError(404, "Drive not found or unauthorized");
   }
 
-  // Pagination parameters
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 25;
   const skip = (page - 1) * limit;
@@ -151,14 +130,13 @@ export const getDriveApplicants = asyncHandler(async (req, res) => {
     filter.applicationStatus = { $ne: "rejected" };
   }
 
-  // Fetch data concurrently
   const [totalApplications, applications] = await Promise.all([
     Application.countDocuments(filter),
     Application.find(filter)
-      .skip(skip)
-      .limit(limit)
+     .skip(skip)
+       .limit(limit)
       .sort({ createdAt: -1 })
-      .populate("student", "fullName rollNo branch cgpa email placementStatus")
+     .populate("student", "fullName rollNo branch cgpa email placementStatus")
       .populate("drive", "companyName role applicationWorkflowStage")
       .lean()
   ]);
@@ -172,7 +150,7 @@ export const getDriveApplicants = asyncHandler(async (req, res) => {
     totalPages: totalPages === 0 ? 1 : totalPages,
     totalApplications,
     hasNextPage: page < totalPages,
-    hasPrevPage: page > 1
+   hasPrevPage: page > 1
   }, "Applicants fetched successfully"));
 });
 
@@ -182,9 +160,9 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
 
   if (!req.file) {
     throw new ApiError(400, "Please upload an Excel or CSV file");
-  }
+ }
 
-  const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
+ const drive = await PlacementDrive.findOne({ _id: driveId, college: collegeId });
   if (!drive) {
     throw new ApiError(404, "Drive not found or unauthorized");
   }
@@ -200,9 +178,8 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
 
   if (!sheetData || sheetData.length === 0) {
     throw new ApiError(400, "The uploaded file is empty");
-  }
+   }
 
-  // Find roll number column using semi-mapping
   const { studentHeaderMap } = await import("../constants/studentHeaderMap.js");
   const headers = Object.keys(sheetData[0]);
   let rollNoKey = null;
@@ -212,7 +189,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
     if (studentHeaderMap.rollNo.includes(normalizedHeader)) {
       rollNoKey = header;
       break;
-    }
+   }
   }
 
   if (!rollNoKey) {
@@ -221,7 +198,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
 
   const uploadedRollNumbers = sheetData
     .map(row => row[rollNoKey]?.toString().trim().toUpperCase())
-    .filter(Boolean);
+   .filter(Boolean);
 
   let sourceStatus;
   let targetStatus;
@@ -229,7 +206,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
 
   switch (drive.applicationWorkflowStage) {
     case "shortlisting":
-      sourceStatus = "applied";
+     sourceStatus = "applied";
       targetStatus = "shortlisted";
       nextWorkflowStage = "interview";
       break;
@@ -240,14 +217,13 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
       break;
     case "selection":
       sourceStatus = "interview_scheduled";
-      targetStatus = "selected";
+       targetStatus = "selected";
       nextWorkflowStage = "completed";
       break;
     default:
       throw new ApiError(400, "Invalid workflow stage");
   }
 
-  // Find all current applications for this drive at the source status
   const currentApplications = await Application.find({ 
     drive: driveId, 
     college: collegeId,
@@ -271,12 +247,11 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
     }
   });
 
-  // Bulk update matched
   if (matchedAppIds.length > 0) {
     await Application.updateMany(
       { _id: { $in: matchedAppIds } },
       { 
-        $set: { 
+       $set: { 
           applicationStatus: targetStatus,
           statusUpdatedAt: new Date(),
           statusUpdatedBy: collegeId
@@ -289,7 +264,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
   if (unmatchedAppIds.length > 0) {
     await Application.updateMany(
       { _id: { $in: unmatchedAppIds } },
-      { 
+       { 
         $set: { 
           applicationStatus: "rejected",
           statusUpdatedAt: new Date(),
@@ -297,18 +272,16 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
         } 
       }
     );
-  }
+ }
 
-  // Update placement status if selected
-  if (selectedStudentIds.length > 0) {
+ if (selectedStudentIds.length > 0) {
     const StudentModel = req.app.get("mongoose") ? req.app.get("mongoose").model("Student") : null;
     const Student = StudentModel || (await import("../models/Student.models.js")).default;
     await Student.updateMany(
       { _id: { $in: selectedStudentIds } },
       { $set: { placementStatus: "placed" } }
-    );
+   );
 
-    // Create PlacementRecords
     const placementRecordsToInsert = [];
     for (const appId of matchedAppIds) {
       if (targetStatus === "selected") {
@@ -317,7 +290,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
            const branchDoc = await Branch.findOne({ 
              name: { $regex: new RegExp(`^${app.student.branch}$`, "i") }, 
              college: collegeId 
-           });
+            });
            
            if (branchDoc) {
              placementRecordsToInsert.push({
@@ -336,7 +309,7 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
     if (placementRecordsToInsert.length > 0) {
        await PlacementRecord.insertMany(placementRecordsToInsert, { ordered: false }).catch(err => {
          console.warn("Placement records insert warning:", err.message);
-       });
+      });
     }
   }
 
@@ -348,39 +321,37 @@ export const advanceDriveWorkflow = asyncHandler(async (req, res) => {
     matchedCount: matchedAppIds.length,
     unmatchedCount: unmatchedAppIds.length,
     newWorkflowStage: nextWorkflowStage
-  }, `Workflow advanced to ${nextWorkflowStage}`));
+   }, `Workflow advanced to ${nextWorkflowStage}`));
 });
 
 export const updateApplicationStatus = asyncHandler(async (req, res) => {
-  const collegeId = req.college._id;
+ const collegeId = req.college._id;
   const applicationId = req.params.applicationId;
-  const { applicationStatus, remarks } = req.body;
+ const { applicationStatus, remarks } = req.body;
 
-  // Find application and ensure it belongs to the college
   const application = await Application.findOne({ _id: applicationId, college: collegeId });
-  if (!application) {
+   if (!application) {
     throw new ApiError(404, "Application not found or unauthorized");
   }
 
-  application.applicationStatus = applicationStatus;
+   application.applicationStatus = applicationStatus;
   application.statusUpdatedAt = new Date();
   application.statusUpdatedBy = collegeId;
   if (remarks) application.remarks = remarks;
   
   await application.save();
 
-  // Update student's placementStatus if selected
   if (applicationStatus === "selected") {
     const StudentModel = req.app.get("mongoose") ? req.app.get("mongoose").model("Student") : null;
-    let Student = StudentModel;
-    if(!StudentModel) {
+   let Student = StudentModel;
+   if(!StudentModel) {
        Student = (await import("../models/Student.models.js")).default;
     }
     const studentDoc = await Student.findByIdAndUpdate(application.student, { placementStatus: "placed" });
     
     if (studentDoc) {
       const drive = await PlacementDrive.findById(application.drive);
-      if (drive) {
+     if (drive) {
         const branchDoc = await Branch.findOne({ 
           name: { $regex: new RegExp(`^${studentDoc.branch}$`, "i") }, 
           college: collegeId 
@@ -390,8 +361,8 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
           try {
             await PlacementRecord.create({
               student: studentDoc._id,
-              college: collegeId,
-              branch: branchDoc._id,
+             college: collegeId,
+               branch: branchDoc._id,
               company: drive.companyName,
               package: drive.package,
               placementSeasonYear: studentDoc.placementSeasonYear || drive.placementSeasonYear
@@ -407,50 +378,46 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, application, "Application status updated successfully"));
 });
 
-// College fetches all applications (Paginated)
 export const getAllCollegeApplications = asyncHandler(async (req, res) => {
   const collegeId = req.college._id;
   
-  // Pagination parameters
-  const page = parseInt(req.query.page) || 1;
+   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const filter = { 
+ const filter = { 
     college: collegeId,
     placementSeasonYear: req.college.activePlacementSeason
   };
 
-  // Fetch data concurrently
   const [totalApplications, applications] = await Promise.all([
     Application.countDocuments(filter),
     Application.find(filter)
-      .skip(skip)
+     .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 })
       .populate("student", "fullName rollNo branch cgpa")
-      .populate("drive", "companyName role")
+       .populate("drive", "companyName role")
       .lean()
   ]);
 
   const totalPages = Math.ceil(totalApplications / limit);
 
-  return res.status(200).json(new ApiResponse(200, {
-    applications,
+   return res.status(200).json(new ApiResponse(200, {
+   applications,
     currentPage: page,
     totalPages: totalPages === 0 ? 1 : totalPages,
     totalApplications,
     hasNextPage: page < totalPages,
     hasPrevPage: page > 1
-  }, "Applications fetched successfully"));
+   }, "Applications fetched successfully"));
 });
 
-// College fetches a single application by ID
 export const getApplicationById = asyncHandler(async (req, res) => {
-  const applicationId = req.params.applicationId;
+ const applicationId = req.params.applicationId;
   const isStudent = req.role === "student";
 
-  const query = { _id: applicationId };
+ const query = { _id: applicationId };
   if (isStudent) {
     query.student = req.student._id;
   } else {

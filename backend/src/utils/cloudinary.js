@@ -1,15 +1,13 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
-// UPLOAD FUNCTION
 
 const uploadOnCloudinary = async (
    localFilePath
 ) => {
 
    try {
-      // CONFIGURATION (Lazy load so env vars are available)
-      cloudinary.config({
+       cloudinary.config({
          cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
          api_key:process.env.CLOUDINARY_API_KEY,
          api_secret:process.env.CLOUDINARY_API_SECRET
@@ -21,7 +19,6 @@ const uploadOnCloudinary = async (
 
 
 
-      // UPLOAD FILE
 
       const isPDF = localFilePath.toLowerCase().endsWith(".pdf");
       const response = await cloudinary.uploader.upload(
@@ -34,7 +31,6 @@ const uploadOnCloudinary = async (
 
 
 
-      // FILE UPLOADED SUCCESSFULLY
 
       console.log(
          "File uploaded successfully",
@@ -43,7 +39,6 @@ const uploadOnCloudinary = async (
 
 
 
-      // REMOVE LOCAL FILE
 
       fs.unlinkSync(localFilePath);
 
@@ -53,7 +48,6 @@ const uploadOnCloudinary = async (
 
    } catch (error) {
 
-      // REMOVE LOCAL FILE IF ERROR
 
       fs.unlinkSync(localFilePath);
 

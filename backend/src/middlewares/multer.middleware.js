@@ -2,14 +2,12 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 
-// CREATE TEMP FOLDER IF NOT EXISTS
 const uploadPath = "./public/temp";
 
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// STORAGE CONFIG
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadPath);
@@ -25,7 +23,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// MULTER INSTANCE
 export const upload = multer({
   storage,
 
